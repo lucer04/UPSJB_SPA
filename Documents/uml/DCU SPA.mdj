@@ -1010,6 +1010,13 @@
 								"$ref": "AAAAAAGgh1B4CjTCdic="
 							},
 							"extensionPointCompartment": {
+								"$ref": "AAAAAAGgh1B4CjTD9pU="
+							}
+						},
+						{
+							"_type": "UMLUseCaseView",
+							"_id": "AAAAAAGgh1EO8zTv2qU=",
+							"_parent": {
 								"$ref": "AAAAAAGgh0xbrDPF2u0="
 							},
 							"model": {
@@ -1038,6 +1045,7 @@
 											"left": -24,
 											"top": -408,
 											"height": 13
+										},
 										{
 											"_type": "LabelView",
 											"_id": "AAAAAAGgh1EO8zTyPq4=",
