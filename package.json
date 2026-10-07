@@ -1,0 +1,24 @@
+{
+  "name": "upsjb_spa",
+  "version": "1.0.0",
+  "description": "sistema web para la gestion de el spa",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucer04/UPSJB_SPA.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/lucer04/UPSJB_SPA/issues"
+  },
+  "homepage": "https://github.com/lucer04/UPSJB_SPA#readme",
+  "dependencies": {
+    "bootstrap": "^5.3.8"
+  }
+}
