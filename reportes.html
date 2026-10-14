@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes · VIVI Spa y Estudio</title>
+    <!-- Google Fonts: Cormorant Garamond & Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Estilos Principales Compilados por Sass -->
+    <link rel="stylesheet" href="./Prototipos/css/custom.css">
+</head>
+
+<body>
+    <!-- Telón de fondo para navegación móvil -->
+    <div class="side-backdrop" id="sideBackdrop"></div>
+
+    <div class="shell">
+        <!-- BARRA LATERAL ESPRESSO OSCURO -->
+        <aside class="side" id="sidebar">
+            <div class="brand">
+                <div class="logo">V</div>
+                <div class="brand-text">
+                    <b>VIVI</b>
+                    <small>Spa y Estudio</small>
+                </div>
+                <button class="side-close-btn d-lg-none ms-auto" id="sideClose" aria-label="Cerrar menú">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+
+            <nav aria-label="Menú principal">
+                <div class="grp">Principal</div>
+                <a class="nv" href="dashboard.html">
+                    <i class="bi bi-grid-1x2"></i>Dashboard
+                </a>
+                <a class="nv on" href="reportes.html" aria-current="page">
+                    <i class="bi bi-bar-chart-line"></i>Reportes
+                </a>
+
+                <div class="grp">Gestión</div>
+                <a class="nv" href="#">
+                    <i class="bi bi-calendar-check"></i>Citas
+                </a>
+                <a class="nv" href="#">
+                    <i class="bi bi-people"></i>Clientes
+                </a>
+                <a class="nv" href="#">
+                    <i class="bi bi-stars"></i>Servicios
+                </a>
+                <a class="nv" href="#">
+                    <i class="bi bi-box-seam"></i>Inventario
+                </a>
+                <a class="nv" href="#">
+                    <i class="bi bi-cash-stack"></i>Pagos y caja
+                </a>
+                <a class="nv" href="#">
+                    <i class="bi bi-percent"></i>Comisiones
+                </a>
+
+                <div class="grp">Configuraciones</div>
+                <a class="nv" href="#">
+                    <i class="bi bi-shield-check"></i>Roles
+                </a>
+                <a class="nv" href="#">
+                    <i class="bi bi-person-gear"></i>Usuarios
+                </a>
+                <a class="nv" href="#">
+                    <i class="bi bi-grid"></i>Categorías
+                </a>
+            </nav>
+
+            <div class="usr">
+                <div class="pm" id="pm" hidden>
+                    <div class="mh">
+                        <div class="av">AD</div>
+                        <div>
+                            <b>Administradora</b>
+                            <small>admin@vivispa.com</small>
+                            <span class="tg">Administradora</span>
+                        </div>
+                    </div>
+                    <button class="mi"><i class="bi bi-person-circle"></i>Mi perfil</button>
+                    <button class="mi"><i class="bi bi-shield-lock"></i>Cambiar contraseña</button>
+                    <button class="mi"><i class="bi bi-sliders"></i>Preferencias del Spa</button>
+                    <button class="mi out"><i class="bi bi-box-arrow-right"></i>Cerrar sesión</button>
+                </div>
+                <button class="ub" id="ub" aria-haspopup="true" aria-expanded="false">
+                    <div class="av">AD</div>
+                    <div>
+                        <b>Administradora</b>
+                        <small>admin@vivispa.com</small>
+                    </div>
+                    <i class="bi bi-chevron-up"></i>
+                </button>
+            </div>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <div class="main">
+            <!-- HEADER SUPERIOR ULTRA-SLIM -->
+            <header class="top">
+                <button class="ib" id="burger" aria-label="Mostrar u ocultar menú">
+                    <i class="bi bi-list"></i>
+                </button>
+                <span class="fw-semibold text-uppercase small d-none d-sm-inline" style="letter-spacing:0.06em; color:var(--spa-espresso);">Reportes</span>
+
+                <!-- Barra de búsqueda rápida -->
+                <div class="search-wrapper d-none d-md-flex">
+                    <i class="bi bi-search"></i>
+                    <input type="text" id="reportSearch" class="search-input" placeholder="Buscar métrica, especialista...">
+                    <span class="search-badge">Ctrl K</span>
+                </div>
+
+                <!-- Fecha actual en cabecera -->
+                <div class="header-date-badge d-none d-lg-flex ms-auto">
+                    <i class="bi bi-calendar3"></i>
+                    <span id="currentDateBadge">Hoy</span>
+                </div>
+
+                <!-- Notificaciones -->
+                <div class="nb ms-auto ms-lg-0">
+                    <button class="ib" id="bell" aria-expanded="false" aria-label="Notificaciones del Spa">
+                        <i class="bi bi-bell"></i>
+                        <span class="bdg">3</span>
+                    </button>
+                    <div class="pop" id="pop" hidden>
+                        <div class="pop-header">
+                            <b>Notificaciones</b>
+                            <span onclick="alert('Notificaciones marcadas como leídas')">Marcar leídas</span>
+                        </div>
+                        <div class="pop-item">
+                            <i class="bi bi-exclamation-triangle-fill text-danger"></i>
+                            <div>
+                                <b>Stock bajo: Aceite de masaje argán</b>
+                                <small>Quedan 2 unidades en almacén</small>
+                            </div>
+                        </div>
+                        <div class="pop-item">
+                            <i class="bi bi-calendar-plus-fill text-primary"></i>
+                            <div>
+                                <b>Nueva cita online confirmada</b>
+                                <small>Valentina R. · Facial Oro hoy 16:30</small>
+                            </div>
+                        </div>
+                        <div class="pop-item">
+                            <i class="bi bi-check-circle-fill text-success"></i>
+                            <div>
+                                <b>Cabina 2 lista para higienización</b>
+                                <small>Turno finalizado a las 13:00</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- ENCABEZADO OCULTO PARA IMPRESIÓN (PDF) -->
+            <div class="print-header">
+                <h1>VIVI SPA Y ESTUDIO</h1>
+                <p>Reporte Oficial de Rendimiento Financiero y Comisiones · Emitido por Administradora</p>
+            </div>
+
+            <!-- PÁGINA / VISTAS -->
+            <main class="page">
+                <!-- CABECERA DE PÁGINA / TÍTULO Y ACCIONES -->
+                <div class="page-head">
+                    <div class="page-head-title">
+                        <h1 class="page-title">Reportes de Gestión y Rendimiento</h1>
+                        <p class="page-subtitle">Ingresos consolidados, flujo de citas atendidas y comisiones por especialista.</p>
+                    </div>
+                    <div class="page-head-actions">
+                        <!-- Botón de Exportación Real a CSV -->
+                        <button class="btn btn-outline-spa btn-sm" id="btnExportCSV" onclick="exportTableToCSV('Reporte_Especialistas_VIVI_Spa.csv')">
+                            <i class="bi bi-file-earmark-spreadsheet me-1"></i>Exportar Excel
+                        </button>
+                        <!-- Botón de Impresión / PDF Real -->
+                        <button class="btn btn-primary btn-sm" onclick="window.print()">
+                            <i class="bi bi-printer me-1"></i>Imprimir / PDF
+                        </button>
+                    </div>
+                </div>
+
+                <!-- BARRA DE FILTROS Y PERÍODOS -->
+                <div class="filter-bar">
+                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                        <span class="text-secondary small fw-semibold">Periodo:</span>
+                        <div class="sg" role="group" aria-label="Periodo de consulta">
+                            <button id="btnPeriodHoy" aria-pressed="false" onclick="changePeriod('hoy')">Hoy</button>
+                            <button id="btnPeriodSemana" aria-pressed="true" class="active" onclick="changePeriod('semana')">Semana</button>
+                            <button id="btnPeriodMes" aria-pressed="false" onclick="changePeriod('mes')">Mes</button>
+                            <button id="btnPeriodAnio" aria-pressed="false" onclick="changePeriod('anio')">Año</button>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-3 flex-wrap">
+                        <div class="header-date-badge">
+                            <i class="bi bi-calendar-range"></i>
+                            <span id="periodRangeLabel">07 Oct 2026 - 14 Oct 2026</span>
+                        </div>
+                        <select class="form-select form-select-sm" style="width: auto; min-width: 170px;" id="serviceFilter" onchange="filterService(this.value)">
+                            <option value="todos">Todos los servicios</option>
+                            <option value="facial">Facial & Skin Care</option>
+                            <option value="masajes">Masajes & Bienestar</option>
+                            <option value="laser">Láser & Aparatología</option>
+                            <option value="estudio">Manicure & Pedicure</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- TARJETAS KPI DE REPORTES -->
+                <div class="row g-3 mb-3">
+                    <!-- KPI 1: Ingresos (Dorado Elegante) -->
+                    <div class="col-12 col-md-6 col-xl-3">
+                        <div class="cd kpi gold">
+                            <span class="kpi-title">Ingresos del periodo</span>
+                            <b id="kpiIngresos">S/ 8 940</b>
+                            <div class="kpi-footer">
+                                <span class="badge-sage" id="kpiIngresosDelta"><i class="bi bi-arrow-up-short"></i> +12.4%</span>
+                            </div>
+                            <svg viewBox="0 0 84 30" aria-hidden="true">
+                                <polyline points="0,17 14,13 28,15 42,9 56,10 70,4 84,2" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- KPI 2: Citas Atendidas -->
+                    <div class="col-12 col-md-6 col-xl-3">
+                        <div class="cd kpi">
+                            <span class="kpi-title">Citas atendidas</span>
+                            <b id="kpiCitas">71</b>
+                            <div class="kpi-footer">
+                                <span class="badge-sage" id="kpiCitasDelta"><i class="bi bi-arrow-up-short"></i> +9 citas</span>
+                            </div>
+                            <svg viewBox="0 0 84 30" aria-hidden="true">
+                                <polyline points="0,17 14,13 28,14 42,7 56,6 70,2 84,2" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- KPI 3: Ticket Promedio -->
+                    <div class="col-12 col-md-6 col-xl-3">
+                        <div class="cd kpi">
+                            <span class="kpi-title">Ticket promedio</span>
+                            <b id="kpiTicket">S/ 126</b>
+                            <div class="kpi-footer">
+                                <span class="badge-sage" id="kpiTicketDelta"><i class="bi bi-arrow-up-short"></i> +3.8%</span>
+                            </div>
+                            <svg viewBox="0 0 84 30" aria-hidden="true">
+                                <polyline points="0,7 14,6 28,7 42,5 56,3 70,3 84,2" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- KPI 4: Comisiones -->
+                    <div class="col-12 col-md-6 col-xl-3">
+                        <div class="cd kpi">
+                            <span class="kpi-title">Comisiones pagadas</span>
+                            <b id="kpiComisiones">S/ 1 890</b>
+                            <div class="kpi-footer">
+                                <span class="badge-sage" id="kpiComisionesDelta"><i class="bi bi-arrow-up-short"></i> +11.2%</span>
+                            </div>
+                            <svg viewBox="0 0 84 30" aria-hidden="true">
+                                <polyline points="0,22 14,20 28,18 42,15 56,11 70,7 84,2" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GRÁFICOS DE REPORTES -->
+                <div class="row g-3 mb-3">
+                    <!-- Gráfico de Evolución de Ingresos -->
+                    <div class="col-lg-8">
+                        <div class="cd">
+                            <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+                                <h3 class="mb-0">
+                                    Evolución de Ingresos
+                                    <small class="text-muted ms-2" id="chartPeriodSubtitle">Semana actual · Cumplimiento de meta 91%</small>
+                                </h3>
+                                <div class="d-flex align-items-center gap-3 small text-muted">
+                                    <span><i class="sw" style="background:#C5A059;"></i>Ingresos reales</span>
+                                    <span><i class="sw" style="background:#6E6252; opacity:0.5;"></i>Meta diaria</span>
+                                </div>
+                            </div>
+
+                            <div class="chart-container">
+                                <svg class="chart" viewBox="0 0 600 200" role="img" aria-label="Gráfico de ingresos del periodo">
+                                    <defs>
+                                        <linearGradient id="goldGradientArea" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="0%" stop-color="#C5A059" stop-opacity="0.38" />
+                                            <stop offset="100%" stop-color="#C5A059" stop-opacity="0.02" />
+                                        </linearGradient>
+                                    </defs>
+                                    <!-- Líneas de cuadrícula sutiles -->
+                                    <line class="grid-line" x1="30" y1="40" x2="570" y2="40" />
+                                    <line class="grid-line" x1="30" y1="85" x2="570" y2="85" />
+                                    <line class="grid-line" x1="30" y1="130" x2="570" y2="130" />
+                                    <line class="grid-line" x1="30" y1="170" x2="570" y2="170" />
+
+                                    <!-- Área de Ingresos -->
+                                    <polygon id="chartArea" class="ar" points="30,105 120,85 210,115 300,68 390,42 480,56 570,122 570,170 30,170" />
+                                    <!-- Línea de Ingresos -->
+                                    <polyline id="chartLine" class="ln" points="30,105 120,85 210,115 300,68 390,42 480,56 570,122" />
+
+                                    <!-- Puntos Interactivos -->
+                                    <circle cx="30" cy="105" r="4.5"><title>Lunes: S/ 1 120 (9 citas)</title></circle>
+                                    <text x="30" y="190" text-anchor="middle">Lun</text>
+
+                                    <circle cx="120" cy="85" r="4.5"><title>Martes: S/ 1 280 (11 citas)</title></circle>
+                                    <text x="120" y="190" text-anchor="middle">Mar</text>
+
+                                    <circle cx="210" cy="115" r="4.5"><title>Miércoles: S/ 980 (8 citas)</title></circle>
+                                    <text x="210" y="190" text-anchor="middle">Mié</text>
+
+                                    <circle cx="300" cy="68" r="4.5"><title>Jueves: S/ 1 450 (12 citas)</title></circle>
+                                    <text x="300" y="190" text-anchor="middle">Jue</text>
+
+                                    <circle cx="390" cy="42" r="4.5"><title>Viernes: S/ 1 690 (14 citas - Pico)</title></circle>
+                                    <text x="390" y="190" text-anchor="middle">Vie</text>
+
+                                    <circle cx="480" cy="56" r="4.5"><title>Sábado: S/ 1 540 (13 citas)</title></circle>
+                                    <text x="480" y="190" text-anchor="middle">Sáb</text>
+
+                                    <circle cx="570" cy="122" r="4.5"><title>Domingo: S/ 880 (4 citas)</title></circle>
+                                    <text x="570" y="190" text-anchor="middle">Dom</text>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gráfico Circular de Servicios -->
+                    <div class="col-lg-4">
+                        <div class="cd">
+                            <h3>
+                                Servicios Más Solicitados
+                                <small class="text-muted">Por volumen</small>
+                            </h3>
+                            <div class="donut" role="img" aria-label="Distribución de servicios más pedidos del spa: 288 citas acumuladas"></div>
+                            
+                            <div class="mt-3">
+                                <div class="service-legend-item">
+                                    <span><i class="sw" style="background:#C5A059"></i>Facial & Skin Care</span>
+                                    <b>38% <small class="text-muted fw-normal">(110 citas)</small></b>
+                                </div>
+                                <div class="service-legend-item">
+                                    <span><i class="sw" style="background:#18120F"></i>Masajes & Bienestar</span>
+                                    <b>31% <small class="text-muted fw-normal">(89 citas)</small></b>
+                                </div>
+                                <div class="service-legend-item">
+                                    <span><i class="sw" style="background:#DFCBA5"></i>Manicure & Pedicure</span>
+                                    <b>24% <small class="text-muted fw-normal">(69 citas)</small></b>
+                                </div>
+                                <div class="service-legend-item">
+                                    <span><i class="sw" style="background:#6E6252"></i>Láser & Aparatología</span>
+                                    <b>7% <small class="text-muted fw-normal">(20 citas)</small></b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TABLA DE DESEMPEÑO Y COMISIONES -->
+                <div class="cd">
+                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3">
+                        <div>
+                            <h3 class="mb-0">
+                                Desempeño y Comisiones por Especialista
+                                <small class="text-muted ms-2">Liquidación del período seleccionado</small>
+                            </h3>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="badge-sage">4 especialistas activas</span>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="tb" id="specialistsTable">
+                            <thead>
+                                <tr>
+                                    <th>Especialista</th>
+                                    <th>Servicios</th>
+                                    <th>Ingreso Bruto</th>
+                                    <th>% Comisión</th>
+                                    <th>Comisión a Pagar</th>
+                                    <th>Rendimiento</th>
+                                    <th>Satisfacción</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody">
+                                <tr>
+                                    <td>
+                                        <div class="specialist-cell">
+                                            <div class="sp-av">CR</div>
+                                            <div>
+                                                <b>Camila Ríos</b>
+                                                <small>Facial & Skin Care</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><b>42</b> <small class="text-muted">citas</small></td>
+                                    <td><b>S/ 4 480</b></td>
+                                    <td>25%</td>
+                                    <td class="text-dark fw-bold">S/ 1 120</td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div class="mt flex-grow-1"><i style="width: 92%;"></i></div>
+                                            <span class="small fw-semibold">92%</span>
+                                        </div>
+                                    </td>
+                                    <td><span class="text-warning">★</span> 4.9</td>
+                                    <td><span class="pl ok">Activa</span></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="specialist-cell">
+                                            <div class="sp-av">DS</div>
+                                            <div>
+                                                <b>Daniela Soto</b>
+                                                <small>Masajes & Bienestar</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><b>37</b> <small class="text-muted">citas</small></td>
+                                    <td><b>S/ 3 840</b></td>
+                                    <td>25%</td>
+                                    <td class="text-dark fw-bold">S/ 960</td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div class="mt flex-grow-1"><i style="width: 82%;"></i></div>
+                                            <span class="small fw-semibold">82%</span>
+                                        </div>
+                                    </td>
+                                    <td><span class="text-warning">★</span> 4.8</td>
+                                    <td><span class="pl ok">Activa</span></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="specialist-cell">
+                                            <div class="sp-av">VN</div>
+                                            <div>
+                                                <b>Valeria Núñez</b>
+                                                <small>Láser & Aparatología</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><b>29</b> <small class="text-muted">citas</small></td>
+                                    <td><b>S/ 3 240</b></td>
+                                    <td>25%</td>
+                                    <td class="text-dark fw-bold">S/ 810</td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div class="mt flex-grow-1"><i style="width: 68%;"></i></div>
+                                            <span class="small fw-semibold">68%</span>
+                                        </div>
+                                    </td>
+                                    <td><span class="text-warning">★</span> 4.9</td>
+                                    <td><span class="pl ok">Activa</span></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="specialist-cell">
+                                            <div class="sp-av">PV</div>
+                                            <div>
+                                                <b>Paola Vega</b>
+                                                <small>Nail Studio & Manicure</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><b>18</b> <small class="text-muted">citas</small></td>
+                                    <td><b>S/ 1 860</b></td>
+                                    <td>30%</td>
+                                    <td class="text-dark fw-bold">S/ 558</td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div class="mt flex-grow-1"><i style="width: 48%;"></i></div>
+                                            <span class="small fw-semibold">48%</span>
+                                        </div>
+                                    </td>
+                                    <td><span class="text-warning">★</span> 4.7</td>
+                                    <td><span class="pl ok">Activa</span></td>
+                                </tr>
+                            </tbody>
+                            <tfoot style="border-top: 2px solid #E8DFC9; font-weight: 700; background: #FAF7F2;">
+                                <tr>
+                                    <td class="text-uppercase" style="letter-spacing:0.08em; font-size:11px;">Totales del Periodo</td>
+                                    <td id="totalServicios">126 citas</td>
+                                    <td id="totalIngresos">S/ 13 420</td>
+                                    <td>-</td>
+                                    <td id="totalComisiones" class="text-dark">S/ 3 448</td>
+                                    <td>Promedio 72%</td>
+                                    <td><span class="text-warning">★</span> 4.83</td>
+                                    <td>-</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- SCRIPT DE INTERACTIVIDAD Y EXPORTACIÓN -->
+    <script>
+        var b = document.body;
+        var $ = function (id) { return document.getElementById(id); };
+
+        // Formateo de fecha dinámica en español
+        (function initDate() {
+            var now = new Date();
+            var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            var dateStr = now.toLocaleDateString('es-ES', options);
+            dateStr = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
+            var dateBadge = $('currentDateBadge');
+            if (dateBadge) dateBadge.textContent = dateStr;
+        })();
+
+        // Control de Menú Lateral en Escritorio y Móvil
+        var burger = $('burger');
+        var sidebar = $('sidebar');
+        var backdrop = $('sideBackdrop');
+        var sideClose = $('sideClose');
+
+        function toggleMenu(e) {
+            if (e) e.stopPropagation();
+            if (window.innerWidth < 992) {
+                b.toggleAttribute('data-sidebar-open');
+            } else {
+                b.toggleAttribute('data-collapsed');
+            }
+        }
+
+        if (burger) burger.onclick = toggleMenu;
+        if (backdrop) backdrop.onclick = function() { b.removeAttribute('data-sidebar-open'); };
+        if (sideClose) sideClose.onclick = function(e) {
+            e.stopPropagation();
+            b.removeAttribute('data-sidebar-open');
+        };
+
+        // Popovers de Notificaciones y Perfil
+        function closeAll() {
+            [['ub', 'pm'], ['bell', 'pop']].forEach(function (pair) {
+                var btn = $(pair[0]);
+                var pop = $(pair[1]);
+                if (pop) pop.hidden = true;
+                if (btn) btn.setAttribute('aria-expanded', 'false');
+            });
+        }
+
+        function setupToggle(btnId, popId) {
+            var btn = $(btnId);
+            var pop = $(popId);
+            if (!btn || !pop) return;
+            btn.onclick = function (e) {
+                e.stopPropagation();
+                var isHidden = pop.hidden;
+                closeAll();
+                pop.hidden = !isHidden;
+                btn.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+            };
+        }
+
+        setupToggle('ub', 'pm');
+        setupToggle('bell', 'pop');
+
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('#sidebar') && window.innerWidth < 992 && b.hasAttribute('data-sidebar-open')) {
+                b.removeAttribute('data-sidebar-open');
+            }
+            closeAll();
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                closeAll();
+                b.removeAttribute('data-sidebar-open');
+            }
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+                e.preventDefault();
+                var search = $('reportSearch');
+                if (search) search.focus();
+            }
+        });
+
+        // Búsqueda en vivo dentro de la tabla
+        var reportSearch = $('reportSearch');
+        if (reportSearch) {
+            reportSearch.addEventListener('input', function(e) {
+                var term = e.target.value.toLowerCase();
+                var rows = document.querySelectorAll('#tableBody tr');
+                rows.forEach(function(row) {
+                    var text = row.textContent.toLowerCase();
+                    row.style.display = text.indexOf(term) > -1 ? '' : 'none';
+                });
+            });
+        }
+
+        // Datos Dinámicos por Período
+        var periodData = {
+            hoy: {
+                label: 'Hoy · 14 de Octubre de 2026',
+                ingresos: 'S/ 1 480',
+                ingresosDelta: '+8.4% vs. ayer',
+                citas: '12',
+                citasDelta: '+2 vs. ayer',
+                ticket: 'S/ 123.30',
+                ticketDelta: '+2.1%',
+                comisiones: 'S/ 370',
+                comisionesDelta: '+8.4%',
+                subtitle: 'Flujo del día de hoy · Cumplimiento de meta 82%',
+                chartLine: '30,140 120,110 210,135 300,75 390,50 480,65 570,95',
+                chartArea: '30,140 120,110 210,135 300,75 390,50 480,65 570,95 570,170 30,170'
+            },
+            semana: {
+                label: '07 Oct 2026 - 14 Oct 2026',
+                ingresos: 'S/ 8 940',
+                ingresosDelta: '+12.4% vs. ant.',
+                citas: '71',
+                citasDelta: '+9 citas',
+                ticket: 'S/ 125.90',
+                ticketDelta: '+3.8%',
+                comisiones: 'S/ 1 890',
+                comisionesDelta: '+11.2%',
+                subtitle: 'Semana actual · Cumplimiento de meta 91%',
+                chartLine: '30,105 120,85 210,115 300,68 390,42 480,56 570,122',
+                chartArea: '30,105 120,85 210,115 300,68 390,42 480,56 570,122 570,170 30,170'
+            },
+            mes: {
+                label: '01 Oct 2026 - 31 Oct 2026',
+                ingresos: 'S/ 36 450',
+                ingresosDelta: '+16.5% vs. ant.',
+                citas: '288',
+                citasDelta: '+34 citas',
+                ticket: 'S/ 126.50',
+                ticketDelta: '+5.2%',
+                comisiones: 'S/ 7 650',
+                comisionesDelta: '+14.1%',
+                subtitle: 'Mes de Octubre 2026 · Cumplimiento de meta 96%',
+                chartLine: '30,90 120,65 210,80 300,45 390,35 480,48 570,70',
+                chartArea: '30,90 120,65 210,80 300,45 390,35 480,48 570,70 570,170 30,170'
+            },
+            anio: {
+                label: 'Año 2026 (Acumulado Anual)',
+                ingresos: 'S/ 418 200',
+                ingresosDelta: '+21.8% vs. 2025',
+                citas: '3 240',
+                citasDelta: '+310 citas',
+                ticket: 'S/ 129.00',
+                ticketDelta: '+6.5%',
+                comisiones: 'S/ 86 500',
+                comisionesDelta: '+19.4%',
+                subtitle: 'Acumulado 2026 · Desempeño excepcional',
+                chartLine: '30,80 120,55 210,70 300,38 390,30 480,42 570,60',
+                chartArea: '30,80 120,55 210,70 300,38 390,30 480,42 570,60 570,170 30,170'
+            }
+        };
+
+        function changePeriod(key) {
+            var data = periodData[key];
+            if (!data) return;
+
+            // Actualizar botones de periodo
+            var btns = document.querySelectorAll('.sg button');
+            btns.forEach(function(btn) {
+                btn.setAttribute('aria-pressed', 'false');
+                btn.classList.remove('active');
+            });
+
+            var activeBtn = $('btnPeriod' + key.charAt(0).toUpperCase() + key.slice(1));
+            if (activeBtn) {
+                activeBtn.setAttribute('aria-pressed', 'true');
+                activeBtn.classList.add('active');
+            }
+
+            // Actualizar etiqueta de rango
+            $('periodRangeLabel').textContent = data.label;
+            $('kpiIngresos').textContent = data.ingresos;
+            $('kpiIngresosDelta').innerHTML = '<i class="bi bi-arrow-up-short"></i> ' + data.ingresosDelta;
+            $('kpiCitas').textContent = data.citas;
+            $('kpiCitasDelta').innerHTML = '<i class="bi bi-arrow-up-short"></i> ' + data.citasDelta;
+            $('kpiTicket').textContent = data.ticket;
+            $('kpiTicketDelta').innerHTML = '<i class="bi bi-arrow-up-short"></i> ' + data.ticketDelta;
+            $('kpiComisiones').textContent = data.comisiones;
+            $('kpiComisionesDelta').innerHTML = '<i class="bi bi-arrow-up-short"></i> ' + data.comisionesDelta;
+            $('chartPeriodSubtitle').textContent = data.subtitle;
+
+            // Transición suave en el gráfico SVG
+            $('chartLine').setAttribute('points', data.chartLine);
+            $('chartArea').setAttribute('points', data.chartArea);
+        }
+
+        // Filtro por Categoría de Servicio
+        function filterService(category) {
+            var rows = document.querySelectorAll('#tableBody tr');
+            rows.forEach(function(row) {
+                if (category === 'todos') {
+                    row.style.display = '';
+                } else if (category === 'facial' && row.textContent.indexOf('Facial') > -1) {
+                    row.style.display = '';
+                } else if (category === 'masajes' && row.textContent.indexOf('Masajes') > -1) {
+                    row.style.display = '';
+                } else if (category === 'laser' && row.textContent.indexOf('Láser') > -1) {
+                    row.style.display = '';
+                } else if (category === 'estudio' && row.textContent.indexOf('Nail') > -1) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        // EXPORTACIÓN REAL A CSV (EXCEL COMPATIBLE UTF-8 CON BOM)
+        function exportTableToCSV(filename) {
+            var table = $('specialistsTable');
+            var csv = [];
+            
+            // Encabezados
+            var headers = [];
+            var ths = table.querySelectorAll('thead th');
+            ths.forEach(function(th) {
+                headers.push('"' + th.innerText.trim().replace(/"/g, '""') + '"');
+            });
+            csv.push(headers.join(';'));
+
+            // Filas
+            var trs = table.querySelectorAll('tbody tr');
+            trs.forEach(function(tr) {
+                if (tr.style.display === 'none') return;
+                var row = [];
+                var tds = tr.querySelectorAll('td');
+                tds.forEach(function(td) {
+                    var text = td.innerText.replace(/\n/g, ' - ').trim();
+                    row.push('"' + text.replace(/"/g, '""') + '"');
+                });
+                csv.push(row.join(';'));
+            });
+
+            // Fila de totales
+            var tfootTds = table.querySelectorAll('tfoot td');
+            if (tfootTds.length > 0) {
+                var footRow = [];
+                tfootTds.forEach(function(td) {
+                    var text = td.innerText.replace(/\n/g, ' ').trim();
+                    footRow.push('"' + text.replace(/"/g, '""') + '"');
+                });
+                csv.push(footRow.join(';'));
+            }
+
+            var csvContent = '\uFEFF' + csv.join('\r\n');
+            var blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            
+            var link = document.createElement('a');
+            var url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', filename);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+
+</html>

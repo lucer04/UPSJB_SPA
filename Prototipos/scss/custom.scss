@@ -1,0 +1,1578 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+// =====================================================
+// VIVI SPA & ESTUDIO - IDENTIDAD VISUAL BOUTIQUE DE LUJO
+// =====================================================
+
+// Paleta de Colores Exclusiva
+$primary: #C5A059;       // Dorado elegante principal
+$primary-dark: #9E7D36;  // Dorado profundo
+$gold-light: #DFCBA5;    // Dorado suave champagne
+$gold-soft: #F7EFE1;     // Fondo dorado sutil
+
+$secondary: #6E6252;     // Taupe cálido y elegante
+$dark: #18120F;          // Espresso oscuro profundo (Sidebar)
+$dark-soft: #241B16;     // Espresso suave
+$light: #FCFAF6;         // Crema luminoso
+
+$body-bg: #FAF7F2;       // Fondo marfil y crema suave
+$body-color: #2D241C;    // Texto principal refinado
+$line: #E8DFC9;          // Línea divisoria crema/dorada suave
+$card-bg: #FFFFFF;       // Fondo blanco puro para tarjetas
+
+// Estados
+$success: #527860;       // Verde salvia para estados positivos
+$sage-bg: #EDF4EF;       // Fondo verde salvia suave
+$sage-text: #2A4833;     // Texto verde salvia
+
+$warning: #C08320;       // Ámbar suave para pendientes
+$warning-bg: #FDF4E5;    // Fondo ámbar suave
+$warning-text: #7D510C;
+
+$danger: #BA3D3D;        // Rojo terracota para alertas críticas
+$danger-bg: #FCEBEB;
+$danger-text: #832222;
+
+$ink: #8A6726;           // Dorado oscuro para acentos de texto
+
+// Tipografía
+$font-family-sans-serif: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+$serif: "Cormorant Garamond", Garamond, Georgia, serif;
+
+// Radios de Borde
+$border-radius: 12px;
+$border-radius-lg: 16px;
+$border-radius-sm: 8px;
+$border-radius-pill: 99px;
+
+// Sombras
+$box-shadow-subtle: 0 3px 14px -2px rgba(35, 23, 15, 0.04), 0 1px 4px -1px rgba(35, 23, 15, 0.02);
+$box-shadow-hover: 0 8px 22px -3px rgba(35, 23, 15, 0.07), 0 3px 8px -2px rgba(35, 23, 15, 0.03);
+$box-shadow-popover: 0 14px 34px -6px rgba(24, 18, 15, 0.16), 0 4px 10px rgba(24, 18, 15, 0.06);
+
+// =====================================================
+// IMPORTACIÓN DE BOOTSTRAP 5
+// =====================================================
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+// =====================================================
+// ESTILOS GENERALES Y RESET REFINADO
+// =====================================================
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: $body-bg;
+  color: $body-color;
+  font-family: $font-family-sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6, .font-serif {
+  font-family: $serif;
+  color: $dark;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+a {
+  color: $primary-dark;
+  text-decoration: none;
+  transition: color 0.18s ease;
+
+  &:hover {
+    color: $primary;
+  }
+}
+
+button {
+  font-family: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid $primary;
+  outline-offset: 3px;
+}
+
+// =====================================================
+// ESTRUCTURA PRINCIPAL (SHELL) - DISTRIBUCIÓN COMPACTA Y SIN ESPACIOS MUERTOS
+// =====================================================
+.shell {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  min-height: 100vh;
+  position: relative;
+}
+
+.main {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.page {
+  flex: 1;
+  padding: 12px 24px 28px;
+}
+
+// Backdrop oscuro para navegación móvil
+.side-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 13, 10, 0.55);
+  backdrop-filter: blur(3px);
+  z-index: 45;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+body[data-sidebar-open] .side-backdrop {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+// =====================================================
+// SIDEBAR (BARRA LATERAL ESPRESSO OSCURO)
+// =====================================================
+.side {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 14px 14px;
+  overflow: hidden;
+  color: #E8DEC9;
+  background:
+    radial-gradient(120% 60% at 0% 0%, rgba($primary, 0.18), transparent 65%),
+    linear-gradient(180deg, #1C1511 0%, #120D0A 100%);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  z-index: 50;
+}
+
+// Marca y Logotipo
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 2px 4px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  margin-bottom: 4px;
+  position: relative;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: linear-gradient(140deg, #F0E1C0 0%, $primary 65%, $primary-dark 100%);
+  color: #1A130E;
+  font-family: $serif;
+  font-weight: 700;
+  font-size: 24px;
+  box-shadow: 0 4px 12px rgba($primary, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.brand-text {
+  b {
+    display: block;
+    color: #F8F3E6;
+    font-family: $serif;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.16em;
+  }
+  small {
+    display: block;
+    margin-top: 3px;
+    color: #B8A68B;
+    font-size: 8.5px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+}
+
+// Botón visible para cerrar menú en móviles y tablets
+.side-close-btn {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #E8DEC9;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.14);
+    color: #FFFFFF;
+  }
+}
+
+// Navegación
+.side nav {
+  flex: 1;
+  overflow-y: auto;
+  padding-top: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba($primary, 0.25) transparent;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba($primary, 0.25);
+    border-radius: 4px;
+  }
+}
+
+.grp {
+  margin: 12px 6px 4px;
+  color: #9E8C76;
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.nv {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 2px 0;
+  padding: 8px 10px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  color: #E2D7C3;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.18s ease;
+
+  i {
+    width: 18px;
+    font-size: 15px;
+    text-align: center;
+    color: #BBA992;
+    transition: color 0.18s ease;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: #FFFFFF;
+
+    i {
+      color: $gold-light;
+    }
+  }
+
+  &.on,
+  &.active,
+  &[aria-current="page"] {
+    background: linear-gradient(135deg, #E6D2AB 0%, $primary 100%);
+    color: #16100D;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba($primary, 0.2);
+    border-color: rgba(255, 255, 255, 0.15);
+
+    i {
+      color: #16100D;
+    }
+  }
+}
+
+// Menú y Perfil de Usuario en Sidebar
+.usr {
+  position: relative;
+  margin-top: 6px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ub {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 7px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.18s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.14);
+  }
+
+  b {
+    display: block;
+    font-size: 11px;
+    color: #FAF4E6;
+  }
+  small {
+    display: block;
+    margin-top: 1px;
+    color: #AFA08A;
+    font-size: 9.5px;
+  }
+
+  .bi-chevron-up {
+    margin-left: auto;
+    font-size: 11px;
+    color: #AFA08A;
+    transition: transform 0.2s ease;
+  }
+
+  &[aria-expanded="true"] .bi-chevron-up {
+    transform: rotate(180deg);
+  }
+}
+
+.av {
+  width: 30px;
+  height: 30px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, $gold-light, $primary);
+  color: #1A130E;
+  font-size: 10.5px;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.pm {
+  position: absolute;
+  z-index: 50;
+  right: 0;
+  bottom: calc(100% + 8px);
+  left: 0;
+  padding: 6px;
+  border: 1px solid $line;
+  border-radius: $border-radius;
+  background: #FFFFFF;
+  color: $body-color;
+  box-shadow: $box-shadow-popover;
+  animation: slideUpFade 0.2s ease;
+
+  &[hidden] {
+    display: none !important;
+  }
+}
+
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mh {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px 8px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid $line;
+
+  b {
+    display: block;
+    font-size: 11.5px;
+    color: $dark;
+  }
+  small {
+    display: block;
+    color: $secondary;
+    font-size: 10px;
+  }
+}
+
+.tg {
+  display: inline-block;
+  margin-top: 3px;
+  padding: 2px 6px;
+  border-radius: 99px;
+  background: rgba($primary, 0.15);
+  color: $primary-dark;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.mi {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 6px 8px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: $body-color;
+  font-size: 11.5px;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  i {
+    font-size: 13px;
+    color: $secondary;
+  }
+
+  &:hover {
+    background: $gold-soft;
+    color: $dark;
+
+    i {
+      color: $primary-dark;
+    }
+  }
+
+  &.out {
+    margin-top: 3px;
+    border-top: 1px solid $line;
+    border-radius: 0 0 6px 6px;
+    color: $danger;
+
+    i {
+      color: $danger;
+    }
+
+    &:hover {
+      background: $danger-bg;
+    }
+  }
+}
+
+// =====================================================
+// BARRA SUPERIOR (HEADER) - ULTRA ESBELTA (48px)
+// =====================================================
+.top {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  height: 48px;
+  padding: 0 24px;
+  border-bottom: 1px solid $line;
+  background: rgba(#FAF7F2, 0.95);
+  backdrop-filter: blur(14px);
+}
+
+.top-title {
+  font-family: $font-family-sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: $secondary;
+  white-space: nowrap;
+}
+
+// Barra de Búsqueda Spa
+.search-wrapper {
+  flex: 1;
+  max-width: 360px;
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  i {
+    position: absolute;
+    left: 12px;
+    color: #9E9180;
+    font-size: 13px;
+    pointer-events: none;
+  }
+
+  .search-input {
+    width: 100%;
+    height: 32px;
+    padding: 3px 56px 3px 32px;
+    border: 1px solid $line;
+    border-radius: $border-radius-pill;
+    background: #FFFFFF;
+    color: $body-color;
+    font-size: 11px;
+    transition: all 0.2s ease;
+
+    &::placeholder {
+      color: #A89B89;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $primary;
+      box-shadow: 0 0 0 3px rgba($primary, 0.15);
+      background: #FFFFFF;
+    }
+  }
+
+  .search-badge {
+    position: absolute;
+    right: 9px;
+    padding: 1px 5px;
+    border: 1px solid #E2D9C8;
+    border-radius: 4px;
+    background: #FAF6EF;
+    color: #8C7D6B;
+    font-size: 8.5px;
+    font-weight: 600;
+    pointer-events: none;
+  }
+}
+
+// Botones de Icono
+.ib {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: $dark;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+
+  &:hover {
+    background: rgba($primary, 0.12);
+    border-color: rgba($primary, 0.2);
+    color: $dark;
+  }
+}
+
+.bdg {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  display: grid;
+  place-items: center;
+  min-width: 15px;
+  height: 15px;
+  padding: 0 3px;
+  border-radius: 99px;
+  background: $danger;
+  color: #FFFFFF;
+  font-size: 8.5px;
+  font-weight: 700;
+  box-shadow: 0 1px 3px rgba($danger, 0.35);
+}
+
+.nb {
+  position: relative;
+}
+
+// Popover Notificaciones
+.pop {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 50;
+  width: 300px;
+  max-width: 88vw;
+  padding: 6px;
+  border: 1px solid $line;
+  border-radius: $border-radius;
+  background: #FFFFFF;
+  box-shadow: $box-shadow-popover;
+  animation: slideUpFade 0.2s ease;
+
+  &[hidden] {
+    display: none !important;
+  }
+
+  .pop-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 8px 8px;
+    border-bottom: 1px solid $line;
+
+    b {
+      font-size: 11px;
+      color: $dark;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    span {
+      font-size: 9px;
+      color: $primary-dark;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  }
+
+  .pop-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 6px;
+    transition: background 0.15s ease;
+    text-decoration: none;
+    color: $body-color;
+
+    &:hover {
+      background: $gold-soft;
+    }
+
+    i {
+      font-size: 13px;
+      margin-top: 1px;
+      flex: none;
+    }
+
+    b {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      color: $dark;
+    }
+    small {
+      display: block;
+      margin-top: 1px;
+      color: $secondary;
+      font-size: 9.5px;
+    }
+  }
+}
+
+// Chip de fecha en Header
+.header-date-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border: 1px solid $line;
+  border-radius: $border-radius-pill;
+  background: #FFFFFF;
+  color: $secondary;
+  font-size: 10.5px;
+  font-weight: 500;
+
+  i {
+    color: $primary;
+    font-size: 11px;
+  }
+}
+
+// =====================================================
+// CABECERA DE PÁGINA UNIFICADA (.page-head)
+// Elimina la redundancia entre .top y .hero
+// =====================================================
+.page-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.page-head-main {
+  flex: 1;
+  min-width: 240px;
+}
+
+.page-title {
+  margin: 0;
+  font-family: $serif;
+  font-size: clamp(20px, 2.2vw, 25px);
+  font-weight: 700;
+  line-height: 1.15;
+  color: $dark;
+}
+
+.page-subtitle {
+  margin: 2px 0 0;
+  color: $secondary;
+  font-size: 11.5px;
+  line-height: 1.4;
+}
+
+.page-head-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+// =====================================================
+// TARJETAS PREMIUM (.cd)
+// =====================================================
+.cd {
+  height: 100%;
+  padding: 16px 18px;
+  border: 1px solid $line;
+  border-radius: $border-radius-lg;
+  background: $card-bg;
+  box-shadow: $box-shadow-subtle;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+
+  &:hover {
+    box-shadow: $box-shadow-hover;
+  }
+}
+
+.cd h3 {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0 0 10px;
+  font-family: $serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: $dark;
+
+  small {
+    color: $secondary;
+    font-family: $font-family-sans-serif;
+    font-size: 10.5px;
+    font-weight: 500;
+  }
+}
+
+// =====================================================
+// TARJETAS KPI
+// =====================================================
+.kpi {
+  position: relative;
+  min-height: 98px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 14px 16px;
+
+  .kpi-title {
+    color: $secondary;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  b {
+    display: block;
+    margin: 2px 0 4px;
+    font-family: $serif;
+    font-size: 29px;
+    font-weight: 700;
+    line-height: 1;
+    color: $dark;
+    font-variant-numeric: lining-nums tabular-nums;
+    letter-spacing: -0.02em;
+  }
+
+  .kpi-footer {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    position: relative;
+    z-index: 2;
+    max-width: calc(100% - 64px);
+  }
+
+  // Chip de Variación Verde Salvia
+  .badge-sage {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 2px 7px;
+    border-radius: 99px;
+    background: $sage-bg;
+    color: $sage-text;
+    font-size: 10px;
+    font-weight: 700;
+    border: 1px solid rgba($success, 0.25);
+    white-space: nowrap;
+  }
+
+  // Sparkline SVG con posición en esquina sin tapar texto
+  svg {
+    position: absolute;
+    right: 10px;
+    bottom: 8px;
+    width: 60px;
+    height: 24px;
+    fill: none;
+    stroke: $primary;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
+  // Variante Dorada Exclusiva
+  &.gold {
+    background: linear-gradient(140deg, #F0E2C3 0%, #D8BA7B 50%, #C5A059 100%);
+    border-color: rgba($primary-dark, 0.3);
+    color: $dark;
+
+    .kpi-title {
+      color: rgba($dark, 0.75);
+    }
+
+    b {
+      color: $dark;
+    }
+
+    .badge-sage {
+      background: rgba(255, 255, 255, 0.55);
+      color: #1A3822;
+      border-color: rgba(255, 255, 255, 0.6);
+    }
+
+    svg {
+      stroke: #2A1D13;
+    }
+  }
+}
+
+// =====================================================
+// AGENDA DE CITAS (CRONOGRAMA DE CABINAS)
+// =====================================================
+.agenda-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba($primary, 0.35) transparent;
+
+  &::-webkit-scrollbar {
+    height: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba($primary, 0.35);
+    border-radius: 4px;
+  }
+}
+
+.ag {
+  min-width: 720px;
+  font-size: 11px;
+}
+
+.ag-r {
+  display: grid;
+  grid-template-columns: 105px repeat(10, minmax(52px, 1fr));
+  align-items: stretch;
+  gap: 5px;
+  padding: 6px 0;
+  border-top: 1px solid $line;
+
+  &.hd {
+    padding-top: 0;
+    border-top: 0;
+    color: $secondary;
+    font-size: 9.5px;
+    font-weight: 700;
+    text-align: center;
+  }
+}
+
+.ag .rl {
+  align-self: center;
+  font-weight: 700;
+  color: $dark;
+  font-size: 11px;
+
+  small {
+    display: block;
+    margin-top: 1px;
+    color: $secondary;
+    font-weight: 400;
+    font-size: 9px;
+  }
+}
+
+.blk {
+  min-height: 46px;
+  overflow: hidden;
+  padding: 5px 7px;
+  border-left: 3px solid $primary;
+  border-radius: 7px;
+  background: rgba($primary, 0.12);
+  line-height: 1.25;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  b {
+    display: block;
+    font-size: 10.5px;
+    font-weight: 600;
+    color: $dark;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  small {
+    display: block;
+    margin-top: 1px;
+    color: $secondary;
+    font-size: 9px;
+  }
+
+  // Estado En Curso
+  &.now {
+    border-left-color: #E2C78E;
+    background: #18120F;
+    color: #F8F2E4;
+    box-shadow: 0 4px 12px rgba(24, 18, 15, 0.18);
+
+    b {
+      color: #FDF9F0;
+    }
+    small {
+      color: #D3C5AB;
+    }
+
+    .pulse-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #E2C78E;
+      margin-right: 4px;
+      box-shadow: 0 0 6px #E2C78E;
+      animation: pulse 1.8s infinite;
+    }
+  }
+
+  // Estado Confirmada (Verde Salvia)
+  &.ok {
+    border-left-color: $success;
+    background: $sage-bg;
+
+    b {
+      color: $sage-text;
+    }
+    small {
+      color: #4A6E55;
+    }
+  }
+
+  // Estado Pendiente (Ámbar)
+  &.pending {
+    border-left-color: $warning;
+    background: $warning-bg;
+
+    b {
+      color: $warning-text;
+    }
+    small {
+      color: #946922;
+    }
+  }
+}
+
+@keyframes pulse {
+  0% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+// =====================================================
+// LISTAS, ALERTAS Y TURNOS
+// =====================================================
+.rw {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-top: 1px solid $line;
+
+  &:first-of-type {
+    border-top: 0;
+  }
+
+  .rw-icon {
+    width: 30px;
+    height: 30px;
+    flex: none;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    background: $gold-soft;
+    color: $primary-dark;
+    font-size: 13px;
+
+    &.rd {
+      background: $danger-bg;
+      color: $danger;
+    }
+    &.wn {
+      background: $warning-bg;
+      color: $warning;
+    }
+    &.ok {
+      background: $sage-bg;
+      color: $success;
+    }
+  }
+
+  b {
+    display: block;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: $dark;
+  }
+
+  small {
+    display: block;
+    margin-top: 1px;
+    color: $secondary;
+    font-size: 10px;
+  }
+}
+
+// Pastillas de Estado (.pl)
+.pl {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-left: auto;
+  padding: 2px 7px;
+  border-radius: 99px;
+  background: rgba($primary, 0.15);
+  color: $primary-dark;
+  font-size: 9.5px;
+  font-weight: 700;
+  white-space: nowrap;
+
+  &.rd {
+    background: $danger-bg;
+    color: $danger-text;
+    border: 1px solid rgba($danger, 0.2);
+  }
+
+  &.wn {
+    background: $warning-bg;
+    color: $warning-text;
+    border: 1px solid rgba($warning, 0.25);
+  }
+
+  &.ok {
+    background: $sage-bg;
+    color: $sage-text;
+    border: 1px solid rgba($success, 0.25);
+  }
+}
+
+// =====================================================
+// FILTROS Y CONTROLES DE REPORTES
+// =====================================================
+.filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding: 6px 12px;
+  border: 1px solid $line;
+  border-radius: $border-radius;
+  background: #FFFFFF;
+  box-shadow: $box-shadow-subtle;
+}
+
+.sg {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  border: 1px solid $line;
+  border-radius: 99px;
+  background: #FAF7F2;
+
+  button {
+    padding: 4px 12px;
+    border: 0;
+    border-radius: 99px;
+    background: transparent;
+    color: $secondary;
+    font-family: $font-family-sans-serif;
+    font-size: 10.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s ease;
+
+    &:hover {
+      color: $dark;
+      background: rgba($primary, 0.12);
+    }
+
+    &[aria-pressed="true"],
+    &.active {
+      background: $dark;
+      color: #F8F3E6;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.18);
+    }
+  }
+}
+
+// =====================================================
+// GRÁFICOS (CHARTS)
+// =====================================================
+.chart-container {
+  position: relative;
+  width: 100%;
+}
+
+.chart {
+  display: block;
+  width: 100%;
+  height: auto;
+
+  .grid-line {
+    stroke: rgba($line, 0.7);
+    stroke-dasharray: 4, 4;
+    stroke-width: 1;
+  }
+
+  .ar {
+    fill: url(#goldGradientArea);
+  }
+
+  .ln {
+    fill: none;
+    stroke: $primary-dark;
+    stroke-width: 2.5;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+
+  text {
+    fill: $secondary;
+    font-family: $font-family-sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+  }
+
+  circle {
+    fill: $dark;
+    stroke: #FFFFFF;
+    stroke-width: 2;
+    transition: r 0.15s ease;
+    cursor: pointer;
+
+    &:hover {
+      r: 5.5;
+      fill: $primary;
+    }
+  }
+}
+
+// Donut Chart
+.donut {
+  display: grid;
+  place-items: center;
+  width: 126px;
+  height: 126px;
+  margin: 4px auto 10px;
+  border-radius: 50%;
+  background: conic-gradient(
+    $primary 0% 38%,
+    $dark 38% 69%,
+    $gold-light 69% 93%,
+    $secondary 93% 100%
+  );
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+
+  &::after {
+    display: grid;
+    place-items: center;
+    width: 82px;
+    height: 82px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    content: "288";
+    font-family: $serif;
+    font-weight: 700;
+    font-size: 24px;
+    color: $dark;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+}
+
+.sw {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 5px;
+  border-radius: 2px;
+  vertical-align: middle;
+}
+
+.service-legend-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 0;
+  font-size: 11px;
+  border-bottom: 1px dashed rgba($line, 0.7);
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  span {
+    color: $body-color;
+  }
+
+  b {
+    font-weight: 600;
+    color: $dark;
+  }
+}
+
+// =====================================================
+// TABLAS DE INFORMACIÓN (.tb)
+// =====================================================
+.table-responsive {
+  -webkit-overflow-scrolling: touch;
+}
+
+.tb {
+  width: 100%;
+  font-size: 11.5px;
+  border-collapse: collapse;
+
+  th {
+    padding: 8px 10px;
+    border-bottom: 1px solid $line;
+    color: $secondary;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    text-align: left;
+    background: #FAF7F2;
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 9px 10px;
+    border-bottom: 1px solid rgba($line, 0.75);
+    vertical-align: middle;
+    color: $body-color;
+    white-space: nowrap;
+  }
+
+  tbody tr {
+    transition: background 0.15s ease;
+
+    &:hover {
+      background: rgba($primary, 0.04);
+    }
+
+    &:last-child td {
+      border-bottom: 0;
+    }
+  }
+
+  .specialist-cell {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .sp-av {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: $gold-soft;
+      color: $primary-dark;
+      font-weight: 700;
+      font-size: 9.5px;
+      display: grid;
+      place-items: center;
+    }
+
+    b {
+      display: block;
+      color: $dark;
+      font-size: 11.5px;
+    }
+
+    small {
+      display: block;
+      color: $secondary;
+      font-size: 9.5px;
+    }
+  }
+}
+
+// =====================================================
+// BOTONES Y FORMULARIOS
+// =====================================================
+.btn-primary {
+  border-color: $primary;
+  background-color: $primary;
+  color: #18120F;
+  font-weight: 600;
+  font-size: 11px;
+  border-radius: $border-radius-sm;
+  padding: 5px 12px;
+  min-height: 34px;
+  box-shadow: 0 3px 8px rgba($primary, 0.2);
+  transition: all 0.18s ease;
+
+  &:hover,
+  &:focus {
+    border-color: $primary-dark;
+    background-color: $primary-dark;
+    color: #FFFFFF;
+    box-shadow: 0 4px 12px rgba($primary, 0.28);
+  }
+}
+
+.btn-outline-spa {
+  border: 1px solid $line;
+  background-color: #FFFFFF;
+  color: $dark;
+  font-weight: 600;
+  font-size: 11px;
+  border-radius: $border-radius-sm;
+  padding: 5px 12px;
+  min-height: 34px;
+  transition: all 0.18s ease;
+
+  &:hover {
+    border-color: $primary;
+    background-color: $gold-soft;
+    color: $dark;
+  }
+}
+
+.form-control,
+.form-select {
+  border-color: $line;
+  border-radius: 8px;
+  background-color: #FFFFFF;
+  font-size: 11px;
+  padding: 5px 8px;
+  color: $body-color;
+
+  &:focus {
+    border-color: $primary;
+    box-shadow: 0 0 0 3px rgba($primary, 0.15);
+  }
+}
+
+// =====================================================
+// SISTEMA RESPONSIVE MULTIDISPOSITIVO COMPLETO
+// =====================================================
+
+// TABLETS Y VENTANAS MEDIANAS (< 992px)
+@media (max-width: 991.98px) {
+  .shell {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  // Sidebar oculto inicialmente y transformado en Drawer
+  .side {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 50;
+    width: 260px;
+    height: 100dvh;
+    transform: translateX(-100%);
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 12px 0 35px rgba(0, 0, 0, 0.35);
+  }
+
+  body[data-sidebar-open] .side {
+    transform: translateX(0);
+  }
+
+  .top {
+    padding: 0 16px;
+  }
+
+  .page {
+    padding: 10px 16px 24px;
+  }
+
+  .search-wrapper {
+    max-width: 240px;
+  }
+}
+
+// CELULARES (hasta 767.98px)
+@media (max-width: 767.98px) {
+  .page-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .page-head-actions {
+    width: 100%;
+    display: flex;
+
+    .btn {
+      flex: 1;
+      justify-content: center;
+      min-height: 40px;
+      font-size: 11.5px;
+    }
+  }
+
+  .filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+
+    .sg {
+      width: 100%;
+      display: flex;
+
+      button {
+        flex: 1;
+        min-height: 36px;
+        font-size: 11px;
+      }
+    }
+  }
+
+  .search-wrapper {
+    display: none !important;
+  }
+
+  // Touch target mínimo de 42-44px para botones móviles
+  .btn,
+  .ib,
+  .form-select,
+  .form-control {
+    min-height: 40px;
+  }
+}
+
+// CELULARES PEQUEÑOS (360px a 390px)
+@media (max-width: 575.98px) {
+  .page {
+    padding: 8px 12px 20px;
+  }
+
+  .page-title {
+    font-size: 19px;
+  }
+
+  .cd {
+    padding: 12px 14px;
+  }
+
+  .kpi {
+    padding: 12px 14px;
+    min-height: 92px;
+
+    b {
+      font-size: 26px;
+    }
+  }
+}
+
+// =====================================================
+// ESTILOS DE IMPRESIÓN (PARA REPORTES Y PDF)
+// =====================================================
+@media print {
+  .side,
+  .top,
+  .side-backdrop,
+  .page-head-actions,
+  .filter-bar,
+  .btn,
+  .ib,
+  .pop,
+  .usr {
+    display: none !important;
+  }
+
+  body {
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    font-size: 10.5pt !important;
+  }
+
+  .shell {
+    display: block !important;
+  }
+
+  .main {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .page {
+    padding: 0 !important;
+  }
+
+  .cd {
+    box-shadow: none !important;
+    border: 1px solid #CCCCCC !important;
+    page-break-inside: avoid;
+    margin-bottom: 14px !important;
+  }
+
+  .print-header {
+    display: block !important;
+    text-align: center;
+    margin-bottom: 16px;
+    border-bottom: 2px solid #C5A059;
+    padding-bottom: 8px;
+
+    h1 {
+      font-size: 18pt;
+      margin: 0;
+    }
+    p {
+      margin: 3px 0 0;
+      color: #666;
+    }
+  }
+}
+
+.print-header {
+  display: none;
+}

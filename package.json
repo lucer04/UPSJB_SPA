@@ -4,7 +4,9 @@
   "description": "sistema web para la gestion de el spa",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:css": "sass Prototipos/scss/custom.scss Prototipos/css/custom.css --no-source-map",
+    "watch:css": "sass --watch Prototipos/scss/custom.scss:Prototipos/css/custom.css"
   },
   "repository": {
     "type": "git",
@@ -20,5 +22,8 @@
   "homepage": "https://github.com/lucer04/UPSJB_SPA#readme",
   "dependencies": {
     "bootstrap": "^5.3.8"
+  },
+  "devDependencies": {
+    "sass": "^1.105.1"
   }
 }
