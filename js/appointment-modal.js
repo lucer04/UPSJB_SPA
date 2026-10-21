@@ -629,6 +629,7 @@
   // OBJETO PÚBLICO
   const AppointmentModal = {
     init(options = {}) {
+      options = options || {};
       ensureModalMarkup();
       setupEvents();
       if (options.onSaved) {
@@ -638,6 +639,7 @@
 
     openNew(defaults = {}, triggerElement = null) {
       this.init();
+      defaults = defaults || {};
       currentEditingCitaId = null;
 
       const form = document.getElementById('formCita');

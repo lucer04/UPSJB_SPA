@@ -762,12 +762,43 @@
     // -------------------------------------------------------------
     // GESTIÓN DE CLIENTES
     // -------------------------------------------------------------
-    getClientes() {
-      return loadFromStorage(STORAGE_KEY_CLIENTES, SEED_CLIENTES);
+    getClientes(filtros = null) {
+      let list = loadFromStorage(STORAGE_KEY_CLIENTES, SEED_CLIENTES);
+      if (!filtros) return list;
+
+      if (filtros.texto) {
+        const q = String(filtros.texto).toLowerCase().trim();
+        list = list.filter(c => 
+          (c.nombreCompleto && c.nombreCompleto.toLowerCase().includes(q)) ||
+          (c.numeroDocumento && c.numeroDocumento.toLowerCase().includes(q)) ||
+          (c.telefono && c.telefono.toLowerCase().includes(q)) ||
+          (c.email && c.email.toLowerCase().includes(q)) ||
+          (c.codigo && c.codigo.toLowerCase().includes(q))
+        );
+      }
+
+      if (filtros.estado) {
+        list = list.filter(c => c.estado === filtros.estado);
+      }
+
+      if (filtros.soloAlergias) {
+        list = list.filter(c => c.alergias && c.alergias.toLowerCase() !== 'ninguna');
+      }
+
+      return list;
     },
 
     getClienteById(id) {
       return this.getClientes().find(c => c.id === id) || null;
+    },
+
+    toggleEstadoCliente(clienteId) {
+      const clientes = this.getClientes();
+      const cli = clientes.find(c => c.id === clienteId);
+      if (!cli) return { success: false, message: 'Clienta no encontrada.' };
+      cli.estado = cli.estado === 'activo' ? 'inactivo' : 'activo';
+      saveToStorage(STORAGE_KEY_CLIENTES, clientes);
+      return { success: true, data: cli, message: `Clienta marcada como ${cli.estado}.` };
     },
 
     getClienteByDoc(tipoDoc, numDoc) {
@@ -923,8 +954,47 @@
     // -------------------------------------------------------------
     // GESTIÓN DE CITAS
     // -------------------------------------------------------------
-    getCitas() {
-      return loadFromStorage(STORAGE_KEY_CITAS, generateSeedCitas());
+    getCitas(filtros = null) {
+      let list = loadFromStorage(STORAGE_KEY_CITAS, generateSeedCitas());
+      if (!filtros) return list;
+
+      if (filtros.texto) {
+        const q = String(filtros.texto).toLowerCase().trim();
+        list = list.filter(c => 
+          (c.codigo && c.codigo.toLowerCase().includes(q)) ||
+          (c.clienteNombre && c.clienteNombre.toLowerCase().includes(q)) ||
+          (c.clienteTelefono && c.clienteTelefono.toLowerCase().includes(q)) ||
+          (c.servicioNombre && c.servicioNombre.toLowerCase().includes(q)) ||
+          (c.especialistaNombre && c.especialistaNombre.toLowerCase().includes(q)) ||
+          (c.cabinaNombre && c.cabinaNombre.toLowerCase().includes(q))
+        );
+      }
+
+      if (filtros.fecha) {
+        list = list.filter(c => c.fecha === filtros.fecha);
+      }
+
+      if (filtros.estado) {
+        list = list.filter(c => c.estado === filtros.estado);
+      }
+
+      if (filtros.clienteId) {
+        list = list.filter(c => c.clienteId === filtros.clienteId);
+      }
+
+      if (filtros.especialistaId) {
+        list = list.filter(c => c.especialistaId === filtros.especialistaId);
+      }
+
+      if (filtros.cabinaId) {
+        list = list.filter(c => c.cabinaId === filtros.cabinaId);
+      }
+
+      if (filtros.servicioId) {
+        list = list.filter(c => c.servicioId === filtros.servicioId);
+      }
+
+      return list;
     },
 
     getCitaById(id) {
