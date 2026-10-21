@@ -177,8 +177,35 @@
       if (firstInvalid) {
         firstInvalid.focus();
       }
+    },
+
+    // -------------------------------------------------------------
+    // ENLACES EN DESARROLLO (PREVENIR SALTO # Y NOTIFICAR CON TOAST)
+    // -------------------------------------------------------------
+    initNavLinks() {
+      document.querySelectorAll('a.nv[href^="#"], aside.side a[href^="#"]').forEach(link => {
+        if (link._hasDevToast) return;
+        link._hasDevToast = true;
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const name = link.textContent.trim().replace(/^\s*[\r\n]+|\s*[\r\n]+$/g, '');
+          SpaUI.showToast(
+            'Módulo en Desarrollo',
+            `El módulo de "${name}" se encuentra planificado para la siguiente versión.`,
+            'info'
+          );
+        });
+      });
     }
   };
+
+  if (typeof document !== 'undefined') {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => SpaUI.initNavLinks());
+    } else {
+      SpaUI.initNavLinks();
+    }
+  }
 
   return SpaUI;
 });
