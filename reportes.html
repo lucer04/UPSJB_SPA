@@ -13,6 +13,33 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <!-- Estilos Principales Compilados por Sass -->
     <link rel="stylesheet" href="./Prototipos/css/custom.css">
+
+    <!-- CORRECCIÓN: evita que las tarjetas se estiren y dejen espacio en blanco -->
+    <style>
+        .page > .cd,
+        .page > .row,
+        .page > .filter-bar,
+        .page > .page-head {
+            flex: 0 0 auto !important;
+            height: auto !important;
+            min-height: 0 !important;
+        }
+
+        .page {
+            align-content: start;
+        }
+
+        .chart-container,
+        .table-responsive {
+            height: auto !important;
+            min-height: 0 !important;
+            flex: 0 0 auto !important;
+        }
+
+        .chart-container .chart {
+            height: auto !important;
+        }
+    </style>
 </head>
 
 <body>
