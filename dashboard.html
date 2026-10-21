@@ -13,6 +13,39 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <!-- Estilos Principales Compilados por Sass -->
     <link rel="stylesheet" href="./Prototipos/css/custom.css">
+
+    <!-- CORRECCIÓN: evita que la agenda se estire y deje espacio en blanco -->
+    <style>
+        .agenda-card,
+        .agenda-wrapper,
+        .agenda-wrapper .ag {
+            height: auto !important;
+            min-height: 0 !important;
+            flex: 0 0 auto !important;
+        }
+
+        .agenda-wrapper .ag {
+            align-content: start !important;
+            grid-auto-rows: min-content !important;
+        }
+
+        .agenda-wrapper .ag-r {
+            flex: 0 0 auto !important;
+            min-height: 0 !important;
+        }
+
+        /* Ninguna tarjeta ni fila directa del contenido se estira */
+        .page > .cd,
+        .page > .row {
+            flex: 0 0 auto !important;
+            height: auto !important;
+            min-height: 0 !important;
+        }
+
+        .page {
+            align-content: start;
+        }
+    </style>
 </head>
 
 <body>
@@ -236,7 +269,7 @@
                 </div>
 
                 <!-- AGENDA DE HOY -->
-                <div class="cd mb-3">
+                <div class="cd mb-3 agenda-card">
                     <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
                         <h3 class="mb-0">
                             Agenda de Cabinas y Horarios 
