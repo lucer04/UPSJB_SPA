@@ -20,6 +20,8 @@
   const STORAGE_KEY_ESPECIALISTAS = 'vivi_spa_especialistas_v1';
   const STORAGE_KEY_CABINAS = 'vivi_spa_cabinas_v1';
   const STORAGE_KEY_SERVICIOS = 'vivi_spa_servicios_v1';
+  const STORAGE_KEY_PRODUCTOS = 'vivi_spa_productos_v1';
+  const STORAGE_KEY_MOVIMIENTOS = 'vivi_spa_movimientos_v1';
 
   // Formato YYYY-MM-DD para hoy
   function getTodayDateString(offsetDays = 0) {
@@ -95,16 +97,203 @@
 
   // Seed Data: Servicios
   const SEED_SERVICIOS = [
-    { id: 'srv-1', nombre: 'Facial Hidratante Profundo', categoria: 'facial', duracionMin: 120, precio: 140, cabinaRecomendada: 'cab-1', especialistaDefecto: 'esp-1' },
-    { id: 'srv-2', nombre: 'Limpieza Facial & Peeling', categoria: 'facial', duracionMin: 120, precio: 150, cabinaRecomendada: 'cab-1', especialistaDefecto: 'esp-1' },
-    { id: 'srv-3', nombre: 'Tratamiento Antiedad Oro', categoria: 'facial', duracionMin: 90, precio: 180, cabinaRecomendada: 'cab-1', especialistaDefecto: 'esp-1' },
-    { id: 'srv-4', nombre: 'Masaje Relajante Aromaterapia', categoria: 'masajes', duracionMin: 120, precio: 130, cabinaRecomendada: 'cab-2', especialistaDefecto: 'esp-2' },
-    { id: 'srv-5', nombre: 'Masaje Piedras Volcánicas', categoria: 'masajes', duracionMin: 90, precio: 160, cabinaRecomendada: 'cab-2', especialistaDefecto: 'esp-2' },
-    { id: 'srv-6', nombre: 'Depilación Láser Diodo', categoria: 'laser', duracionMin: 90, precio: 150, cabinaRecomendada: 'cab-3', especialistaDefecto: 'esp-3' },
-    { id: 'srv-7', nombre: 'Rejuvenecimiento Facial Láser', categoria: 'laser', duracionMin: 60, precio: 200, cabinaRecomendada: 'cab-3', especialistaDefecto: 'esp-3' },
-    { id: 'srv-8', nombre: 'Spa Pedicure Deluxe', categoria: 'estudio', duracionMin: 90, precio: 85, cabinaRecomendada: 'cab-4', especialistaDefecto: 'esp-4' },
-    { id: 'srv-9', nombre: 'Manicure Ruso con Gel', categoria: 'estudio', duracionMin: 90, precio: 75, cabinaRecomendada: 'cab-4', especialistaDefecto: 'esp-4' },
-    { id: 'srv-10', nombre: 'Esmaltado Semipermanente', categoria: 'estudio', duracionMin: 90, precio: 60, cabinaRecomendada: 'cab-4', especialistaDefecto: 'esp-4' }
+    { id: 'srv-1', nombre: 'Facial Hidratante Profundo', categoria: 'facial', duracionMin: 120, precio: 140, cabinaRecomendada: 'cab-1', especialistaDefecto: 'esp-1', estado: 'activo', descripcion: 'Tratamiento intensivo con ácido hialurónico y velo de colágeno.' },
+    { id: 'srv-2', nombre: 'Limpieza Facial & Peeling', categoria: 'facial', duracionMin: 120, precio: 150, cabinaRecomendada: 'cab-1', especialistaDefecto: 'esp-1', estado: 'activo', descripcion: 'Extracción de impurezas, microdermoabrasión y renovación celular.' },
+    { id: 'srv-3', nombre: 'Tratamiento Antiedad Oro', categoria: 'facial', duracionMin: 90, precio: 180, cabinaRecomendada: 'cab-1', especialistaDefecto: 'esp-1', estado: 'activo', descripcion: 'Lifting biológico tensor con oro coloidal e iluminación facial.' },
+    { id: 'srv-4', nombre: 'Masaje Relajante Aromaterapia', categoria: 'masajes', duracionMin: 120, precio: 130, cabinaRecomendada: 'cab-2', especialistaDefecto: 'esp-2', estado: 'activo', descripcion: 'Sesión integral antiestrés con aceites esenciales botánicos franceses.' },
+    { id: 'srv-5', nombre: 'Masaje Piedras Volcánicas', categoria: 'masajes', duracionMin: 90, precio: 160, cabinaRecomendada: 'cab-2', especialistaDefecto: 'esp-2', estado: 'activo', descripcion: 'Termoterapia con piedras basálticas calientes para relajar contracturas.' },
+    { id: 'srv-6', nombre: 'Depilación Láser Diodo', categoria: 'laser', duracionMin: 90, precio: 150, cabinaRecomendada: 'cab-3', especialistaDefecto: 'esp-3', estado: 'activo', descripcion: 'Eliminación progresiva y definitiva del vello con sistema de enfriamiento.' },
+    { id: 'srv-7', nombre: 'Rejuvenecimiento Facial Láser', categoria: 'laser', duracionMin: 60, precio: 200, cabinaRecomendada: 'cab-3', especialistaDefecto: 'esp-3', estado: 'activo', descripcion: 'Estimulación térmica de colágeno para atenuar líneas de expresión.' },
+    { id: 'srv-8', nombre: 'Spa Pedicure Deluxe', categoria: 'estudio', duracionMin: 90, precio: 85, cabinaRecomendada: 'cab-4', especialistaDefecto: 'esp-4', estado: 'activo', descripcion: 'Cuidado completo con exfoliación marina, baño hidratante y esmaltado.' },
+    { id: 'srv-9', nombre: 'Manicure Ruso con Gel', categoria: 'estudio', duracionMin: 90, precio: 75, cabinaRecomendada: 'cab-4', especialistaDefecto: 'esp-4', estado: 'activo', descripcion: 'Técnica en seco con torno de alta precisión y nivelación en gel.' },
+    { id: 'srv-10', nombre: 'Esmaltado Semipermanente', categoria: 'estudio', duracionMin: 90, precio: 60, cabinaRecomendada: 'cab-4', especialistaDefecto: 'esp-4', estado: 'activo', descripcion: 'Color de alto brillo con secado UV/LED de 3 semanas de duración.' }
+  ];
+
+  // Seed Data: Productos de Inventario
+  const SEED_PRODUCTOS = [
+    {
+      id: 'prd-1',
+      sku: 'SKU-ACE-001',
+      nombre: 'Aceite de masaje argán y almendras 500ml',
+      categoria: 'insumos_masajes',
+      stockActual: 2,
+      stockMinimo: 5,
+      unidad: 'Frasco 500ml',
+      precioCompra: 38.00,
+      precioVenta: 0,
+      ubicacion: 'Cabina 2',
+      estado: 'activo',
+      descripcion: 'Mezcla emoliente con aceites prensados en frío para masajes relajantes.'
+    },
+    {
+      id: 'prd-2',
+      sku: 'SKU-SER-002',
+      nombre: 'Serum concentrado ácido hialurónico 100ml',
+      categoria: 'facial',
+      stockActual: 15,
+      stockMinimo: 4,
+      unidad: 'Frasco 100ml',
+      precioCompra: 65.00,
+      precioVenta: 110.00,
+      ubicacion: 'Cabina 1',
+      estado: 'activo',
+      descripcion: 'Alta concentración de ácido hialurónico para hidratación profunda.'
+    },
+    {
+      id: 'prd-3',
+      sku: 'SKU-GEL-003',
+      nombre: 'Gel conductor hipoalergénico aparatología 1L',
+      categoria: 'laser',
+      stockActual: 8,
+      stockMinimo: 3,
+      unidad: 'Botella 1L',
+      precioCompra: 24.00,
+      precioVenta: 0,
+      ubicacion: 'Cabina 3',
+      estado: 'activo',
+      descripcion: 'Gel conductor neutro para sesiones de depilación láser diodo.'
+    },
+    {
+      id: 'prd-4',
+      sku: 'SKU-MAS-004',
+      nombre: 'Mascarilla hidroplástica oro coloidal 500g',
+      categoria: 'facial',
+      stockActual: 6,
+      stockMinimo: 3,
+      unidad: 'Tarro 500g',
+      precioCompra: 52.00,
+      precioVenta: 95.00,
+      ubicacion: 'Cabina 1',
+      estado: 'activo',
+      descripcion: 'Mascarilla peel-off con partículas de oro que aporta firmeza inmediata.'
+    },
+    {
+      id: 'prd-5',
+      sku: 'SKU-EXF-005',
+      nombre: 'Exfoliante sales marinas y karité 1kg',
+      categoria: 'insumos_masajes',
+      stockActual: 7,
+      stockMinimo: 3,
+      unidad: 'Tarro 1kg',
+      precioCompra: 42.00,
+      precioVenta: 75.00,
+      ubicacion: 'Cabina 2',
+      estado: 'activo',
+      descripcion: 'Sales del mar muerto enriquecidas con manteca de karité.'
+    },
+    {
+      id: 'prd-6',
+      sku: 'SKU-ESM-006',
+      nombre: 'Set esmaltes semipermanentes gama nude (x6)',
+      categoria: 'estudio',
+      stockActual: 12,
+      stockMinimo: 4,
+      unidad: 'Caja x6',
+      precioCompra: 78.00,
+      precioVenta: 135.00,
+      ubicacion: 'Estudio Glow',
+      estado: 'activo',
+      descripcion: 'Gama de esmaltes libres de químicos agresivos de larga duración.'
+    },
+    {
+      id: 'prd-7',
+      sku: 'SKU-ACE-007',
+      nombre: 'Aceite esencial lavanda francesa 30ml',
+      categoria: 'insumos_masajes',
+      stockActual: 10,
+      stockMinimo: 3,
+      unidad: 'Frasco 30ml',
+      precioCompra: 29.00,
+      precioVenta: 48.00,
+      ubicacion: 'Almacén Central',
+      estado: 'activo',
+      descripcion: 'Aceite 100% puro para difusores de aromaterapia e inhalaciones.'
+    },
+    {
+      id: 'prd-8',
+      sku: 'SKU-TOA-008',
+      nombre: 'Toallas microfibra ultra-suave blancas (x10)',
+      categoria: 'blanqueria',
+      stockActual: 30,
+      stockMinimo: 10,
+      unidad: 'Pack x10',
+      precioCompra: 45.00,
+      precioVenta: 0,
+      ubicacion: 'Almacén Central',
+      estado: 'activo',
+      descripcion: 'Toallas de alta absorción resistentes a lavados continuos.'
+    },
+    {
+      id: 'prd-9',
+      sku: 'SKU-CRE-009',
+      nombre: 'Crema regeneradora post-láser aloe vera 250ml',
+      categoria: 'laser',
+      stockActual: 0,
+      stockMinimo: 4,
+      unidad: 'Tubo 250ml',
+      precioCompra: 32.00,
+      precioVenta: 55.00,
+      ubicacion: 'Cabina 3',
+      estado: 'activo',
+      descripcion: 'Fórmula descongestiva y calmante post-tratamientos de calor.'
+    },
+    {
+      id: 'prd-10',
+      sku: 'SKU-LIP-010',
+      nombre: 'Bálsamo regenerador labial colágeno 15ml',
+      categoria: 'facial',
+      stockActual: 18,
+      stockMinimo: 5,
+      unidad: 'Unidad 15ml',
+      precioCompra: 18.00,
+      precioVenta: 35.00,
+      ubicacion: 'Vitrina Recepción',
+      estado: 'activo',
+      descripcion: 'Bálsamo para venta en recepción con colágeno y filtro solar.'
+    }
+  ];
+
+  // Seed Data: Historial de Movimientos de Inventario
+  const SEED_MOVIMIENTOS = [
+    {
+      id: 'mov-1',
+      productoId: 'prd-1',
+      productoSku: 'SKU-ACE-001',
+      productoNombre: 'Aceite de masaje argán y almendras 500ml',
+      tipo: 'salida',
+      cantidad: 3,
+      stockAnterior: 5,
+      stockNuevo: 2,
+      motivo: 'Consumo operativo en Cabina 2 para sesiones del día',
+      usuario: 'Camila Ríos',
+      fechaHora: `${getTodayDateString()} 09:15`
+    },
+    {
+      id: 'mov-2',
+      productoId: 'prd-2',
+      productoSku: 'SKU-SER-002',
+      productoNombre: 'Serum concentrado ácido hialurónico 100ml',
+      tipo: 'entrada',
+      cantidad: 10,
+      stockAnterior: 5,
+      stockNuevo: 15,
+      motivo: 'Recepción de pedido proveedor Laboratorios DermaCare',
+      usuario: 'Administradora',
+      fechaHora: `${getTodayDateString(-1)} 16:30`
+    },
+    {
+      id: 'mov-3',
+      productoId: 'prd-9',
+      productoSku: 'SKU-CRE-009',
+      productoNombre: 'Crema regeneradora post-láser aloe vera 250ml',
+      tipo: 'salida',
+      cantidad: 4,
+      stockAnterior: 4,
+      stockNuevo: 0,
+      motivo: 'Consumo intensivo en jornada de depilación láser',
+      usuario: 'Valeria Núñez',
+      fechaHora: `${getTodayDateString(-2)} 18:00`
+    }
   ];
 
   // Seed Data: Clientes
@@ -664,27 +853,37 @@
     ];
   }
 
-  // Helper para leer/escribir en localStorage de forma segura
+  // Helper para leer/escribir en storage de forma segura con fallback en memoria
+  const memoryStorage = {};
+
   function loadFromStorage(key, fallbackData) {
     try {
-      const data = localStorage.getItem(key);
-      if (data) {
-        return JSON.parse(data);
+      if (typeof localStorage !== 'undefined') {
+        const data = localStorage.getItem(key);
+        if (data) return JSON.parse(data);
+      } else if (memoryStorage[key]) {
+        return JSON.parse(memoryStorage[key]);
       }
     } catch (e) {
-      console.warn(`[SpaStore] Error al leer ${key}:`, e);
+      // Ignorar fallo de parseo
     }
-    // Guardar fallback si no existe
     saveToStorage(key, fallbackData);
     return fallbackData;
   }
 
   function saveToStorage(key, data) {
     try {
-      localStorage.setItem(key, JSON.stringify(data));
-      window.dispatchEvent(new CustomEvent('spastore:change', { detail: { key } }));
+      const json = JSON.stringify(data);
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem(key, json);
+      } else {
+        memoryStorage[key] = json;
+      }
+      if (typeof window !== 'undefined' && typeof window.dispatchEvent === 'function') {
+        window.dispatchEvent(new CustomEvent('spastore:change', { detail: { key } }));
+      }
     } catch (e) {
-      console.error(`[SpaStore] Error al escribir en ${key}:`, e);
+      // Error de cuota o escritura
     }
   }
 
@@ -751,12 +950,130 @@
       return this.getEspecialistas().find(e => e.id === id) || null;
     },
 
-    getServicios() {
-      return loadFromStorage(STORAGE_KEY_SERVICIOS, SEED_SERVICIOS);
+    getServicios(filtros = null) {
+      let list = loadFromStorage(STORAGE_KEY_SERVICIOS, SEED_SERVICIOS);
+      if (!filtros) return list;
+
+      if (filtros.texto) {
+        const q = String(filtros.texto).toLowerCase().trim();
+        list = list.filter(s => 
+          s.nombre.toLowerCase().includes(q) ||
+          (s.descripcion && s.descripcion.toLowerCase().includes(q)) ||
+          s.categoria.toLowerCase().includes(q)
+        );
+      }
+
+      if (filtros.categoria) {
+        list = list.filter(s => s.categoria === filtros.categoria);
+      }
+
+      if (filtros.estado) {
+        list = list.filter(s => s.estado === filtros.estado);
+      }
+
+      return list;
     },
 
     getServicioById(id) {
       return this.getServicios().find(s => s.id === id) || null;
+    },
+
+    validarServicio(data) {
+      const errors = {};
+      const nombre = String(data.nombre || '').trim();
+      const duracion = Number(data.duracionMin) || 0;
+      const precio = Number(data.precio);
+
+      if (!nombre) {
+        errors.nombre = 'El nombre del servicio es obligatorio.';
+      } else if (nombre.length < 3) {
+        errors.nombre = 'El nombre debe tener al menos 3 caracteres.';
+      } else {
+        const existente = this.getServicios().find(s => 
+          s.nombre.toLowerCase() === nombre.toLowerCase() && (!data.id || s.id !== data.id)
+        );
+        if (existente) {
+          errors.nombre = 'Ya existe un servicio registrado con este nombre.';
+        }
+      }
+
+      if (!data.categoria) {
+        errors.categoria = 'Debe seleccionar una categoría.';
+      }
+
+      if (isNaN(duracion) || duracion <= 0) {
+        errors.duracionMin = 'La duración debe ser un número mayor a 0 minutos.';
+      } else if (duracion > 360) {
+        errors.duracionMin = 'La duración máxima permitida es de 360 minutos (6 horas).';
+      }
+
+      if (isNaN(precio) || precio < 0) {
+        errors.precio = 'El precio debe ser un número mayor o igual a 0.';
+      }
+
+      return errors;
+    },
+
+    guardarServicio(servicioData) {
+      const errors = this.validarServicio(servicioData);
+      if (Object.keys(errors).length > 0) {
+        return { success: false, errors };
+      }
+
+      const servicios = this.getServicios();
+      const isEdit = Boolean(servicioData.id);
+
+      if (isEdit) {
+        const index = servicios.findIndex(s => s.id === servicioData.id);
+        if (index === -1) {
+          return { success: false, errors: { general: 'Servicio no encontrado.' } };
+        }
+
+        const actualizado = {
+          ...servicios[index],
+          nombre: servicioData.nombre.trim(),
+          categoria: servicioData.categoria,
+          duracionMin: Number(servicioData.duracionMin),
+          precio: Number(servicioData.precio),
+          cabinaRecomendada: servicioData.cabinaRecomendada || servicios[index].cabinaRecomendada || 'cab-1',
+          especialistaDefecto: servicioData.especialistaDefecto || servicios[index].especialistaDefecto || 'esp-1',
+          estado: servicioData.estado || servicios[index].estado || 'activo',
+          descripcion: (servicioData.descripcion || '').trim()
+        };
+
+        servicios[index] = actualizado;
+        saveToStorage(STORAGE_KEY_SERVICIOS, servicios);
+
+        return { success: true, data: actualizado, message: 'Servicio actualizado correctamente.' };
+      } else {
+        const nextId = 'srv-' + Date.now();
+        const nuevo = {
+          id: nextId,
+          nombre: servicioData.nombre.trim(),
+          categoria: servicioData.categoria,
+          duracionMin: Number(servicioData.duracionMin),
+          precio: Number(servicioData.precio),
+          cabinaRecomendada: servicioData.cabinaRecomendada || 'cab-1',
+          especialistaDefecto: servicioData.especialistaDefecto || 'esp-1',
+          estado: servicioData.estado || 'activo',
+          descripcion: (servicioData.descripcion || '').trim()
+        };
+
+        servicios.push(nuevo);
+        saveToStorage(STORAGE_KEY_SERVICIOS, servicios);
+
+        return { success: true, data: nuevo, message: 'Servicio registrado exitosamente.' };
+      }
+    },
+
+    toggleEstadoServicio(servicioId) {
+      const servicios = this.getServicios();
+      const s = servicios.find(item => item.id === servicioId);
+      if (!s) return { success: false, message: 'Servicio no encontrado.' };
+
+      s.estado = s.estado === 'activo' ? 'inactivo' : 'activo';
+      saveToStorage(STORAGE_KEY_SERVICIOS, servicios);
+      return { success: true, data: s, message: `Servicio marcado como ${s.estado}.` };
     },
 
     // -------------------------------------------------------------
@@ -1276,6 +1593,250 @@
     },
 
     // -------------------------------------------------------------
+
+    // -------------------------------------------------------------
+    // GESTIÓN DE INVENTARIO Y MOVIMIENTOS
+    // -------------------------------------------------------------
+    getProductos(filtros = null) {
+      let list = loadFromStorage(STORAGE_KEY_PRODUCTOS, SEED_PRODUCTOS);
+      if (!filtros) return list;
+
+      if (filtros.texto) {
+        const q = String(filtros.texto).toLowerCase().trim();
+        list = list.filter(p => 
+          p.nombre.toLowerCase().includes(q) ||
+          p.sku.toLowerCase().includes(q) ||
+          (p.ubicacion && p.ubicacion.toLowerCase().includes(q))
+        );
+      }
+
+      if (filtros.categoria) {
+        list = list.filter(p => p.categoria === filtros.categoria);
+      }
+
+      if (filtros.estado) {
+        if (filtros.estado === 'normal') {
+          list = list.filter(p => p.stockActual > p.stockMinimo);
+        } else if (filtros.estado === 'bajo') {
+          list = list.filter(p => p.stockActual <= p.stockMinimo && p.stockActual > 0);
+        } else if (filtros.estado === 'agotado') {
+          list = list.filter(p => p.stockActual <= 0);
+        }
+      }
+
+      return list;
+    },
+
+    getProductoById(id) {
+      return this.getProductos().find(p => p.id === id) || null;
+    },
+
+    getProductoBySku(sku) {
+      const s = String(sku || '').trim().toLowerCase();
+      return this.getProductos().find(p => p.sku.toLowerCase() === s) || null;
+    },
+
+    validarProducto(data) {
+      const errors = {};
+      const nombre = String(data.nombre || '').trim();
+      const sku = String(data.sku || '').trim();
+      const stockMin = Number(data.stockMinimo);
+      const stockAct = Number(data.stockActual);
+      const pCompra = Number(data.precioCompra);
+      const pVenta = Number(data.precioVenta);
+
+      if (!nombre) {
+        errors.nombre = 'El nombre del producto es obligatorio.';
+      } else if (nombre.length < 2) {
+        errors.nombre = 'El nombre debe tener al menos 2 caracteres.';
+      }
+
+      if (!sku) {
+        errors.sku = 'El código SKU es obligatorio.';
+      } else {
+        const existente = this.getProductoBySku(sku);
+        if (existente && (!data.id || existente.id !== data.id)) {
+          errors.sku = `Ya existe un producto con el SKU "${sku}".`;
+        }
+      }
+
+      if (!data.categoria) {
+        errors.categoria = 'Debe seleccionar una categoría para el producto.';
+      }
+
+      if (isNaN(stockMin) || stockMin < 0) {
+        errors.stockMinimo = 'El stock mínimo no puede ser negativo.';
+      }
+
+      if (isNaN(stockAct) || stockAct < 0) {
+        errors.stockActual = 'El stock inicial no puede ser negativo.';
+      }
+
+      if (isNaN(pCompra) || pCompra < 0) {
+        errors.precioCompra = 'El precio de compra no puede ser negativo.';
+      }
+
+      if (isNaN(pVenta) || pVenta < 0) {
+        errors.precioVenta = 'El precio de venta no puede ser negativo.';
+      }
+
+      return errors;
+    },
+
+    guardarProducto(productoData) {
+      const errors = this.validarProducto(productoData);
+      if (Object.keys(errors).length > 0) {
+        return { success: false, errors };
+      }
+
+      const productos = this.getProductos();
+      const isEdit = Boolean(productoData.id);
+
+      if (isEdit) {
+        const index = productos.findIndex(p => p.id === productoData.id);
+        if (index === -1) {
+          return { success: false, errors: { general: 'Producto no encontrado.' } };
+        }
+
+        const actualizado = {
+          ...productos[index],
+          nombre: productoData.nombre.trim(),
+          sku: productoData.sku.trim().toUpperCase(),
+          categoria: productoData.categoria,
+          stockMinimo: Number(productoData.stockMinimo),
+          stockActual: Number(productoData.stockActual),
+          unidad: productoData.unidad ? productoData.unidad.trim() : productos[index].unidad,
+          precioCompra: Number(productoData.precioCompra),
+          precioVenta: Number(productoData.precioVenta),
+          ubicacion: productoData.ubicacion ? productoData.ubicacion.trim() : productos[index].ubicacion,
+          estado: productoData.estado || productos[index].estado || 'activo',
+          descripcion: (productoData.descripcion || '').trim()
+        };
+
+        productos[index] = actualizado;
+        saveToStorage(STORAGE_KEY_PRODUCTOS, productos);
+        return { success: true, data: actualizado, message: 'Producto actualizado con éxito.' };
+      } else {
+        const nuevoId = 'prd-' + Date.now();
+        const nuevo = {
+          id: nuevoId,
+          nombre: productoData.nombre.trim(),
+          sku: productoData.sku.trim().toUpperCase(),
+          categoria: productoData.categoria,
+          stockMinimo: Number(productoData.stockMinimo),
+          stockActual: Number(productoData.stockActual),
+          unidad: productoData.unidad ? productoData.unidad.trim() : 'Unidad',
+          precioCompra: Number(productoData.precioCompra),
+          precioVenta: Number(productoData.precioVenta),
+          ubicacion: productoData.ubicacion ? productoData.ubicacion.trim() : 'Almacén Central',
+          estado: 'activo',
+          descripcion: (productoData.descripcion || '').trim()
+        };
+
+        productos.unshift(nuevo);
+        saveToStorage(STORAGE_KEY_PRODUCTOS, productos);
+
+        // Si inició con stock > 0, registrar movimiento inicial
+        if (nuevo.stockActual > 0) {
+          this.registrarMovimiento({
+            productoId: nuevo.id,
+            tipo: 'entrada',
+            cantidad: nuevo.stockActual,
+            motivo: 'Inventario inicial de registro',
+            usuario: 'Administradora'
+          });
+        }
+
+        return { success: true, data: nuevo, message: 'Producto creado exitosamente.' };
+      }
+    },
+
+    registrarMovimiento(movData) {
+      const productoId = movData.productoId;
+      const tipo = movData.tipo; // 'entrada' | 'salida'
+      const cantidad = Number(movData.cantidad);
+      const motivo = String(movData.motivo || '').trim();
+      const usuario = movData.usuario || 'Administradora';
+
+      if (!productoId) return { success: false, message: 'Debe seleccionar un producto.' };
+      if (isNaN(cantidad) || cantidad <= 0) return { success: false, message: 'La cantidad debe ser mayor a 0.' };
+      if (!motivo) return { success: false, message: 'Debe ingresar un motivo para registrar el movimiento.' };
+
+      const productos = this.getProductos();
+      const producto = productos.find(p => p.id === productoId);
+      if (!producto) return { success: false, message: 'Producto no encontrado.' };
+
+      const stockAnterior = Number(producto.stockActual) || 0;
+      let stockNuevo = stockAnterior;
+
+      if (tipo === 'entrada') {
+        stockNuevo = stockAnterior + cantidad;
+      } else if (tipo === 'salida') {
+        if (cantidad > stockAnterior) {
+          return {
+            success: false,
+            message: `No hay suficiente stock disponible. Stock actual: ${stockAnterior} ${producto.unidad}.`
+          };
+        }
+        stockNuevo = stockAnterior - cantidad;
+      } else {
+        return { success: false, message: 'Tipo de movimiento inválido.' };
+      }
+
+      // Actualizar stock de producto
+      producto.stockActual = stockNuevo;
+      saveToStorage(STORAGE_KEY_PRODUCTOS, productos);
+
+      // Registrar movimiento
+      const movimientos = this.getMovimientos();
+      const nuevoMov = {
+        id: 'mov-' + Date.now(),
+        productoId: producto.id,
+        productoSku: producto.sku,
+        productoNombre: producto.nombre,
+        tipo: tipo,
+        cantidad: cantidad,
+        stockAnterior: stockAnterior,
+        stockNuevo: stockNuevo,
+        motivo: motivo,
+        usuario: usuario,
+        fechaHora: `${getTodayDateString()} ${new Date().toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' })}`
+      };
+
+      movimientos.unshift(nuevoMov);
+      saveToStorage(STORAGE_KEY_MOVIMIENTOS, movimientos);
+
+      return {
+        success: true,
+        data: nuevoMov,
+        producto: producto,
+        message: `Movimiento de ${tipo.toUpperCase()} registrado con éxito. Stock actual: ${stockNuevo} ${producto.unidad}.`
+      };
+    },
+
+    getMovimientos(productoId = null) {
+      let list = loadFromStorage(STORAGE_KEY_MOVIMIENTOS, SEED_MOVIMIENTOS);
+      if (productoId) {
+        list = list.filter(m => m.productoId === productoId);
+      }
+      return list;
+    },
+
+    getResumenInventario() {
+      const productos = this.getProductos();
+      const total = productos.length;
+      const valorCostoTotal = productos.reduce((sum, p) => sum + ((p.stockActual || 0) * (p.precioCompra || 0)), 0);
+      const stockBajo = productos.filter(p => p.stockActual <= p.stockMinimo && p.stockActual > 0).length;
+      const agotados = productos.filter(p => p.stockActual <= 0).length;
+
+      return {
+        total,
+        valorCostoTotal,
+        stockBajo,
+        agotados
+      };
+    },
+
     // CONSULTAS PARA DASHBOARD & REPORTES
     // -------------------------------------------------------------
     getResumenCitas(fechaFiltro = null) {

@@ -21,7 +21,8 @@
   },
   "homepage": "https://github.com/lucer04/UPSJB_SPA#readme",
   "dependencies": {
-    "bootstrap": "^5.3.8"
+    "bootstrap": "^5.3.8",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "sass": "^1.105.1"
