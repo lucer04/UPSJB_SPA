@@ -29,6 +29,129 @@
   const STORAGE_KEY_COMISIONES = 'vivi_spa_comisiones_v1';
   const STORAGE_KEY_LIQUIDACIONES = 'vivi_spa_liquidaciones_v1';
   const STORAGE_KEY_REGLAS_COMISION = 'vivi_spa_reglas_comision_v1';
+  const STORAGE_KEY_ROLES = 'vivi_spa_roles_v1';
+  const STORAGE_KEY_USUARIOS = 'vivi_spa_usuarios_v1';
+  const STORAGE_KEY_CATEGORIAS = 'vivi_spa_categorias_v1';
+
+  // ---------------------------------------------------------------
+  // SEED DATA — ROLES
+  // ---------------------------------------------------------------
+  const SEED_ROLES = [
+    {
+      id: 'rol-1', nombre: 'Administrador', descripcion: 'Acceso total al sistema. Gestiona usuarios, roles, configuraciones y todos los m\u00f3dulos.',
+      sistema: true, estado: 'activo',
+      permisos: {
+        dashboard: ['ver'], citas: ['ver','crear','editar','anular','exportar'],
+        clientes: ['ver','crear','editar','anular','exportar'], servicios: ['ver','crear','editar','anular'],
+        inventario: ['ver','crear','editar','anular','exportar'], pagos: ['ver','crear','editar','anular','exportar'],
+        comisiones: ['ver','crear','editar','anular','exportar'], reportes: ['ver','exportar'],
+        roles: ['ver','crear','editar','anular','administrar'], usuarios: ['ver','crear','editar','anular','administrar'],
+        categorias: ['ver','crear','editar','anular'], configuraciones: ['ver','administrar']
+      },
+      creadoEn: '2026-01-01T08:00:00.000Z', actualizadoEn: '2026-01-01T08:00:00.000Z'
+    },
+    {
+      id: 'rol-2', nombre: 'Recepci\u00f3n', descripcion: 'Gestiona citas, clientes y cobros del d\u00eda. Sin acceso a configuraciones.',
+      sistema: false, estado: 'activo',
+      permisos: {
+        dashboard: ['ver'], citas: ['ver','crear','editar','anular'],
+        clientes: ['ver','crear','editar'], servicios: ['ver'],
+        inventario: [], pagos: ['ver','crear'],
+        comisiones: [], reportes: ['ver'],
+        roles: [], usuarios: [], categorias: [], configuraciones: []
+      },
+      creadoEn: '2026-01-01T08:00:00.000Z', actualizadoEn: '2026-01-01T08:00:00.000Z'
+    },
+    {
+      id: 'rol-3', nombre: 'Especialista', descripcion: 'Visualiza su agenda, citas del d\u00eda y sus comisiones. Solo lectura.',
+      sistema: false, estado: 'activo',
+      permisos: {
+        dashboard: ['ver'], citas: ['ver'],
+        clientes: ['ver'], servicios: ['ver'],
+        inventario: [], pagos: [],
+        comisiones: ['ver'], reportes: [],
+        roles: [], usuarios: [], categorias: [], configuraciones: []
+      },
+      creadoEn: '2026-01-01T08:00:00.000Z', actualizadoEn: '2026-01-01T08:00:00.000Z'
+    },
+    {
+      id: 'rol-4', nombre: 'Caja', descripcion: 'Gestiona apertura/cierre de caja, pagos y egresos. Sin acceso a configuraciones.',
+      sistema: false, estado: 'activo',
+      permisos: {
+        dashboard: ['ver'], citas: ['ver'],
+        clientes: ['ver'], servicios: ['ver'],
+        inventario: ['ver'], pagos: ['ver','crear','editar','anular','exportar'],
+        comisiones: ['ver'], reportes: ['ver','exportar'],
+        roles: [], usuarios: [], categorias: [], configuraciones: []
+      },
+      creadoEn: '2026-01-01T08:00:00.000Z', actualizadoEn: '2026-01-01T08:00:00.000Z'
+    },
+    {
+      id: 'rol-5', nombre: 'Supervisor', descripcion: 'Monitoreo general, reportes y aprobaci\u00f3n de comisiones. Sin modificar configuraciones.',
+      sistema: false, estado: 'activo',
+      permisos: {
+        dashboard: ['ver'], citas: ['ver','editar'],
+        clientes: ['ver','editar'], servicios: ['ver'],
+        inventario: ['ver','exportar'], pagos: ['ver','exportar'],
+        comisiones: ['ver','editar','exportar'], reportes: ['ver','exportar'],
+        roles: ['ver'], usuarios: ['ver'], categorias: ['ver'], configuraciones: ['ver']
+      },
+      creadoEn: '2026-01-01T08:00:00.000Z', actualizadoEn: '2026-01-01T08:00:00.000Z'
+    }
+  ];
+
+  // ---------------------------------------------------------------
+  // SEED DATA — USUARIOS
+  // ---------------------------------------------------------------
+  function hashSimple(str) {
+    // Hash no seguro para demo frontend-only. NO usar en producción con backend real.
+    let h = 0;
+    for (let i = 0; i < str.length; i++) { h = (Math.imul(31, h) + str.charCodeAt(i)) | 0; }
+    return 'hash_' + Math.abs(h).toString(36);
+  }
+
+  const SEED_USUARIOS = [
+    {
+      id: 'usr-1', nombre: 'Administradora', apellido: 'Principal',
+      email: 'admin@vivispa.com', username: 'admin',
+      rolId: 'rol-1', rolNombre: 'Administrador',
+      estado: 'activo', sistema: true,
+      passwordHash: hashSimple('Admin2026!'),
+      creadoEn: '2026-01-01T08:00:00.000Z', ultimoAcceso: null
+    },
+    {
+      id: 'usr-2', nombre: 'Valeria', apellido: 'Quispe',
+      email: 'recepcion@vivispa.com', username: 'vquispe',
+      rolId: 'rol-2', rolNombre: 'Recepci\u00f3n',
+      estado: 'activo', sistema: false,
+      passwordHash: hashSimple('Recep2026!'),
+      creadoEn: '2026-03-10T08:00:00.000Z', ultimoAcceso: null
+    },
+    {
+      id: 'usr-3', nombre: 'Camila', apellido: 'R\u00edos',
+      email: 'camila@vivispa.com', username: 'crios',
+      rolId: 'rol-3', rolNombre: 'Especialista',
+      estado: 'activo', sistema: false,
+      passwordHash: hashSimple('Esp2026!'),
+      creadoEn: '2026-03-15T08:00:00.000Z', ultimoAcceso: null
+    }
+  ];
+
+  // ---------------------------------------------------------------
+  // SEED DATA — CATEGORÍAS
+  // ---------------------------------------------------------------
+  const SEED_CATEGORIAS = [
+    { id: 'cat-srv-1', nombre: 'Facial & Skin Care', tipo: 'servicio', slug: 'facial', descripcion: 'Tratamientos faciales, limpiezas e hidrataci\u00f3n profunda.', estado: 'activo', creadoEn: '2026-01-01T08:00:00.000Z' },
+    { id: 'cat-srv-2', nombre: 'Masajes & Bienestar', tipo: 'servicio', slug: 'masajes', descripcion: 'Masajes relajantes, descontracturantes y terap\u00e9uticos.', estado: 'activo', creadoEn: '2026-01-01T08:00:00.000Z' },
+    { id: 'cat-srv-3', nombre: 'L\u00e1ser & Aparatolog\u00eda', tipo: 'servicio', slug: 'laser', descripcion: 'Tratamientos con tecnolog\u00eda l\u00e1ser y equipos m\u00e9dico-est\u00e9ticos.', estado: 'activo', creadoEn: '2026-01-01T08:00:00.000Z' },
+    { id: 'cat-srv-4', nombre: 'Nail Studio & Manicure', tipo: 'servicio', slug: 'estudio', descripcion: 'Manicure, pedicure, esmaltado y dise\u00f1o de u\u00f1as.', estado: 'activo', creadoEn: '2026-01-01T08:00:00.000Z' },
+    { id: 'cat-prod-1', nombre: 'Insumos de Masajes', tipo: 'producto', slug: 'insumos_masajes', descripcion: 'Aceites, cremas y productos para masajes.', estado: 'activo', creadoEn: '2026-01-01T08:00:00.000Z' },
+    { id: 'cat-prod-2', nombre: 'Facial & Cuidado de Piel', tipo: 'producto', slug: 'facial', descripcion: 'Serums, m\u00e1scaras y cosm\u00e9ticos para tratamientos faciales.', estado: 'activo', creadoEn: '2026-01-01T08:00:00.000Z' },
+    { id: 'cat-prod-3', nombre: 'Aparatolog\u00eda & Consumibles', tipo: 'producto', slug: 'laser', descripcion: 'Consumibles y repuestos para equipos l\u00e1ser y aparatolog\u00eda.', estado: 'activo', creadoEn: '2026-01-01T08:00:00.000Z' },
+    { id: 'cat-prod-4', nombre: 'Nail Studio & Esmaltes', tipo: 'producto', slug: 'estudio', descripcion: 'Esmaltes, geles y materiales para nail studio.', estado: 'activo', creadoEn: '2026-01-01T08:00:00.000Z' },
+    { id: 'cat-prod-5', nombre: 'Textiles & Descartables', tipo: 'producto', slug: 'textiles', descripcion: 'Toallas, s\u00e1banas descartables, gorros y consumibles generales.', estado: 'activo', creadoEn: '2026-01-01T08:00:00.000Z' }
+  ];
+
 
   // Formato YYYY-MM-DD para hoy
   function getTodayDateString(offsetDays = 0) {
@@ -1342,6 +1465,9 @@
       this.getComisiones();
       this.getLiquidaciones();
       this.getReglasComision();
+      this.getRoles();
+      this.getUsuarios();
+      this.getCategorias();
     },
 
     // -------------------------------------------------------------
@@ -3099,6 +3225,283 @@
         ocupacionPct,
         citasDelDia: citasFecha
       };
+    },
+
+    // ---------------------------------------------------------------
+    // MÓDULO ROLES
+    // ---------------------------------------------------------------
+    getRoles(filtro = {}) {
+      let list = loadFromStorage(STORAGE_KEY_ROLES, SEED_ROLES);
+      if (filtro.estado && filtro.estado !== 'todos') list = list.filter(r => r.estado === filtro.estado);
+      if (filtro.busqueda) {
+        const q = filtro.busqueda.toLowerCase().trim();
+        list = list.filter(r => r.nombre.toLowerCase().includes(q) || (r.descripcion && r.descripcion.toLowerCase().includes(q)));
+      }
+      return list;
+    },
+
+    getRolById(id) {
+      return this.getRoles().find(r => r.id === id) || null;
+    },
+
+    crearRol(datos) {
+      const roles = this.getRoles();
+      const nombre = (datos.nombre || '').trim();
+      if (!nombre) return { success: false, message: 'El nombre del rol es obligatorio.' };
+      if (nombre.length > 80) return { success: false, message: 'El nombre no puede superar 80 caracteres.' };
+      const dup = roles.find(r => r.nombre.trim().toLowerCase() === nombre.toLowerCase());
+      if (dup) return { success: false, message: `Ya existe un rol con el nombre "${nombre}".` };
+      const nuevoRol = {
+        id: 'rol-' + Date.now(),
+        nombre,
+        descripcion: (datos.descripcion || '').trim().slice(0, 300),
+        sistema: false,
+        estado: datos.estado || 'activo',
+        permisos: datos.permisos || {},
+        creadoEn: new Date().toISOString(),
+        actualizadoEn: new Date().toISOString()
+      };
+      roles.push(nuevoRol);
+      saveToStorage(STORAGE_KEY_ROLES, roles);
+      return { success: true, data: nuevoRol };
+    },
+
+    editarRol(id, datos) {
+      const roles = this.getRoles();
+      const idx = roles.findIndex(r => r.id === id);
+      if (idx < 0) return { success: false, message: 'Rol no encontrado.' };
+      const rol = roles[idx];
+      const nombre = (datos.nombre || '').trim();
+      if (!nombre) return { success: false, message: 'El nombre del rol es obligatorio.' };
+      if (nombre.length > 80) return { success: false, message: 'El nombre no puede superar 80 caracteres.' };
+      const dup = roles.find(r => r.id !== id && r.nombre.trim().toLowerCase() === nombre.toLowerCase());
+      if (dup) return { success: false, message: `Ya existe un rol con el nombre "${nombre}".` };
+      roles[idx] = Object.assign({}, rol, {
+        nombre, descripcion: (datos.descripcion || '').trim().slice(0, 300),
+        permisos: datos.permisos !== undefined ? datos.permisos : rol.permisos,
+        actualizadoEn: new Date().toISOString()
+      });
+      saveToStorage(STORAGE_KEY_ROLES, roles);
+      return { success: true, data: roles[idx] };
+    },
+
+    toggleRolEstado(id) {
+      const roles = this.getRoles();
+      const idx = roles.findIndex(r => r.id === id);
+      if (idx < 0) return { success: false, message: 'Rol no encontrado.' };
+      if (roles[idx].sistema) return { success: false, message: 'No se puede desactivar un rol del sistema.' };
+      // Impedir desactivar si es el único rol administrador activo
+      if (roles[idx].nombre === 'Administrador' && roles[idx].estado === 'activo') {
+        const admins = roles.filter(r => r.nombre === 'Administrador' && r.estado === 'activo');
+        if (admins.length <= 1) return { success: false, message: 'No se puede desactivar el único rol Administrador activo.' };
+      }
+      roles[idx].estado = roles[idx].estado === 'activo' ? 'inactivo' : 'activo';
+      roles[idx].actualizadoEn = new Date().toISOString();
+      saveToStorage(STORAGE_KEY_ROLES, roles);
+      return { success: true, data: roles[idx] };
+    },
+
+    getUsuariosPorRol(rolId) {
+      return this.getUsuarios().filter(u => u.rolId === rolId);
+    },
+
+    // ---------------------------------------------------------------
+    // MÓDULO USUARIOS
+    // ---------------------------------------------------------------
+    getUsuarios(filtro = {}) {
+      let list = loadFromStorage(STORAGE_KEY_USUARIOS, SEED_USUARIOS);
+      if (filtro.estado && filtro.estado !== 'todos') list = list.filter(u => u.estado === filtro.estado);
+      if (filtro.rolId) list = list.filter(u => u.rolId === filtro.rolId);
+      if (filtro.busqueda) {
+        const q = filtro.busqueda.toLowerCase().trim();
+        list = list.filter(u =>
+          u.nombre.toLowerCase().includes(q) ||
+          (u.apellido && u.apellido.toLowerCase().includes(q)) ||
+          u.email.toLowerCase().includes(q) ||
+          (u.username && u.username.toLowerCase().includes(q))
+        );
+      }
+      return list;
+    },
+
+    getUsuarioById(id) {
+      return this.getUsuarios().find(u => u.id === id) || null;
+    },
+
+    crearUsuario(datos) {
+      const usuarios = this.getUsuarios();
+      const nombre = (datos.nombre || '').trim();
+      const email = (datos.email || '').trim().toLowerCase();
+      const username = (datos.username || '').trim().toLowerCase();
+      if (!nombre) return { success: false, message: 'El nombre es obligatorio.' };
+      if (!email) return { success: false, message: 'El correo electrónico es obligatorio.' };
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return { success: false, message: 'El correo no tiene formato válido.' };
+      if (usuarios.find(u => u.email === email)) return { success: false, message: 'Ya existe un usuario con ese correo.' };
+      if (username && usuarios.find(u => u.username === username)) return { success: false, message: 'Ya existe un usuario con ese nombre de usuario.' };
+      const rol = this.getRolById(datos.rolId);
+      if (!rol) return { success: false, message: 'El rol seleccionado no existe.' };
+      if (rol.estado !== 'activo') return { success: false, message: 'No se puede asignar un rol inactivo.' };
+      const pwd = (datos.password || '').trim();
+      if (pwd && pwd.length < 8) return { success: false, message: 'La contraseña debe tener al menos 8 caracteres.' };
+      if (pwd && datos.passwordConfirm && pwd !== datos.passwordConfirm) return { success: false, message: 'Las contraseñas no coinciden.' };
+      const nuevoUsuario = {
+        id: 'usr-' + Date.now(),
+        nombre, apellido: (datos.apellido || '').trim(),
+        email, username: username || email.split('@')[0],
+        rolId: rol.id, rolNombre: rol.nombre,
+        estado: datos.estado || 'activo',
+        sistema: false,
+        passwordHash: pwd ? hashSimple(pwd) : hashSimple('Temp' + Date.now()),
+        creadoEn: new Date().toISOString(),
+        ultimoAcceso: null
+      };
+      usuarios.push(nuevoUsuario);
+      saveToStorage(STORAGE_KEY_USUARIOS, usuarios);
+      return { success: true, data: nuevoUsuario };
+    },
+
+    editarUsuario(id, datos) {
+      const usuarios = this.getUsuarios();
+      const idx = usuarios.findIndex(u => u.id === id);
+      if (idx < 0) return { success: false, message: 'Usuario no encontrado.' };
+      const usr = usuarios[idx];
+      const nombre = (datos.nombre || usr.nombre).trim();
+      const email = (datos.email || usr.email).trim().toLowerCase();
+      if (!nombre) return { success: false, message: 'El nombre es obligatorio.' };
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return { success: false, message: 'El correo no tiene formato válido.' };
+      const dup = usuarios.find(u => u.id !== id && u.email === email);
+      if (dup) return { success: false, message: 'Ya existe otro usuario con ese correo.' };
+      if (datos.rolId && datos.rolId !== usr.rolId) {
+        const rol = this.getRolById(datos.rolId);
+        if (!rol) return { success: false, message: 'El rol seleccionado no existe.' };
+        if (rol.estado !== 'activo') return { success: false, message: 'No se puede asignar un rol inactivo.' };
+        usuarios[idx].rolId = rol.id;
+        usuarios[idx].rolNombre = rol.nombre;
+      }
+      usuarios[idx] = Object.assign({}, usuarios[idx], {
+        nombre, apellido: (datos.apellido !== undefined ? datos.apellido : usr.apellido || '').trim(),
+        email, username: (datos.username || usr.username || '').trim().toLowerCase() || email.split('@')[0],
+        estado: datos.estado !== undefined ? datos.estado : usr.estado,
+        actualizadoEn: new Date().toISOString()
+      });
+      if (datos.password && datos.password.trim().length >= 8) {
+        if (datos.passwordConfirm && datos.password !== datos.passwordConfirm) return { success: false, message: 'Las contraseñas no coinciden.' };
+        usuarios[idx].passwordHash = hashSimple(datos.password.trim());
+      }
+      saveToStorage(STORAGE_KEY_USUARIOS, usuarios);
+      return { success: true, data: usuarios[idx] };
+    },
+
+    toggleUsuarioEstado(id) {
+      const usuarios = this.getUsuarios();
+      const idx = usuarios.findIndex(u => u.id === id);
+      if (idx < 0) return { success: false, message: 'Usuario no encontrado.' };
+      // Impedir desactivar al último admin activo
+      if (usuarios[idx].rolId === 'rol-1' && usuarios[idx].estado === 'activo') {
+        const admins = usuarios.filter(u => u.rolId === 'rol-1' && u.estado === 'activo');
+        if (admins.length <= 1) return { success: false, message: 'No se puede desactivar al último administrador activo.' };
+      }
+      usuarios[idx].estado = usuarios[idx].estado === 'activo' ? 'inactivo' : 'activo';
+      usuarios[idx].actualizadoEn = new Date().toISOString();
+      saveToStorage(STORAGE_KEY_USUARIOS, usuarios);
+      return { success: true, data: usuarios[idx] };
+    },
+
+    // ---------------------------------------------------------------
+    // MÓDULO CATEGORÍAS
+    // ---------------------------------------------------------------
+    getCategorias(filtro = {}) {
+      let list = loadFromStorage(STORAGE_KEY_CATEGORIAS, SEED_CATEGORIAS);
+      if (filtro.tipo && filtro.tipo !== 'todos') list = list.filter(c => c.tipo === filtro.tipo);
+      if (filtro.estado && filtro.estado !== 'todos') list = list.filter(c => c.estado === filtro.estado);
+      if (filtro.busqueda) {
+        const q = filtro.busqueda.toLowerCase().trim();
+        list = list.filter(c => c.nombre.toLowerCase().includes(q) || (c.descripcion && c.descripcion.toLowerCase().includes(q)));
+      }
+      return list;
+    },
+
+    getCategoriaById(id) {
+      return this.getCategorias().find(c => c.id === id) || null;
+    },
+
+    getCategoriasByTipo(tipo, soloActivas = true) {
+      const cats = this.getCategorias({ tipo });
+      return soloActivas ? cats.filter(c => c.estado === 'activo') : cats;
+    },
+
+    crearCategoria(datos) {
+      const cats = this.getCategorias();
+      const nombre = (datos.nombre || '').trim();
+      const tipo = (datos.tipo || '').trim();
+      if (!nombre) return { success: false, message: 'El nombre de la categoría es obligatorio.' };
+      if (nombre.length > 100) return { success: false, message: 'El nombre no puede superar 100 caracteres.' };
+      if (!tipo || !['servicio','producto'].includes(tipo)) return { success: false, message: 'Debe seleccionar un tipo válido (servicio o producto).' };
+      const dup = cats.find(c => c.nombre.trim().toLowerCase() === nombre.toLowerCase() && c.tipo === tipo);
+      if (dup) return { success: false, message: `Ya existe una categoría "${nombre}" de tipo ${tipo}.` };
+      const slug = nombre.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'');
+      const nuevaCat = {
+        id: 'cat-' + Date.now(),
+        nombre, tipo, slug,
+        descripcion: (datos.descripcion || '').trim().slice(0, 300),
+        estado: datos.estado || 'activo',
+        creadoEn: new Date().toISOString(),
+        actualizadoEn: new Date().toISOString()
+      };
+      cats.push(nuevaCat);
+      saveToStorage(STORAGE_KEY_CATEGORIAS, cats);
+      return { success: true, data: nuevaCat };
+    },
+
+    editarCategoria(id, datos) {
+      const cats = this.getCategorias();
+      const idx = cats.findIndex(c => c.id === id);
+      if (idx < 0) return { success: false, message: 'Categoría no encontrada.' };
+      const cat = cats[idx];
+      const nombre = (datos.nombre || cat.nombre).trim();
+      const tipo = datos.tipo || cat.tipo;
+      if (!nombre) return { success: false, message: 'El nombre es obligatorio.' };
+      if (nombre.length > 100) return { success: false, message: 'El nombre no puede superar 100 caracteres.' };
+      const dup = cats.find(c => c.id !== id && c.nombre.trim().toLowerCase() === nombre.toLowerCase() && c.tipo === tipo);
+      if (dup) return { success: false, message: `Ya existe otra categoría "${nombre}" del mismo tipo.` };
+      cats[idx] = Object.assign({}, cat, {
+        nombre, tipo,
+        descripcion: (datos.descripcion !== undefined ? datos.descripcion : cat.descripcion || '').trim().slice(0, 300),
+        estado: datos.estado !== undefined ? datos.estado : cat.estado,
+        actualizadoEn: new Date().toISOString()
+      });
+      saveToStorage(STORAGE_KEY_CATEGORIAS, cats);
+      return { success: true, data: cats[idx] };
+    },
+
+    toggleCategoriaEstado(id) {
+      const cats = this.getCategorias();
+      const idx = cats.findIndex(c => c.id === id);
+      if (idx < 0) return { success: false, message: 'Categoría no encontrada.' };
+      // Verificar registros relacionados antes de desactivar
+      const cat = cats[idx];
+      if (cat.estado === 'activo') {
+        const servicios = this.getServicios().filter(s => s.categoria === cat.slug).length;
+        const productos = this.getProductos ? this.getProductos().filter(p => p.categoria === cat.slug).length : 0;
+        if (servicios + productos > 0) {
+          cats[idx].estado = 'inactivo';
+          cats[idx].actualizadoEn = new Date().toISOString();
+          saveToStorage(STORAGE_KEY_CATEGORIAS, cats);
+          return { success: true, data: cats[idx], aviso: `Categoría desactivada. Tiene ${servicios + productos} registros relacionados que conservan su asignación.` };
+        }
+      }
+      cats[idx].estado = cats[idx].estado === 'activo' ? 'inactivo' : 'activo';
+      cats[idx].actualizadoEn = new Date().toISOString();
+      saveToStorage(STORAGE_KEY_CATEGORIAS, cats);
+      return { success: true, data: cats[idx] };
+    },
+
+    getRegistrosRelacionadosCategoria(catId) {
+      const cat = this.getCategoriaById(catId);
+      if (!cat) return { servicios: 0, productos: 0 };
+      const servicios = this.getServicios().filter(s => s.categoria === cat.slug).length;
+      const productos = this.getProductos ? this.getProductos().filter(p => p.categoria === cat.slug).length : 0;
+      return { servicios, productos, total: servicios + productos };
     },
 
     getHistorialCliente(clienteId) {
