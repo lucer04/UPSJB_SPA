@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+<<<<<<< Updated upstream
 
 <head>
     <meta charset="UTF-8">
@@ -926,3 +927,93 @@
 </body>
 
 </html>
+=======
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Citas · VIVI Spa y Estudio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="./Prototipos/css/custom.css">
+<style>
+.page>.cd,.page>.row,.page>.page-head{flex:0 0 auto!important;height:auto!important;min-height:0!important}
+.page{align-content:start}
+</style>
+</head>
+<body>
+<div class="side-backdrop" id="sideBackdrop"></div>
+<div class="shell">
+<aside class="side" id="sidebar">
+<div class="brand"><div class="logo">V</div><div class="brand-text"><b>VIVI</b><small>Spa y Estudio</small></div>
+<button class="side-close-btn d-lg-none ms-auto" id="sideClose" aria-label="Cerrar menú"><i class="bi bi-x-lg"></i></button></div>
+<nav aria-label="Menú principal">
+<div class="grp">Principal</div>
+<a class="nv" href="dashboard.html"><i class="bi bi-grid-1x2"></i>Dashboard</a>
+<a class="nv" href="reportes.html"><i class="bi bi-bar-chart-line"></i>Reportes</a>
+<div class="grp">Gestión</div>
+<a class="nv on" aria-current="page" href="citas.html"><i class="bi bi-calendar-check"></i>Citas</a>
+<a class="nv" href="clientes.html"><i class="bi bi-people"></i>Clientes</a>
+<a class="nv" href="servicios.html"><i class="bi bi-stars"></i>Servicios</a>
+<a class="nv" href="inventario.html"><i class="bi bi-box-seam"></i>Inventario</a>
+<a class="nv" href="pagos.html"><i class="bi bi-cash-stack"></i>Pagos y caja</a>
+<a class="nv" href="comisiones.html"><i class="bi bi-percent"></i>Comisiones</a>
+<div class="grp">Configuraciones</div>
+<a class="nv" href="roles.html"><i class="bi bi-shield-check"></i>Roles</a>
+<a class="nv" href="usuarios.html"><i class="bi bi-person-gear"></i>Usuarios</a>
+<a class="nv" href="categorias.html"><i class="bi bi-grid"></i>Categorías</a>
+</nav>
+<div class="usr">
+<div class="pm" id="pm" hidden>
+<div class="mh"><div class="av">AD</div><div><b>Administradora</b><small>admin@vivispa.com</small><span class="tg">Administradora</span></div></div>
+<button class="mi"><i class="bi bi-person-circle"></i>Mi perfil</button>
+<button class="mi"><i class="bi bi-shield-lock"></i>Cambiar contraseña</button>
+<button class="mi"><i class="bi bi-sliders"></i>Preferencias del Spa</button>
+<button class="mi out"><i class="bi bi-box-arrow-right"></i>Cerrar sesión</button></div>
+<button class="ub" id="ub" aria-haspopup="true" aria-expanded="false"><div class="av">AD</div><div><b>Administradora</b><small>admin@vivispa.com</small></div><i class="bi bi-chevron-up"></i></button>
+</div>
+</aside>
+<div class="main">
+<header class="top">
+<button class="ib" id="burger" aria-label="Mostrar u ocultar menú"><i class="bi bi-list"></i></button>
+<span class="fw-semibold text-uppercase small d-none d-sm-inline" style="letter-spacing:0.06em; color:var(--spa-espresso);">Citas</span>
+<div class="search-wrapper d-none d-md-flex"><i class="bi bi-search"></i><input type="text" id="tableSearch" class="search-input" placeholder="Buscar en citas..."></div>
+<div class="header-date-badge d-none d-lg-flex ms-auto"><i class="bi bi-calendar3"></i><span id="currentDateBadge">Hoy</span></div>
+<div class="nb ms-auto ms-lg-0">
+<button class="ib" id="bell" aria-expanded="false" aria-label="Notificaciones"><i class="bi bi-bell"></i><span class="bdg">3</span></button>
+<div class="pop" id="pop" hidden>
+<div class="pop-header"><b>Notificaciones</b></div>
+<div class="pop-item"><i class="bi bi-exclamation-triangle-fill text-danger"></i><div><b>Stock bajo: Aceite de masaje argán</b><small>Quedan 2 unidades en almacén</small></div></div>
+<div class="pop-item"><i class="bi bi-calendar-plus-fill text-primary"></i><div><b>Nueva cita online confirmada</b><small>Valentina R. · Facial Oro hoy 16:30</small></div></div>
+<div class="pop-item"><i class="bi bi-check-circle-fill text-success"></i><div><b>Cabina 2 lista para higienización</b><small>Turno finalizado a las 13:00</small></div></div>
+</div></div>
+</header>
+<main class="page">
+<div class="page-head">
+<div class="page-head-title"><h1 class="page-title">Citas</h1><p class="page-subtitle">Agenda y estado de todas las citas del spa.</p></div>
+<div class="page-head-actions"><button class="btn btn-primary btn-sm" onclick="alert('Formulario: Nueva cita')"><i class="bi bi-plus-lg me-1"></i>Nueva cita</button></div>
+</div>
+<div class="row g-3 mb-3"><div class="col-12 col-md-6 col-xl-3"><div class="cd kpi gold"><span class="kpi-title">Citas de hoy</span><b>12</b></div></div><div class="col-12 col-md-6 col-xl-3"><div class="cd kpi"><span class="kpi-title">Confirmadas</span><b>9</b></div></div><div class="col-12 col-md-6 col-xl-3"><div class="cd kpi"><span class="kpi-title">Por confirmar</span><b>2</b></div></div><div class="col-12 col-md-6 col-xl-3"><div class="cd kpi"><span class="kpi-title">Canceladas</span><b>1</b></div></div></div>
+<div class="cd">
+<h3 class="mb-3">Listado de citas<small class="text-muted ms-2">Datos de ejemplo</small></h3>
+<div class="table-responsive"><table class="tb" id="tb"><thead><tr><th>Hora</th><th>Clienta</th><th>Servicio</th><th>Espacio</th><th>Especialista</th><th>Estado</th></tr></thead><tbody><tr><td><b>10:00</b></td><td>Lucía Requena</td><td>Facial Hidratante Profundo</td><td>Cabina 1</td><td>Camila Ríos</td><td><span class="pl ok">En curso</span></td></tr><tr><td><b>11:30</b></td><td>Marta Gómez</td><td>Masaje Relajante</td><td>Cabina 2</td><td>Daniela Soto</td><td><span class="pl ok">Confirmada</span></td></tr><tr><td><b>14:00</b></td><td>Andrea Prado</td><td>Manicure Ruso con Gel</td><td>Estudio Glow</td><td>Paola Vega</td><td><span class="pl wn">Pendiente</span></td></tr><tr><td><b>14:00</b></td><td>Sofía Mendoza</td><td>Limpieza Facial &amp; Peeling</td><td>Cabina 1</td><td>Camila Ríos</td><td><span class="pl ok">Confirmada</span></td></tr><tr><td><b>16:30</b></td><td>Rosa Torres</td><td>Rejuvenecimiento Láser</td><td>Cabina 3</td><td>Valeria Núñez</td><td><span class="pl wn">Pendiente</span></td></tr><tr><td><b>17:00</b></td><td>Karla Ruiz</td><td>Esmaltado Semipermanente</td><td>Estudio Glow</td><td>Paola Vega</td><td><span class="pl rd">Cancelada</span></td></tr></tbody></table></div>
+</div>
+</main>
+</div>
+</div>
+<script>
+var b=document.body,$=function(i){return document.getElementById(i)};
+var d=new Date().toLocaleDateString('es-ES',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+$('currentDateBadge').textContent=d.charAt(0).toUpperCase()+d.slice(1);
+$('burger').onclick=function(e){e.stopPropagation();b.toggleAttribute(innerWidth<992?'data-sidebar-open':'data-collapsed')};
+$('sideBackdrop').onclick=$('sideClose').onclick=function(){b.removeAttribute('data-sidebar-open')};
+function closeAll(){[['ub','pm'],['bell','pop']].forEach(function(p){$(p[1]).hidden=true;$(p[0]).setAttribute('aria-expanded','false')})}
+[['ub','pm'],['bell','pop']].forEach(function(p){$(p[0]).onclick=function(e){e.stopPropagation();var h=$(p[1]).hidden;closeAll();$(p[1]).hidden=!h;this.setAttribute('aria-expanded',h)}});
+document.addEventListener('click',closeAll);
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeAll();b.removeAttribute('data-sidebar-open')}});
+var q=$('tableSearch');if(q)q.addEventListener('input',function(){var t=q.value.toLowerCase();document.querySelectorAll('#tb tbody tr').forEach(function(r){r.style.display=r.textContent.toLowerCase().indexOf(t)>-1?'':'none'})});
+</script>
+</body>
+</html>
+>>>>>>> Stashed changes
