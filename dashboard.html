@@ -43,10 +43,10 @@
                 </a>
 
                 <div class="grp">Gestión</div>
-                <a class="nv" href="citas.html">
+                <a class="nv" href="#">
                     <i class="bi bi-calendar-check"></i>Citas
                 </a>
-                <a class="nv" href="clientes.html">
+                <a class="nv" href="#">
                     <i class="bi bi-people"></i>Clientes
                 </a>
                 <a class="nv" href="servicios.html">
@@ -131,7 +131,7 @@
                     <div class="pop" id="pop" hidden>
                         <div class="pop-header">
                             <b>Notificaciones</b>
-                            <span onclick="SpaUI.showToast('Notificaciones', 'Notificaciones marcadas como leídas.', 'info')">Marcar leídas</span>
+                            <span onclick="alert('Notificaciones marcadas como leídas')">Marcar leídas</span>
                         </div>
                         <div class="pop-item">
                             <i class="bi bi-exclamation-triangle-fill text-danger"></i>
@@ -170,7 +170,7 @@
                         <button class="btn btn-outline-spa btn-sm" onclick="location.href='reportes.html'">
                             <i class="bi bi-bar-chart-line me-1"></i>Ver Reportes
                         </button>
-                        <button class="btn btn-primary btn-sm" id="btnNuevaCitaDashboard">
+                        <button class="btn btn-primary btn-sm" onclick="alert('Formulario de nueva cita rápida abierto')">
                             <i class="bi bi-plus-lg me-1"></i>Nueva Cita
                         </button>
                     </div>
@@ -179,10 +179,10 @@
                 <!-- TARJETAS KPI -->
                 <div class="row g-3 mb-3">
                     <!-- KPI 1: Citas de Hoy -->
-                    <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="col-12 col-md-6 col-xl-3">
                         <div class="cd kpi">
                             <span class="kpi-title">Citas de hoy</span>
-                            <b id="dashKpiCitas">12</b>
+                            <b>12</b>
                             <div class="kpi-footer">
                                 <span class="badge-sage"><i class="bi bi-arrow-up-short"></i> +2 hoy</span>
                             </div>
@@ -193,10 +193,10 @@
                     </div>
 
                     <!-- KPI 2: Ingresos del Día (Dorado Elegante) -->
-                    <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="col-12 col-md-6 col-xl-3">
                         <div class="cd kpi gold">
                             <span class="kpi-title">Ingresos del día</span>
-                            <b id="dashKpiIngresos">S/ 1 480</b>
+                            <b>S/ 1 480</b>
                             <div class="kpi-footer">
                                 <span class="badge-sage"><i class="bi bi-arrow-up-short"></i> +8.4%</span>
                             </div>
@@ -207,10 +207,10 @@
                     </div>
 
                     <!-- KPI 3: Clientes del Día -->
-                    <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="col-12 col-md-6 col-xl-3">
                         <div class="cd kpi">
                             <span class="kpi-title">Clientas atendidas</span>
-                            <b id="dashKpiClientas">14</b>
+                            <b>14</b>
                             <div class="kpi-footer">
                                 <span class="badge-sage"><i class="bi bi-arrow-up-short"></i> +15%</span>
                             </div>
@@ -221,10 +221,10 @@
                     </div>
 
                     <!-- KPI 4: Ocupación de Cabinas -->
-                    <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="col-12 col-md-6 col-xl-3">
                         <div class="cd kpi">
                             <span class="kpi-title">Ocupación cabinas</span>
-                            <b id="dashKpiOcupacion">85%</b>
+                            <b>85%</b>
                             <div class="kpi-footer">
                                 <span class="badge-sage"><i class="bi bi-check2"></i> Óptimo</span>
                             </div>
@@ -281,15 +281,15 @@
                                     Cabina 1
                                     <small>Facial · Camila R.</small>
                                 </div>
-                                <div class="blk now" style="grid-column: 3 / 5; cursor: pointer;" data-cita-id="cit-101" title="Click para ver detalle">
+                                <div class="blk now" style="grid-column: 3 / 5;" title="En curso actualmente">
                                     <b><span class="pulse-dot"></span>Facial Hidratante Profundo</b>
                                     <small>10:00 - 12:00 · Lucía Requena</small>
                                 </div>
-                                <div class="blk ok" style="grid-column: 7 / 9; cursor: pointer;" data-cita-id="cit-102" title="Click para ver detalle">
+                                <div class="blk ok" style="grid-column: 7 / 9;" title="Confirmada">
                                     <b>Limpieza Facial & Peeling</b>
                                     <small>14:00 - 16:00 · Sofía Mendoza</small>
                                 </div>
-                                <div class="blk ok" style="grid-column: 9 / 11; cursor: pointer;" data-cita-id="cit-103" title="Click para ver detalle">
+                                <div class="blk ok" style="grid-column: 9 / 11;" title="Confirmada">
                                     <b>Tratamiento Antiedad Oro</b>
                                     <small>16:30 - 18:00 · Mariana Paz</small>
                                 </div>
@@ -301,11 +301,11 @@
                                     Cabina 2
                                     <small>Masajes · Daniela S.</small>
                                 </div>
-                                <div class="blk ok" style="grid-column: 4 / 7; cursor: pointer;" data-cita-id="cit-104" title="Click para ver detalle">
+                                <div class="blk ok" style="grid-column: 4 / 7;" title="Confirmada">
                                     <b>Masaje Relajante Aromaterapia</b>
                                     <small>11:30 - 13:30 · Marta Gómez</small>
                                 </div>
-                                <div class="blk ok" style="grid-column: 8 / 10; cursor: pointer;" data-cita-id="cit-105" title="Click para ver detalle">
+                                <div class="blk ok" style="grid-column: 8 / 10;" title="Confirmada">
                                     <b>Masaje Piedras Volcánicas</b>
                                     <small>15:00 - 16:30 · Elena Castro</small>
                                 </div>
@@ -317,11 +317,11 @@
                                     Cabina 3
                                     <small>Láser · Valeria N.</small>
                                 </div>
-                                <div class="blk ok" style="grid-column: 2 / 4; cursor: pointer;" data-cita-id="cit-106" title="Click para ver detalle">
+                                <div class="blk ok" style="grid-column: 2 / 4;" title="Confirmada">
                                     <b>Depilación Láser Diodo</b>
                                     <small>09:30 - 11:00 · Carmen Morales</small>
                                 </div>
-                                <div class="blk pending" style="grid-column: 9 / 11; cursor: pointer;" data-cita-id="cit-107" title="Click para ver detalle">
+                                <div class="blk pending" style="grid-column: 9 / 11;" title="Por confirmar">
                                     <b>Rejuvenecimiento Facial Láser</b>
                                     <small>16:30 - 17:30 · Rosa Torres</small>
                                 </div>
@@ -333,15 +333,15 @@
                                     Estudio Glow
                                     <small>Uñas · Paola V.</small>
                                 </div>
-                                <div class="blk ok" style="grid-column: 5 / 7; cursor: pointer;" data-cita-id="cit-108" title="Click para ver detalle">
+                                <div class="blk ok" style="grid-column: 5 / 7;" title="Confirmada">
                                     <b>Spa Pedicure Deluxe</b>
                                     <small>12:00 - 13:30 · Jimena Solís</small>
                                 </div>
-                                <div class="blk pending" style="grid-column: 7 / 9; cursor: pointer;" data-cita-id="cit-109" title="Click para ver detalle">
+                                <div class="blk pending" style="grid-column: 7 / 9;" title="Por confirmar">
                                     <b>Manicure Ruso con Gel</b>
                                     <small>14:00 - 15:30 · Andrea Prado</small>
                                 </div>
-                                <div class="blk ok" style="grid-column: 9 / 11; cursor: pointer;" data-cita-id="cit-110" title="Click para ver detalle">
+                                <div class="blk ok" style="grid-column: 9 / 11;" title="Confirmada">
                                     <b>Esmaltado Semipermanente</b>
                                     <small>16:00 - 17:30 · Karla Ruiz</small>
                                 </div>
@@ -373,7 +373,7 @@
                                 </div>
                                 <div class="ms-auto d-flex align-items-center gap-2">
                                     <span class="pl wn">Pendiente</span>
-                                    <button class="btn btn-outline-spa btn-sm py-1 px-2" data-confirm-cita="cit-109">
+                                    <button class="btn btn-outline-spa btn-sm py-1 px-2" onclick="this.parentElement.innerHTML='<span class=\'pl ok\'>Confirmada</span>';">
                                         <i class="bi bi-check-lg"></i>
                                     </button>
                                 </div>
@@ -400,7 +400,7 @@
                                 </div>
                                 <div class="ms-auto d-flex align-items-center gap-2">
                                     <span class="pl wn">Pendiente</span>
-                                    <button class="btn btn-outline-spa btn-sm py-1 px-2" data-confirm-cita="cit-107">
+                                    <button class="btn btn-outline-spa btn-sm py-1 px-2" onclick="this.parentElement.innerHTML='<span class=\'pl ok\'>Confirmada</span>';">
                                         <i class="bi bi-check-lg"></i>
                                     </button>
                                 </div>
@@ -482,10 +482,6 @@
         </div>
     </div>
 
-    <script src="./js/spa-store.js"></script>
-    <script src="./js/spa-ui.js"></script>
-    <script src="./js/appointment-modal.js"></script>
-    <script src="./js/client-modal.js"></script>
     <!-- SCRIPT DE INTERACTIVIDAD -->
     <script>
         var b = document.body;
@@ -511,59 +507,6 @@
             var greetingEl = $('greetingTitle');
             if (greetingEl) greetingEl.textContent = greeting;
         })();
-
-        
-        // Inicializar AppointmentModal y enlazar interactividad dinámica
-        if (typeof AppointmentModal !== 'undefined') {
-            AppointmentModal.init();
-
-            var btnNueva = $('btnNuevaCitaDashboard');
-            if (btnNueva) {
-                btnNueva.onclick = function() {
-                    AppointmentModal.openNew(null, this);
-                };
-            }
-
-            // Click en bloques de agenda para ver detalle
-            document.querySelectorAll('.ag-r .blk[data-cita-id]').forEach(function(blk) {
-                blk.onclick = function() {
-                    var citaId = this.dataset.citaId;
-                    if (citaId) {
-                        AppointmentModal.openDetail(citaId, this);
-                    }
-                };
-            });
-
-            // Confirmar turnos pendientes desde Dashboard
-            document.querySelectorAll('button[data-confirm-cita]').forEach(function(btn) {
-                btn.onclick = function() {
-                    var citaId = this.dataset.confirmCita;
-                    var res = SpaStore.confirmarCita(citaId);
-                    if (res.success) {
-                        SpaUI.showToast('Cita Confirmada', 'La reserva ha sido confirmada.', 'success');
-                        this.parentElement.innerHTML = '<span class="pl ok"><i class="bi bi-check-circle-fill"></i> Confirmada</span>';
-                    }
-                };
-            });
-
-            // Sincronizar KPIs en vivo
-            function syncDashboardKPIs() {
-                if (typeof SpaStore === 'undefined') return;
-                var res = SpaStore.getResumenCitas();
-                var cEl = $('dashKpiCitas');
-                var iEl = $('dashKpiIngresos');
-                var clEl = $('dashKpiClientas');
-                var ocEl = $('dashKpiOcupacion');
-
-                if (cEl) cEl.textContent = res.total;
-                if (iEl) iEl.textContent = SpaStore.formatMoney(res.ingresosDia);
-                if (clEl) clEl.textContent = res.clientasAtendidas;
-                if (ocEl) ocEl.textContent = res.ocupacionPct + '%';
-            }
-
-            syncDashboardKPIs();
-            window.addEventListener('spastore:change', syncDashboardKPIs);
-        }
 
         // Control de Menú Lateral en Escritorio y Móvil
         var burger = $('burger');
