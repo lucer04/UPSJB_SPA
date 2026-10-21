@@ -8,26 +8,15 @@ let content = fs.readFileSync(citasPath, 'utf8');
 if (!content.includes('payment-modal.js')) {
   content = content.replace(
     '<script src="./js/appointment-modal.js"></script>',
-    '<script src="./js/appointment-modal.js"></script>\n    <script src="./js/payment-modal.js"></script>'
+    '<script src="./js/appointment-modal.js"></script>\r\n    <script src="./js/payment-modal.js"></script>'
   );
 }
 
 // 2. Add payment buttons in botonesAccion
-const searchAcciones = `                    if (cita.estado !== 'cancelada' && cita.estado !== 'completada') {
-                        botonesAccion += \`
-                            <button type="button" class="btn-action-icon btn-act-danger" data-action="cancel" data-id="\${cita.id}" title="Cancelar cita">
-                                <i class="bi bi-x-lg"></i>
-                            </button>
-                        \`;
-                    }`;
+const cancelNeedle = 'title="Cancelar cita">\r\n                                <i class="bi bi-x-lg"></i>\r\n                            </button>\r\n                        `;\r\n                    }';
+const altCancelNeedle = 'title="Cancelar cita">\n                                <i class="bi bi-x-lg"></i>\n                            </button>\n                        `;\n                    }';
 
-const replaceAcciones = `                    if (cita.estado !== 'cancelada' && cita.estado !== 'completada') {
-                        botonesAccion += \`
-                            <button type="button" class="btn-action-icon btn-act-danger" data-action="cancel" data-id="\${cita.id}" title="Cancelar cita">
-                                <i class="bi bi-x-lg"></i>
-                            </button>
-                        \`;
-                    }
+const paymentButtonsCode = `
 
                     if (cita.estado !== 'cancelada') {
                         const saldoPend = typeof cita.saldoPendiente === 'number'
@@ -36,7 +25,7 @@ const replaceAcciones = `                    if (cita.estado !== 'cancelada' && 
 
                         if (saldoPend > 0.05) {
                             botonesAccion += \`
-                                <button type="button" class="btn-action-icon" style="color:var(--spa-dorado-oscuro, #8a7042);" data-action="pay" data-id="\${cita.id}" title="Cobrar Cita (Saldo: \${SpaStore.formatMoney(saldoPend)})">
+                                <button type="button" class="btn-action-icon" style="color:var(--spa-dorado-oscuro, #8a7042);" data-action="pay" data-id="\${cita.id}" title="Cobrar Cita (Saldo pendiente: \${SpaStore.formatMoney(saldoPend)})">
                                     <i class="bi bi-cash-stack"></i>
                                 </button>
                             \`;
@@ -49,16 +38,22 @@ const replaceAcciones = `                    if (cita.estado !== 'cancelada' && 
                         }
                     }`;
 
-content = content.replace(searchAcciones, replaceAcciones);
+if (content.includes(cancelNeedle)) {
+  content = content.replace(cancelNeedle, cancelNeedle + paymentButtonsCode);
+} else if (content.includes(altCancelNeedle)) {
+  content = content.replace(altCancelNeedle, altCancelNeedle + paymentButtonsCode);
+} else {
+  console.log('Cancel needle not found directly, using indexOf');
+  const idx = content.indexOf('title="Cancelar cita"');
+  if (idx !== -1) {
+    const closeBraceIdx = content.indexOf('}', idx);
+    content = content.slice(0, closeBraceIdx + 1) + paymentButtonsCode + content.slice(closeBraceIdx + 1);
+  }
+}
 
 // 3. Add payment badge in total column
-const searchTotalCol = `                            <td>
-                                <b class="text-dark">\${SpaStore.formatMoney(cita.total || cita.precio)}</b>
-                                <small class="text-muted d-block" style="font-size:10px;">\${(cita.metodoPago || 'Pendiente').toUpperCase()}</small>
-                            </td>`;
-
-const replaceTotalCol = `                            <td>
-                                <b class="text-dark">\${SpaStore.formatMoney(cita.total || cita.precio)}</b>
+const totalColNeedle = '<small class="text-muted d-block" style="font-size:10px;">${(cita.metodoPago || \'Pendiente\').toUpperCase()}</small>';
+const paymentBadgeCode = `
                                 <div class="mt-1">
                                     \${(() => {
                                         const saldoPend = typeof cita.saldoPendiente === 'number'
@@ -72,18 +67,15 @@ const replaceTotalCol = `                            <td>
                                             return '<span class="badge" style="background:#fef2f2; color:#c62828; font-size:10px; padding:2px 6px;"><i class="bi bi-exclamation-circle me-1"></i>Por cobrar</span>';
                                         }
                                     })()}
-                                </div>
-                            </td>`;
+                                </div>`;
 
-content = content.replace(searchTotalCol, replaceTotalCol);
+if (content.includes(totalColNeedle)) {
+  content = content.replace(totalColNeedle, totalColNeedle + paymentBadgeCode);
+}
 
-// 4. Handle 'pay' and 'receipt' in citasTableBody click delegation
-const searchClickDelegation = `                    } else if (action === 'cancel') {
-                        AppointmentModal.openCancel(citaId, btn);
-                    }`;
-
-const replaceClickDelegation = `                    } else if (action === 'cancel') {
-                        AppointmentModal.openCancel(citaId, btn);
+// 4. Handle click delegation
+const cancelActionNeedle = "AppointmentModal.openCancel(citaId, btn);";
+const paymentActionsDelegation = `
                     } else if (action === 'pay') {
                         PaymentModal.openNuevoPagoModal({ citaId: citaId, onSaved: renderView });
                     } else if (action === 'receipt') {
@@ -92,10 +84,11 @@ const replaceClickDelegation = `                    } else if (action === 'cance
                             PaymentModal.openComprobanteModal(pagos[0].id);
                         } else {
                             PaymentModal.openNuevoPagoModal({ citaId: citaId, onSaved: renderView });
-                        }
-                    }`;
+                        }`;
 
-content = content.replace(searchClickDelegation, replaceClickDelegation);
+if (content.includes(cancelActionNeedle) && !content.includes("action === 'pay'")) {
+  content = content.replace(cancelActionNeedle, cancelActionNeedle + paymentActionsDelegation);
+}
 
 fs.writeFileSync(citasPath, content, 'utf8');
-console.log('Successfully patched citas.html with direct payments!');
+console.log('Successfully applied payment integration to citas.html!');
