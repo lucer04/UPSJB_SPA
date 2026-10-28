@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:css": "sass Prototipos/scss/custom.scss Prototipos/css/custom.css --no-source-map",
-    "watch:css": "sass --watch Prototipos/scss/custom.scss:Prototipos/css/custom.css"
+    "build:css": "sass prototipo/scss/custom.scss prototipo/css/custom.css --no-source-map",
+    "watch:css": "sass --watch prototipo/scss/custom.scss:prototipo/css/custom.css"
   },
   "repository": {
     "type": "git",

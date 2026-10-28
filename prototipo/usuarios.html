@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuarios · VIVI Spa y Estudio</title>
+    <meta name="description" content="Gestión de cuentas de usuario del sistema VIVI Spa y Estudio.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="./css/custom.css">
+    <style>
+        .vv-modal-backdrop {
+            position: fixed; inset: 0; z-index: 1050;
+            background: rgba(18,13,10,.65); backdrop-filter: blur(4px);
+            display: flex; align-items: center; justify-content: center;
+            padding: 16px; opacity: 0; pointer-events: none;
+            transition: opacity .22s ease;
+            overflow-y: auto; overflow-x: hidden;
+            -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
+        }
+        .vv-modal-backdrop.show { opacity: 1; pointer-events: auto; }
+        .vv-modal-dialog {
+            background: #fff; border-radius: 16px;
+            max-width: 560px; width: 100%;
+            height: auto; max-height: calc(100vh - 32px); max-height: calc(100dvh - 32px);
+            display: flex; flex-direction: column; overflow: hidden;
+            box-shadow: 0 24px 80px rgba(90,62,40,.22);
+            transform: translateY(24px); transition: transform .22s ease;
+            margin: auto; position: relative;
+        }
+        .vv-modal-backdrop.show .vv-modal-dialog { transform: translateY(0); }
+        .vv-modal-dialog > form, .vv-modal-dialog form {
+            display: flex; flex-direction: column; flex: 1 1 auto;
+            min-height: 0; max-height: 100%; height: 100%; overflow: hidden; margin: 0;
+        }
+        .vv-modal-header {
+            flex-shrink: 0; position: sticky; top: 0; z-index: 10; background: #fff;
+            display: flex; align-items: flex-start; justify-content: space-between;
+            padding: 20px 26px 14px; border-bottom: 1px solid #E8DED0;
+        }
+        .vv-modal-header h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: #3A2A1E; margin: 0; }
+        .vv-modal-header p { font-size: 12px; color: #7B5B3A; margin: 3px 0 0; }
+        .vv-modal-body {
+            flex: 1 1 auto; min-height: 0; overflow-y: auto; overflow-x: hidden;
+            padding: 20px 26px; -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
+            scrollbar-width: thin; scrollbar-color: #DFCBA5 #FAF7F2;
+        }
+        .vv-modal-body::-webkit-scrollbar { width: 6px; }
+        .vv-modal-body::-webkit-scrollbar-track { background: #FAF7F2; }
+        .vv-modal-body::-webkit-scrollbar-thumb { background: #DFCBA5; border-radius: 99px; }
+        .vv-modal-body::-webkit-scrollbar-thumb:hover { background: #C5A059; }
+        .vv-modal-footer {
+            flex-shrink: 0; position: sticky; bottom: 0; z-index: 10; background: #fff;
+            padding: 14px 26px 16px; border-top: 1px solid #E8DED0;
+            display: flex; gap: 10px; justify-content: flex-end;
+        }
+        .vv-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        @media (max-width: 540px) { .vv-form-row { grid-template-columns: 1fr; } }
+        .vv-form-group { margin-bottom: 14px; }
+        .vv-label { display: block; font-size: 11px; font-weight: 600; color: #7B5B3A; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 5px; }
+        .vv-input, .vv-select { width: 100%; padding: 9px 13px; border: 1.5px solid #E0D5C5; border-radius: 8px; font-family: 'Montserrat', sans-serif; font-size: 13px; color: #3A2A1E; background: #FDFAF6; transition: border-color .2s; box-sizing: border-box; }
+        .vv-input:focus, .vv-select:focus { outline: none; border-color: #C8A96E; background: #fff; }
+        .vv-error { color: #c0392b; font-size: 11px; margin-top: 3px; display: none; }
+        .vv-error.show { display: block; }
+        .vv-error-box { background: #fdecea; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #c0392b; margin-top: 8px; display: none; }
+        .vv-error-box.show { display: block; }
+        .vv-divider { border: none; border-top: 1px solid #E8DED0; margin: 16px 0; }
+        .nota-seguridad-usr { background: #FEF3E2; border: 1px solid #E8B84B; border-radius: 8px; padding: 10px 14px; font-size: 11px; color: #7B5B3A; margin-bottom: 16px; }
+        .av-tabla { width: 36px; height: 36px; border-radius: 50%; background: #C8A96E; color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .perm-resumen-mod { margin-bottom: 8px; }
+        .perm-resumen-mod-name { font-size: 10px; font-weight: 600; color: #7B5B3A; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 2px; }
+        .perm-tag { display: inline-block; background: #EAE0CF; color: #5A3E28; font-size: 10px; padding: 2px 8px; border-radius: 12px; margin: 1px; }
+        .perm-resumen-box { background: #FAF7F2; border-radius: 10px; padding: 14px; max-height: 260px; overflow-y: auto; }
+        [hidden] { display: none !important; }
+    </style>
+</head>
+<body>
+    <div class="side-backdrop" id="sideBackdrop"></div>
+
+    <div class="shell">
+        <!-- BARRA LATERAL -->
+        <aside class="side" id="sidebar">
+            <div class="brand">
+                <div class="logo">V</div>
+                <div class="brand-text"><b>VIVI</b><small>Spa y Estudio</small></div>
+                <button class="side-close-btn d-lg-none ms-auto" id="sideClose" aria-label="Cerrar menú">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+            <nav aria-label="Menú principal">
+                <div class="grp">Principal</div>
+                <a class="nv" href="dashboard.html"><i class="bi bi-grid-1x2"></i>Dashboard</a>
+                <a class="nv" href="reportes.html"><i class="bi bi-bar-chart-line"></i>Reportes</a>
+                <div class="grp">Gestión</div>
+                <a class="nv" href="citas.html"><i class="bi bi-calendar-check"></i>Citas</a>
+                <a class="nv" href="clientes.html"><i class="bi bi-people"></i>Clientes</a>
+                <a class="nv" href="servicios.html"><i class="bi bi-stars"></i>Servicios</a>
+                <a class="nv" href="inventario.html"><i class="bi bi-box-seam"></i>Inventario</a>
+                <a class="nv" href="pagos.html"><i class="bi bi-cash-stack"></i>Pagos y caja</a>
+                <a class="nv" href="comisiones.html"><i class="bi bi-percent"></i>Comisiones</a>
+                <div class="grp">Configuraciones</div>
+                <a class="nv" href="roles.html"><i class="bi bi-shield-check"></i>Roles</a>
+                <a class="nv on" href="usuarios.html" aria-current="page"><i class="bi bi-person-gear"></i>Usuarios</a>
+                <a class="nv" href="categorias.html"><i class="bi bi-grid"></i>Categorías</a>
+            </nav>
+            <div class="usr">
+                <div class="pm" id="pm" hidden>
+                    <div class="mh"><div class="av">AD</div><div><b>Administradora</b><small>admin@vivispa.com</small><span class="tg">Administradora</span></div></div>
+                    <button class="mi"><i class="bi bi-person-circle"></i>Mi perfil</button>
+                    <button class="mi"><i class="bi bi-shield-lock"></i>Cambiar contraseña</button>
+                    <button class="mi out"><i class="bi bi-box-arrow-right"></i>Cerrar sesión</button>
+                </div>
+                <button class="ub" id="ub" aria-haspopup="true" aria-expanded="false">
+                    <div class="av">AD</div>
+                    <div><b>Administradora</b><small>admin@vivispa.com</small></div>
+                    <i class="bi bi-chevron-up"></i>
+                </button>
+            </div>
+        </aside>
+
+        <div class="main">
+            <!-- HEADER -->
+            <header class="top">
+                <button class="ib" id="burger" aria-label="Mostrar u ocultar menú"><i class="bi bi-list"></i></button>
+                <span class="fw-semibold text-uppercase small d-none d-sm-inline" style="letter-spacing:.06em;color:var(--spa-espresso);">Usuarios del Sistema</span>
+                <div class="nb ms-auto">
+                    <button class="ib" id="bell" aria-expanded="false" aria-label="Notificaciones"><i class="bi bi-bell"></i></button>
+                    <div class="pop" id="pop" hidden>
+                        <div class="pop-header"><b>Notificaciones</b></div>
+                        <div class="pop-item" style="padding:16px;font-size:13px;color:#7B5B3A;">Sin notificaciones nuevas.</div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- PÁGINA -->
+            <main class="page">
+                <div class="page-head">
+                    <div class="page-head-title">
+                        <h1 class="page-title">Usuarios del Sistema</h1>
+                        <p class="page-subtitle">Administra las cuentas de acceso y los roles asignados a cada persona.</p>
+                    </div>
+                    <div class="page-head-actions">
+                        <button class="btn btn-primary btn-sm" id="btnNuevoUsuario">
+                            <i class="bi bi-person-plus me-1"></i>Nuevo Usuario
+                        </button>
+                    </div>
+                </div>
+
+                <!-- AVISO SEGURIDAD -->
+                <div class="nota-seguridad-usr mb-3">
+                    <i class="bi bi-shield-exclamation me-1"></i>
+                    <strong>Aviso:</strong> Esta aplicación funciona íntegramente en el navegador (localStorage). Las contraseñas se almacenan con un hash simple no criptográfico y <strong>no proveen seguridad real</strong> sin un backend.
+                </div>
+
+                <!-- KPIs -->
+                <div class="row g-3 mb-3">
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="cd kpi">
+                            <span class="kpi-title">Total usuarios</span>
+                            <b id="kpiTotalUsrs">—</b>
+                            <div class="kpi-footer"><span class="badge-sage"><i class="bi bi-people"></i> registrados</span></div>
+                            <svg viewBox="0 0 84 30" aria-hidden="true"><polyline points="0,20 14,16 28,18 42,12 56,14 70,8 84,3" /></svg>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="cd kpi gold">
+                            <span class="kpi-title">Activos</span>
+                            <b id="kpiUsrsActivos">—</b>
+                            <div class="kpi-footer"><span class="badge-sage"><i class="bi bi-person-check"></i> habilitados</span></div>
+                            <svg viewBox="0 0 84 30" aria-hidden="true"><polyline points="0,18 14,14 28,15 42,9 56,11 70,4 84,2" /></svg>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="cd kpi">
+                            <span class="kpi-title">Inactivos</span>
+                            <b id="kpiUsrsInactivos">—</b>
+                            <div class="kpi-footer"><span class="badge-sage"><i class="bi bi-person-dash"></i> suspendidos</span></div>
+                            <svg viewBox="0 0 84 30" aria-hidden="true"><polyline points="0,22 14,19 28,21 42,15 56,17 70,10 84,5" /></svg>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="cd kpi">
+                            <span class="kpi-title">Roles disponibles</span>
+                            <b id="kpiRolesDisp">—</b>
+                            <div class="kpi-footer"><span class="badge-sage"><i class="bi bi-shield"></i> activos</span></div>
+                            <svg viewBox="0 0 84 30" aria-hidden="true"><polyline points="0,21 14,17 28,19 42,13 56,10 70,6 84,2" /></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FILTROS -->
+                <div class="cd mb-3">
+                    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+                        <div class="search-wrapper" style="flex:1;min-width:200px;">
+                            <i class="bi bi-search"></i>
+                            <input type="search" id="busqueda" class="search-input" placeholder="Buscar por nombre, email o usuario…">
+                        </div>
+                        <select id="filtroRol" class="vv-select" style="width:auto;min-width:160px;">
+                            <option value="">Todos los roles</option>
+                        </select>
+                        <select id="filtroEstado" class="vv-select" style="width:auto;min-width:150px;">
+                            <option value="todos">Todos los estados</option>
+                            <option value="activo">Activos</option>
+                            <option value="inactivo">Inactivos</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- TABLA -->
+                <div class="cd">
+                    <div style="overflow-x:auto;">
+                        <table class="tb" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th>Usuario</th>
+                                    <th>Username</th>
+                                    <th>Rol</th>
+                                    <th>Estado</th>
+                                    <th>Creado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaUsrsBody">
+                                <tr><td colspan="6" style="text-align:center;padding:40px;color:#9A8070;">Cargando usuarios…</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- MODAL USUARIO -->
+    <div class="vv-modal-backdrop" id="modalUsrBackdrop" aria-hidden="true" role="dialog" aria-modal="true">
+        <div class="vv-modal-dialog">
+            <div class="vv-modal-header">
+                <div>
+                    <h2 id="modalUsrTitulo">Nuevo Usuario</h2>
+                    <p id="modalUsrSubtitulo">Crea una cuenta de acceso asignando un rol y credenciales.</p>
+                </div>
+                <button type="button" class="btn-action-icon" id="modalUsrCloseBtn" aria-label="Cerrar"><i class="bi bi-x-lg"></i></button>
+            </div>
+            <div class="vv-modal-body">
+                <div class="vv-form-row">
+                    <div class="vv-form-group">
+                        <label class="vv-label" for="usrNombre">Nombre <span style="color:#c0392b">*</span></label>
+                        <input type="text" id="usrNombre" class="vv-input" placeholder="Nombre" maxlength="60">
+                        <div class="vv-error" id="errUsrNombre"></div>
+                    </div>
+                    <div class="vv-form-group">
+                        <label class="vv-label" for="usrApellido">Apellido</label>
+                        <input type="text" id="usrApellido" class="vv-input" placeholder="Apellido" maxlength="60">
+                    </div>
+                </div>
+                <div class="vv-form-group">
+                    <label class="vv-label" for="usrEmail">Correo electrónico <span style="color:#c0392b">*</span></label>
+                    <input type="email" id="usrEmail" class="vv-input" placeholder="correo@ejemplo.com" maxlength="120">
+                    <div class="vv-error" id="errUsrEmail"></div>
+                </div>
+                <div class="vv-form-row">
+                    <div class="vv-form-group">
+                        <label class="vv-label" for="usrUsername">Nombre de usuario</label>
+                        <input type="text" id="usrUsername" class="vv-input" placeholder="usuario123" maxlength="40">
+                        <div class="vv-error" id="errUsrUsername"></div>
+                    </div>
+                    <div class="vv-form-group">
+                        <label class="vv-label" for="usrRol">Rol <span style="color:#c0392b">*</span></label>
+                        <select id="usrRol" class="vv-select">
+                            <option value="">Seleccionar rol…</option>
+                        </select>
+                        <div class="vv-error" id="errUsrRol"></div>
+                    </div>
+                </div>
+                <div class="vv-form-group">
+                    <label class="vv-label" for="usrEstado">Estado</label>
+                    <select id="usrEstado" class="vv-select">
+                        <option value="activo">Activo</option>
+                        <option value="inactivo">Inactivo</option>
+                    </select>
+                </div>
+                <hr class="vv-divider">
+                <p class="vv-label" style="margin-bottom:12px;">Credenciales de acceso</p>
+                <div class="vv-form-row">
+                    <div class="vv-form-group">
+                        <label class="vv-label" for="usrPassword">Contraseña <span id="passRequired" style="color:#c0392b">*</span></label>
+                        <input type="password" id="usrPassword" class="vv-input" placeholder="Mín. 8 caracteres" maxlength="80" autocomplete="new-password">
+                        <div class="vv-error" id="errUsrPass"></div>
+                    </div>
+                    <div class="vv-form-group">
+                        <label class="vv-label" for="usrPassConfirm">Confirmar contraseña</label>
+                        <input type="password" id="usrPassConfirm" class="vv-input" placeholder="Repetir contraseña" maxlength="80" autocomplete="new-password">
+                        <div class="vv-error" id="errUsrPassConfirm"></div>
+                    </div>
+                </div>
+                <p id="passHint" style="font-size:11px;color:#9A8070;margin-top:-6px;">Mínimo 8 caracteres.</p>
+                <div class="vv-error-box" id="errUsrGeneral"></div>
+            </div>
+            <div class="vv-modal-footer">
+                <button type="button" class="btn btn-outline-spa btn-sm" id="btnCancelarUsr">Cancelar</button>
+                <button type="button" class="btn btn-primary btn-sm" id="btnGuardarUsr"><i class="bi bi-check-lg me-1"></i>Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DETALLE -->
+    <div class="vv-modal-backdrop" id="modalDetalleBackdrop" aria-hidden="true" role="dialog" aria-modal="true">
+        <div class="vv-modal-dialog">
+            <div class="vv-modal-header">
+                <div><h2>Detalle del Usuario</h2></div>
+                <button type="button" class="btn-action-icon" id="modalDetalleCloseBtn" aria-label="Cerrar"><i class="bi bi-x-lg"></i></button>
+            </div>
+            <div class="vv-modal-body" id="detalleContent"></div>
+            <div class="vv-modal-footer">
+                <button type="button" class="btn btn-outline-spa btn-sm" id="btnCerrarDetalle">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/spa-store.js"></script>
+    <script src="./js/spa-ui.js"></script>
+    <script>
+    (function () {
+        'use strict';
+        var $ = function (id) { return document.getElementById(id); };
+        var editandoId = null;
+
+        function openModal(id) {
+            var m = $(id);
+            m.classList.add('show'); m.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeModal(id) {
+            var m = $(id);
+            m.classList.remove('show'); m.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+
+        // ── FILTRO ROL ────────────────────────────────────────
+        function llenarFiltroRol() {
+            var roles = SpaStore.getRoles({ estado: 'activo' });
+            var sel = $('filtroRol');
+            sel.innerHTML = '<option value="">Todos los roles</option>' +
+                roles.map(function (r) { return '<option value="' + r.id + '">' + r.nombre + '</option>'; }).join('');
+        }
+        function llenarRolSelect() {
+            var roles = SpaStore.getRoles({ estado: 'activo' });
+            var sel = $('usrRol');
+            sel.innerHTML = '<option value="">Seleccionar rol…</option>' +
+                roles.map(function (r) { return '<option value="' + r.id + '">' + r.nombre + '</option>'; }).join('');
+        }
+
+        // ── KPIs ──────────────────────────────────────────────
+        function renderKPIs() {
+            var usrs = SpaStore.getUsuarios();
+            var roles = SpaStore.getRoles({ estado: 'activo' });
+            $('kpiTotalUsrs').textContent = usrs.length;
+            $('kpiUsrsActivos').textContent = usrs.filter(function (u) { return u.estado === 'activo'; }).length;
+            $('kpiUsrsInactivos').textContent = usrs.filter(function (u) { return u.estado === 'inactivo'; }).length;
+            $('kpiRolesDisp').textContent = roles.length;
+        }
+
+        // ── TABLA ─────────────────────────────────────────────
+        function iniciales(u) { return ((u.nombre || '?')[0] + ((u.apellido || '?')[0] || '?')).toUpperCase(); }
+        function fechaCorta(iso) { if (!iso) return '—'; return new Date(iso).toLocaleDateString('es-PE', { day: '2-digit', month: 'short', year: 'numeric' }); }
+
+        function renderTabla() {
+            var busq = ($('busqueda').value || '').trim();
+            var rolId = $('filtroRol').value;
+            var est = $('filtroEstado').value;
+            var filtro = {};
+            if (busq) filtro.busqueda = busq;
+            if (rolId) filtro.rolId = rolId;
+            if (est !== 'todos') filtro.estado = est;
+            var usrs = SpaStore.getUsuarios(filtro);
+            var tbody = $('tablaUsrsBody');
+            if (usrs.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:40px;color:#9A8070;"><i class="bi bi-person-slash" style="font-size:2rem;display:block;margin-bottom:8px;"></i>No se encontraron usuarios.</td></tr>';
+                return;
+            }
+            tbody.innerHTML = usrs.map(function (u) {
+                var ini = iniciales(u);
+                var estBadge = u.estado === 'activo'
+                    ? '<span class="pl ok">Activo</span>'
+                    : '<span class="pl" style="background:#fdecea;color:#c0392b;">Inactivo</span>';
+                var sisTag = u.sistema ? '<span style="font-size:9px;background:#7B5B3A;color:#fff;border-radius:12px;padding:1px 7px;margin-left:4px;">Sistema</span>' : '';
+                var btnToggle = u.sistema
+                    ? '<button class="btn-action-icon" style="opacity:.35;cursor:default;" title="Usuario del sistema: protegido"><i class="bi bi-lock"></i></button>'
+                    : (u.estado === 'activo'
+                        ? '<button class="btn-action-icon" title="Desactivar" data-action="toggle" data-id="' + u.id + '"><i class="bi bi-toggle2-on" style="color:#2d6a4f;"></i></button>'
+                        : '<button class="btn-action-icon" title="Activar" data-action="toggle" data-id="' + u.id + '"><i class="bi bi-toggle2-off" style="color:#aaa;"></i></button>');
+                return '<tr>' +
+                    '<td><div style="display:flex;align-items:center;gap:10px;">' +
+                        '<div class="av-tabla">' + ini + '</div>' +
+                        '<div><strong style="font-size:13px;">' + u.nombre + ' ' + (u.apellido || '') + '</strong>' + sisTag +
+                        '<br><small style="color:#9A8070;">' + u.email + '</small></div></div></td>' +
+                    '<td style="font-size:13px;color:#7B5B3A;">@' + (u.username || '—') + '</td>' +
+                    '<td><span class="badge-sage">' + (u.rolNombre || '—') + '</span></td>' +
+                    '<td>' + estBadge + '</td>' +
+                    '<td style="font-size:12px;color:#9A8070;">' + fechaCorta(u.creadoEn) + '</td>' +
+                    '<td style="white-space:nowrap;">' +
+                        '<button class="btn-action-icon" title="Ver detalle" data-action="ver" data-id="' + u.id + '"><i class="bi bi-eye"></i></button>' +
+                        '<button class="btn-action-icon" title="Editar" data-action="editar" data-id="' + u.id + '"><i class="bi bi-pencil"></i></button>' +
+                        btnToggle +
+                    '</td></tr>';
+            }).join('');
+        }
+
+        function renderView() { renderKPIs(); renderTabla(); }
+
+        // ── MODAL USUARIO ──────────────────────────────────────
+        function limpiarForm() {
+            ['usrNombre','usrApellido','usrEmail','usrUsername','usrPassword','usrPassConfirm'].forEach(function (id) { $(id).value = ''; });
+            $('usrRol').value = '';
+            $('usrEstado').value = 'activo';
+            ['errUsrNombre','errUsrEmail','errUsrUsername','errUsrRol','errUsrPass','errUsrPassConfirm'].forEach(function (id) {
+                $(id).classList.remove('show'); $(id).textContent = '';
+            });
+            $('errUsrGeneral').classList.remove('show'); $('errUsrGeneral').textContent = '';
+        }
+
+        function abrirModalNuevo() {
+            editandoId = null;
+            $('modalUsrTitulo').textContent = 'Nuevo Usuario';
+            $('modalUsrSubtitulo').textContent = 'Crea una cuenta de acceso asignando un rol y credenciales.';
+            $('passRequired').style.display = 'inline';
+            $('passHint').textContent = 'Mínimo 8 caracteres.';
+            llenarRolSelect();
+            limpiarForm();
+            openModal('modalUsrBackdrop');
+            setTimeout(function () { $('usrNombre').focus(); }, 120);
+        }
+
+        function abrirModalEditar(id) {
+            var u = SpaStore.getUsuarioById(id);
+            if (!u) return;
+            editandoId = id;
+            $('modalUsrTitulo').textContent = 'Editar Usuario';
+            $('modalUsrSubtitulo').textContent = 'Modifica los datos del usuario. Deja la contraseña en blanco para no cambiarla.';
+            $('passRequired').style.display = 'none';
+            $('passHint').textContent = 'Dejar en blanco para no cambiar la contraseña.';
+            llenarRolSelect();
+            limpiarForm();
+            $('usrNombre').value = u.nombre;
+            $('usrApellido').value = u.apellido || '';
+            $('usrEmail').value = u.email;
+            $('usrUsername').value = u.username || '';
+            $('usrRol').value = u.rolId;
+            $('usrEstado').value = u.estado;
+            openModal('modalUsrBackdrop');
+        }
+
+        function guardarUsuario() {
+            var nombre = ($('usrNombre').value || '').trim();
+            var apellido = ($('usrApellido').value || '').trim();
+            var email = ($('usrEmail').value || '').trim();
+            var username = ($('usrUsername').value || '').trim();
+            var rolId = $('usrRol').value;
+            var estado = $('usrEstado').value;
+            var pwd = $('usrPassword').value;
+            var pwdC = $('usrPassConfirm').value;
+            var btn = $('btnGuardarUsr');
+
+            ['errUsrNombre','errUsrEmail','errUsrUsername','errUsrRol','errUsrPass','errUsrPassConfirm'].forEach(function (id) { $(id).classList.remove('show'); $(id).textContent = ''; });
+            $('errUsrGeneral').classList.remove('show');
+
+            var valid = true;
+            if (!nombre) { $('errUsrNombre').textContent = 'El nombre es obligatorio.'; $('errUsrNombre').classList.add('show'); valid = false; }
+            if (!email) { $('errUsrEmail').textContent = 'El correo es obligatorio.'; $('errUsrEmail').classList.add('show'); valid = false; }
+            else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { $('errUsrEmail').textContent = 'Formato de correo inválido.'; $('errUsrEmail').classList.add('show'); valid = false; }
+            if (!rolId) { $('errUsrRol').textContent = 'Debe seleccionar un rol.'; $('errUsrRol').classList.add('show'); valid = false; }
+            if (!editandoId && !pwd) { $('errUsrPass').textContent = 'La contraseña es obligatoria.'; $('errUsrPass').classList.add('show'); valid = false; }
+            if (pwd && pwd.length < 8) { $('errUsrPass').textContent = 'Mínimo 8 caracteres.'; $('errUsrPass').classList.add('show'); valid = false; }
+            if (pwd && pwdC && pwd !== pwdC) { $('errUsrPassConfirm').textContent = 'Las contraseñas no coinciden.'; $('errUsrPassConfirm').classList.add('show'); valid = false; }
+            if (!valid) return;
+
+            btn.disabled = true;
+            var datos = { nombre: nombre, apellido: apellido, email: email, username: username, rolId: rolId, estado: estado };
+            if (pwd) { datos.password = pwd; datos.passwordConfirm = pwdC; }
+
+            var res = editandoId ? SpaStore.editarUsuario(editandoId, datos) : SpaStore.crearUsuario(datos);
+            btn.disabled = false;
+            if (!res.success) { $('errUsrGeneral').textContent = res.message; $('errUsrGeneral').classList.add('show'); return; }
+            SpaUI.showToast('Éxito', editandoId ? 'Usuario actualizado.' : 'Usuario creado correctamente.', 'success');
+            closeModal('modalUsrBackdrop');
+            renderView();
+        }
+
+        function abrirDetalle(id) {
+            var u = SpaStore.getUsuarioById(id);
+            if (!u) return;
+            var rol = SpaStore.getRolById(u.rolId);
+            var perms = rol ? (rol.permisos || {}) : {};
+            var permsHtml = Object.keys(perms).filter(function (m) { return perms[m] && perms[m].length > 0; }).map(function (m) {
+                return '<div class="perm-resumen-mod"><div class="perm-resumen-mod-name">' + m + '</div>' + perms[m].map(function (a) { return '<span class="perm-tag">' + a + '</span>'; }).join('') + '</div>';
+            }).join('');
+            var estBadge = u.estado === 'activo' ? '<span class="pl ok">Activo</span>' : '<span class="pl" style="background:#fdecea;color:#c0392b;">Inactivo</span>';
+            $('detalleContent').innerHTML =
+                '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">' +
+                    '<div><span style="font-size:10px;font-weight:600;color:#9A8070;text-transform:uppercase;letter-spacing:.05em;display:block;">Nombre</span><span style="font-size:13px;">' + u.nombre + ' ' + (u.apellido || '') + '</span></div>' +
+                    '<div><span style="font-size:10px;font-weight:600;color:#9A8070;text-transform:uppercase;letter-spacing:.05em;display:block;">Email</span><span style="font-size:13px;">' + u.email + '</span></div>' +
+                    '<div><span style="font-size:10px;font-weight:600;color:#9A8070;text-transform:uppercase;letter-spacing:.05em;display:block;">Username</span><span style="font-size:13px;">@' + (u.username || '—') + '</span></div>' +
+                    '<div><span style="font-size:10px;font-weight:600;color:#9A8070;text-transform:uppercase;letter-spacing:.05em;display:block;">Rol</span><span class="badge-sage">' + (u.rolNombre || '—') + '</span></div>' +
+                    '<div><span style="font-size:10px;font-weight:600;color:#9A8070;text-transform:uppercase;letter-spacing:.05em;display:block;">Estado</span>' + estBadge + '</div>' +
+                '</div>' +
+                '<p style="font-size:11px;font-weight:600;color:#7B5B3A;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Permisos del Rol</p>' +
+                '<div class="perm-resumen-box">' + (permsHtml || '<p style="font-size:13px;color:#9A8070;margin:0;">Sin permisos configurados.</p>') + '</div>';
+            openModal('modalDetalleBackdrop');
+        }
+
+        // ── EVENTOS ────────────────────────────────────────────
+        $('tablaUsrsBody').addEventListener('click', function (e) {
+            var btn = e.target.closest('[data-action]');
+            if (!btn) return;
+            var action = btn.dataset.action, id = btn.dataset.id;
+            if (action === 'ver') abrirDetalle(id);
+            else if (action === 'editar') abrirModalEditar(id);
+            else if (action === 'toggle') {
+                var res = SpaStore.toggleUsuarioEstado(id);
+                if (!res.success) { SpaUI.showToast('Error', res.message, 'error'); return; }
+                SpaUI.showToast('Actualizado', 'Estado del usuario modificado.', 'success');
+                renderView();
+            }
+        });
+        $('btnNuevoUsuario').onclick = abrirModalNuevo;
+        $('btnGuardarUsr').onclick = guardarUsuario;
+        $('btnCancelarUsr').onclick = function () { closeModal('modalUsrBackdrop'); };
+        $('modalUsrCloseBtn').onclick = function () { closeModal('modalUsrBackdrop'); };
+        $('modalUsrBackdrop').onclick = function (e) { if (e.target === this) closeModal('modalUsrBackdrop'); };
+        $('btnCerrarDetalle').onclick = function () { closeModal('modalDetalleBackdrop'); };
+        $('modalDetalleCloseBtn').onclick = function () { closeModal('modalDetalleBackdrop'); };
+        $('modalDetalleBackdrop').onclick = function (e) { if (e.target === this) closeModal('modalDetalleBackdrop'); };
+        $('busqueda').addEventListener('input', renderTabla);
+        $('filtroRol').addEventListener('change', renderTabla);
+        $('filtroEstado').addEventListener('change', renderTabla);
+
+        // ── SIDEBAR ────────────────────────────────────────────
+        var b = document.body;
+        var burger = $('burger'), bkdrop = $('sideBackdrop'), sideClose = $('sideClose');
+        function toggleSide(e) { if (e) e.stopPropagation(); if (window.innerWidth < 992) { b.toggleAttribute('data-sidebar-open'); } else { b.toggleAttribute('data-collapsed'); } }
+        if (burger) burger.onclick = toggleSide;
+        if (bkdrop) bkdrop.onclick = function () { b.removeAttribute('data-sidebar-open'); };
+        if (sideClose) sideClose.onclick = function (e) { e.stopPropagation(); b.removeAttribute('data-sidebar-open'); };
+        function closeAllPops() { [['ub','pm'],['bell','pop']].forEach(function (p) { var btn=$(p[0]),pop=$(p[1]); if(pop)pop.hidden=true; if(btn)btn.setAttribute('aria-expanded','false'); }); }
+        function setupPop(bId, pId) { var btn=$(bId),pop=$(pId); if(!btn||!pop)return; btn.onclick=function(e){e.stopPropagation();var wh=pop.hidden;closeAllPops();pop.hidden=!wh;btn.setAttribute('aria-expanded',wh?'true':'false');}; }
+        setupPop('ub','pm'); setupPop('bell','pop');
+        document.addEventListener('click', function (e) { if(!e.target.closest('#sidebar')&&window.innerWidth<992&&b.hasAttribute('data-sidebar-open'))b.removeAttribute('data-sidebar-open'); closeAllPops(); });
+        document.addEventListener('keydown', function (e) { if(e.key==='Escape'){closeAllPops();b.removeAttribute('data-sidebar-open');closeModal('modalUsrBackdrop');closeModal('modalDetalleBackdrop');} });
+
+        // ── INIT ───────────────────────────────────────────────
+        llenarFiltroRol();
+        renderView();
+    })();
+    </script>
+</body>
+</html>
