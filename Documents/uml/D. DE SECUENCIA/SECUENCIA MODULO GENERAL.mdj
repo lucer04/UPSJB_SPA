@@ -1228,7 +1228,7 @@
 													"fillColor": "#FFD8FF63",
 													"font": "Arial;13;0",
 													"parentStyle": true,
-													"left": 71.9599609375,
+													"left": 69.07177734375,
 													"top": 341,
 													"width": 89.6162109375,
 													"height": 13,
@@ -1245,9 +1245,9 @@
 													"parentStyle": true,
 													"left": 45,
 													"top": 341,
-													"width": 20.9599609375,
+													"width": 18.07177734375,
 													"height": 13,
-													"text": "seq"
+													"text": "opt"
 												},
 												{
 													"_type": "UMLInteractionOperandCompartmentView",
@@ -1574,7 +1574,7 @@
 													"fillColor": "#FFD8FF6B",
 													"font": "Arial;13;0",
 													"parentStyle": true,
-													"left": 103.9599609375,
+													"left": 101.07177734375,
 													"top": 525,
 													"width": 121.4052734375,
 													"height": 13,
@@ -1591,9 +1591,9 @@
 													"parentStyle": true,
 													"left": 77,
 													"top": 525,
-													"width": 20.9599609375,
+													"width": 18.07177734375,
 													"height": 13,
-													"text": "seq"
+													"text": "opt"
 												},
 												{
 													"_type": "UMLInteractionOperandCompartmentView",
@@ -1835,7 +1835,7 @@
 													"fillColor": "#FFD8FF6B",
 													"font": "Arial;13;0",
 													"parentStyle": true,
-													"left": 71.9599609375,
+													"left": 64.72998046875,
 													"top": 749,
 													"width": 79.498046875,
 													"height": 13,
@@ -1852,9 +1852,9 @@
 													"parentStyle": true,
 													"left": 45,
 													"top": 749,
-													"width": 20.9599609375,
+													"width": 13.72998046875,
 													"height": 13,
-													"text": "seq"
+													"text": "alt"
 												},
 												{
 													"_type": "UMLInteractionOperandCompartmentView",
@@ -2685,7 +2685,7 @@
 													"fillColor": "#FFD8FF6B",
 													"font": "Arial;13;0",
 													"parentStyle": true,
-													"left": 71.9599609375,
+													"left": 64.72998046875,
 													"top": 1189,
 													"width": 103.33349609375,
 													"height": 13,
@@ -2702,9 +2702,9 @@
 													"parentStyle": true,
 													"left": 45,
 													"top": 1189,
-													"width": 20.9599609375,
+													"width": 13.72998046875,
 													"height": 13,
-													"text": "seq"
+													"text": "alt"
 												},
 												{
 													"_type": "UMLInteractionOperandCompartmentView",
@@ -2952,7 +2952,7 @@
 													"fillColor": "#FFD8FF69",
 													"font": "Arial;13;0",
 													"parentStyle": true,
-													"left": 103.9599609375,
+													"left": 101.07177734375,
 													"top": 1309,
 													"width": 96.103515625,
 													"height": 13,
@@ -2969,9 +2969,9 @@
 													"parentStyle": true,
 													"left": 77,
 													"top": 1309,
-													"width": 20.9599609375,
+													"width": 18.07177734375,
 													"height": 13,
-													"text": "seq"
+													"text": "opt"
 												},
 												{
 													"_type": "UMLInteractionOperandCompartmentView",
@@ -3561,7 +3561,7 @@
 													"fillColor": "#FFD8FF6B",
 													"font": "Arial;13;0",
 													"parentStyle": true,
-													"left": 71.9599609375,
+													"left": 69.07177734375,
 													"top": 1685,
 													"width": 68.64990234375,
 													"height": 13,
@@ -3578,9 +3578,9 @@
 													"parentStyle": true,
 													"left": 45,
 													"top": 1685,
-													"width": 20.9599609375,
+													"width": 18.07177734375,
 													"height": 13,
-													"text": "seq"
+													"text": "opt"
 												},
 												{
 													"_type": "UMLInteractionOperandCompartmentView",
@@ -3793,9 +3793,9 @@
 													},
 													"font": "Arial;13;0",
 													"parentStyle": false,
-													"left": 549,
+													"left": 547,
 													"top": 1808,
-													"width": 108.392578125,
+													"width": 112.00439453125,
 													"height": 13,
 													"alpha": 1.5707963267948966,
 													"distance": 10,
@@ -3803,7 +3803,7 @@
 														"$ref": "AAAAAAGhF1qDe/r4sHE="
 													},
 													"edgePosition": 1,
-													"text": "20 : Consular ficha"
+													"text": "20 : Consultar ficha"
 												},
 												{
 													"_type": "EdgeLabelView",
@@ -4024,7 +4024,7 @@
 													"fillColor": "#FFD8FF6E",
 													"font": "Arial;13;0",
 													"parentStyle": true,
-													"left": 303.9599609375,
+													"left": 301.07177734375,
 													"top": 1925,
 													"width": 46.96630859375,
 													"height": 13,
@@ -4041,9 +4041,9 @@
 													"parentStyle": true,
 													"left": 277,
 													"top": 1925,
-													"width": 20.9599609375,
+													"width": 18.07177734375,
 													"height": 13,
-													"text": "seq"
+													"text": "opt"
 												},
 												{
 													"_type": "UMLInteractionOperandCompartmentView",
@@ -4370,7 +4370,7 @@
 													"fillColor": "#FFD8FF69",
 													"font": "Arial;13;0",
 													"parentStyle": true,
-													"left": 71.9599609375,
+													"left": 69.07177734375,
 													"top": 2133,
 													"width": 89.59716796875,
 													"height": 13,
@@ -4387,9 +4387,9 @@
 													"parentStyle": true,
 													"left": 45,
 													"top": 2133,
-													"width": 20.9599609375,
+													"width": 18.07177734375,
 													"height": 13,
-													"text": "seq"
+													"text": "opt"
 												},
 												{
 													"_type": "UMLInteractionOperandCompartmentView",
@@ -4832,7 +4832,7 @@
 													"fillColor": "#FFD8FF6B",
 													"font": "Arial;13;0",
 													"parentStyle": true,
-													"left": 103.9599609375,
+													"left": 101.07177734375,
 													"top": 2301,
 													"width": 121.4052734375,
 													"height": 13,
@@ -4849,9 +4849,9 @@
 													"parentStyle": true,
 													"left": 77,
 													"top": 2301,
-													"width": 20.9599609375,
+													"width": 18.07177734375,
 													"height": 13,
-													"text": "seq"
+													"text": "opt"
 												},
 												{
 													"_type": "UMLInteractionOperandCompartmentView",
@@ -5209,7 +5209,7 @@
 													"fillColor": "#FFD8FF6E",
 													"font": "Arial;13;0",
 													"parentStyle": true,
-													"left": 79.9599609375,
+													"left": 77.07177734375,
 													"top": 2637,
 													"width": 70.80810546875,
 													"height": 13,
@@ -5226,9 +5226,9 @@
 													"parentStyle": true,
 													"left": 53,
 													"top": 2637,
-													"width": 20.9599609375,
+													"width": 18.07177734375,
 													"height": 13,
-													"text": "seq"
+													"text": "opt"
 												},
 												{
 													"_type": "UMLInteractionOperandCompartmentView",
@@ -5323,7 +5323,7 @@
 													"fillColor": "#FFD8FF6B",
 													"font": "Arial;13;0",
 													"parentStyle": true,
-													"left": 103.9599609375,
+													"left": 101.07177734375,
 													"top": 2797,
 													"width": 121.4052734375,
 													"height": 13,
@@ -5340,9 +5340,9 @@
 													"parentStyle": true,
 													"left": 77,
 													"top": 2797,
-													"width": 20.9599609375,
+													"width": 18.07177734375,
 													"height": 13,
-													"text": "seq"
+													"text": "opt"
 												},
 												{
 													"_type": "UMLInteractionOperandCompartmentView",
@@ -6059,7 +6059,7 @@
 														"$ref": "AAAAAAGhF2QodP0DAJ0="
 													},
 													"edgePosition": 1,
-													"text": "34 : Resgistrar servicios e insumos"
+													"text": "34 : Registrar servicios e insumos"
 												},
 												{
 													"_type": "EdgeLabelView",
@@ -6628,7 +6628,7 @@
 													"fillColor": "#FFD8FF6B",
 													"font": "Arial;13;0",
 													"parentStyle": true,
-													"left": 87.9599609375,
+													"left": 80.72998046875,
 													"top": 3357,
 													"width": 93.96435546875,
 													"height": 13,
@@ -6645,9 +6645,9 @@
 													"parentStyle": true,
 													"left": 61,
 													"top": 3357,
-													"width": 20.9599609375,
+													"width": 13.72998046875,
 													"height": 13,
-													"text": "seq"
+													"text": "alt"
 												},
 												{
 													"_type": "UMLInteractionOperandCompartmentView",
@@ -6934,9 +6934,9 @@
 													},
 													"font": "Arial;13;0",
 													"parentStyle": false,
-													"left": 285,
+													"left": 179,
 													"top": 3499,
-													"width": 131.26953125,
+													"width": 342.2783203125,
 													"height": 13,
 													"alpha": 1.5707963267948966,
 													"distance": 10,
@@ -6944,7 +6944,7 @@
 														"$ref": "AAAAAAGhF2eDBf4Qs+o="
 													},
 													"edgePosition": 1,
-													"text": "40 : Verificar Yape-Plin"
+													"text": "40 : Confirmar manualmente recepción de pago (Yape/Plin)"
 												},
 												{
 													"_type": "EdgeLabelView",
@@ -7050,9 +7050,9 @@
 													},
 													"font": "Arial;13;0",
 													"parentStyle": false,
-													"left": 289,
+													"left": 181,
 													"top": 3595,
-													"width": 122.103515625,
+													"width": 339.6376953125,
 													"height": 13,
 													"alpha": 1.5707963267948966,
 													"distance": 10,
@@ -7060,7 +7060,7 @@
 														"$ref": "AAAAAAGhF2e/FP4mvMw="
 													},
 													"edgePosition": 1,
-													"text": "41 : Confirmar tarjeta"
+													"text": "41 : Confirmar manualmente recepción de pago con tarjeta"
 												},
 												{
 													"_type": "EdgeLabelView",
@@ -7164,7 +7164,7 @@
 													"fillColor": "#FFD8FF6E",
 													"font": "Arial;13;0",
 													"parentStyle": true,
-													"left": 87.9599609375,
+													"left": 80.72998046875,
 													"top": 3773,
 													"width": 90.34619140625,
 													"height": 13,
@@ -7181,9 +7181,9 @@
 													"parentStyle": true,
 													"left": 61,
 													"top": 3773,
-													"width": 20.9599609375,
+													"width": 13.72998046875,
 													"height": 13,
-													"text": "seq"
+													"text": "alt"
 												},
 												{
 													"_type": "UMLInteractionOperandCompartmentView",
@@ -7315,7 +7315,7 @@
 													"fillColor": "#FFD8FF6B",
 													"font": "Arial;13;0",
 													"parentStyle": true,
-													"left": 471.9599609375,
+													"left": 469.7890625,
 													"top": 4013,
 													"width": 67.91357421875,
 													"height": 13,
@@ -7332,9 +7332,9 @@
 													"parentStyle": true,
 													"left": 445,
 													"top": 4013,
-													"width": 20.9599609375,
+													"width": 18.7890625,
 													"height": 13,
-													"text": "seq"
+													"text": "par"
 												},
 												{
 													"_type": "UMLInteractionOperandCompartmentView",
@@ -7500,7 +7500,7 @@
 													"fillColor": "#FFD8FF69",
 													"font": "Arial;13;0",
 													"parentStyle": true,
-													"left": 687.9599609375,
+													"left": 685.07177734375,
 													"top": 4293,
 													"width": 60.70263671875,
 													"height": 13,
@@ -7517,9 +7517,9 @@
 													"parentStyle": true,
 													"left": 661,
 													"top": 4293,
-													"width": 20.9599609375,
+													"width": 18.07177734375,
 													"height": 13,
-													"text": "seq"
+													"text": "opt"
 												},
 												{
 													"_type": "UMLInteractionOperandCompartmentView",
@@ -9054,7 +9054,7 @@
 									"_parent": {
 										"$ref": "AAAAAAGhF0ncY/dOCn0="
 									},
-									"name": "Consular ficha",
+									"name": "Consultar ficha",
 									"source": {
 										"$ref": "AAAAAAGhF0sIwPe3U1E="
 									},
@@ -9252,7 +9252,7 @@
 									"_parent": {
 										"$ref": "AAAAAAGhF0ncY/dOCn0="
 									},
-									"name": "Resgistrar servicios e insumos",
+									"name": "Registrar servicios e insumos",
 									"source": {
 										"$ref": "AAAAAAGhF0q18PeGSPE="
 									},
@@ -9337,7 +9337,7 @@
 									"_parent": {
 										"$ref": "AAAAAAGhF0ncY/dOCn0="
 									},
-									"name": "Verificar Yape-Plin",
+									"name": "Confirmar manualmente recepción de pago (Yape/Plin)",
 									"source": {
 										"$ref": "AAAAAAGhF0q18PeGSPE="
 									},
@@ -9351,7 +9351,7 @@
 									"_parent": {
 										"$ref": "AAAAAAGhF0ncY/dOCn0="
 									},
-									"name": "Confirmar tarjeta",
+									"name": "Confirmar manualmente recepción de pago con tarjeta",
 									"source": {
 										"$ref": "AAAAAAGhF0q18PeGSPE="
 									},
@@ -9572,7 +9572,7 @@
 										"$ref": "AAAAAAGhF0ncY/dOCn0="
 									},
 									"name": "Condición cupo",
-									"interactionOperator": "seq",
+									"interactionOperator": "opt",
 									"operands": [
 										{
 											"_type": "UMLInteractionOperand",
@@ -9592,7 +9592,7 @@
 										"$ref": "AAAAAAGhF0ncY/dOCn0="
 									},
 									"name": "Condición alternativa",
-									"interactionOperator": "seq",
+									"interactionOperator": "opt",
 									"operands": [
 										{
 											"_type": "UMLInteractionOperand",
@@ -9612,7 +9612,7 @@
 										"$ref": "AAAAAAGhF0ncY/dOCn0="
 									},
 									"name": "Cliente nuevo",
-									"interactionOperator": "seq",
+									"interactionOperator": "alt",
 									"operands": [
 										{
 											"_type": "UMLInteractionOperand",
@@ -9641,7 +9641,7 @@
 										"$ref": "AAAAAAGhF0ncY/dOCn0="
 									},
 									"name": "Condición cambio",
-									"interactionOperator": "seq",
+									"interactionOperator": "alt",
 									"operands": [
 										{
 											"_type": "UMLInteractionOperand",
@@ -9670,7 +9670,7 @@
 										"$ref": "AAAAAAGhF0ncY/dOCn0="
 									},
 									"name": "Reprogramación",
-									"interactionOperator": "seq",
+									"interactionOperator": "opt",
 									"operands": [
 										{
 											"_type": "UMLInteractionOperand",
@@ -9690,7 +9690,7 @@
 										"$ref": "AAAAAAGhF0ncY/dOCn0="
 									},
 									"name": "Inasistencia",
-									"interactionOperator": "seq",
+									"interactionOperator": "opt",
 									"operands": [
 										{
 											"_type": "UMLInteractionOperand",
@@ -9710,7 +9710,7 @@
 										"$ref": "AAAAAAGhF0ncY/dOCn0="
 									},
 									"name": "Alergias",
-									"interactionOperator": "seq",
+									"interactionOperator": "opt",
 									"operands": [
 										{
 											"_type": "UMLInteractionOperand",
@@ -9730,7 +9730,7 @@
 										"$ref": "AAAAAAGhF0ncY/dOCn0="
 									},
 									"name": "Servicio seguro",
-									"interactionOperator": "seq",
+									"interactionOperator": "opt",
 									"operands": [
 										{
 											"_type": "UMLInteractionOperand",
@@ -9750,7 +9750,7 @@
 										"$ref": "AAAAAAGhF0ncY/dOCn0="
 									},
 									"name": "Condición alternativa",
-									"interactionOperator": "seq",
+									"interactionOperator": "opt",
 									"operands": [
 										{
 											"_type": "UMLInteractionOperand",
@@ -9770,7 +9770,7 @@
 										"$ref": "AAAAAAGhF0ncY/dOCn0="
 									},
 									"name": "Sin insumos",
-									"interactionOperator": "seq",
+									"interactionOperator": "opt",
 									"operands": [
 										{
 											"_type": "UMLInteractionOperand",
@@ -9790,7 +9790,7 @@
 										"$ref": "AAAAAAGhF0ncY/dOCn0="
 									},
 									"name": "Condición alternativa",
-									"interactionOperator": "seq",
+									"interactionOperator": "opt",
 									"operands": [
 										{
 											"_type": "UMLInteractionOperand",
@@ -9810,7 +9810,7 @@
 										"$ref": "AAAAAAGhF0ncY/dOCn0="
 									},
 									"name": "Método de pago",
-									"interactionOperator": "seq",
+									"interactionOperator": "alt",
 									"operands": [
 										{
 											"_type": "UMLInteractionOperand",
@@ -9848,7 +9848,7 @@
 										"$ref": "AAAAAAGhF0ncY/dOCn0="
 									},
 									"name": "Condición pago",
-									"interactionOperator": "seq",
+									"interactionOperator": "alt",
 									"operands": [
 										{
 											"_type": "UMLInteractionOperand",
@@ -9877,7 +9877,7 @@
 										"$ref": "AAAAAAGhF0ncY/dOCn0="
 									},
 									"name": "Paralelismo",
-									"interactionOperator": "seq",
+									"interactionOperator": "par",
 									"operands": [
 										{
 											"_type": "UMLInteractionOperand",
@@ -9912,7 +9912,7 @@
 										"$ref": "AAAAAAGhF0ncY/dOCn0="
 									},
 									"name": "Stock bajo",
-									"interactionOperator": "seq",
+									"interactionOperator": "opt",
 									"operands": [
 										{
 											"_type": "UMLInteractionOperand",
@@ -9935,7 +9935,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGhF0ncY/dNKuU="
 							},
-							"name": "Role1"
+							"name": "Role1",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -9943,7 +9944,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGhF0ncY/dNKuU="
 							},
-							"name": "Role2"
+							"name": "Role2",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -9951,7 +9953,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGhF0ncY/dNKuU="
 							},
-							"name": "Role3"
+							"name": "Role3",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -9959,7 +9962,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGhF0ncY/dNKuU="
 							},
-							"name": "Role4"
+							"name": "Role4",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -9967,7 +9971,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGhF0ncY/dNKuU="
 							},
-							"name": "Role5"
+							"name": "Role5",
+							"type": ""
 						}
 					]
 				}

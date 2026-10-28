@@ -1,4 +1,4 @@
-/**
+﻿/**
  * VIVI SPA & ESTUDIO - CENTRAL DATA STORE & BUSINESS ENGINE
  * Manejo centralizado de Clientes, Citas, Especialistas, Servicios y Cabinas.
  * Persistencia en localStorage con sembrado inteligente (Seed Data).
@@ -1772,10 +1772,17 @@
         }
       }
 
+      // Validación de teléfono: acepta formatos peruanos e internacionales
+      // Permite: +51 987654321, (01) 234-5678, +1 (800) 123-4567, etc.
+      const soloDigitos = telefono.replace(/\D/g, '');
       if (!telefono) {
-        errors.telefono = 'El teléfono es obligatorio.';
-      } else if (!/^[0-9+ -]{7,15}$/.test(telefono)) {
-        errors.telefono = 'Formato de teléfono inválido (mínimo 7 dígitos).';
+        errors.telefono = 'El tel\u00e9fono es obligatorio.';
+      } else if (soloDigitos.length < 7) {
+        errors.telefono = 'El tel\u00e9fono debe tener al menos 7 d\u00edgitos.';
+      } else if (soloDigitos.length > 15) {
+        errors.telefono = 'El tel\u00e9fono no puede tener m\u00e1s de 15 d\u00edgitos.';
+      } else if (!/^[+\d][\d\s()\-\.+]{5,19}$/.test(telefono)) {
+        errors.telefono = 'Formato inv\u00e1lido. Ejemplos v\u00e1lidos: 987654321, +51 987 654 321, (01) 234-5678.';
       }
 
       if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
