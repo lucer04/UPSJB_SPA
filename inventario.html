@@ -1,0 +1,716 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario e Insumos · VIVI Spa y Estudio</title>
+    <!-- Google Fonts: Cormorant Garamond & Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Estilos Principales Compilados por Sass -->
+    <link rel="stylesheet" href="./Prototipos/css/custom.css">
+</head>
+
+<body>
+    <!-- Telón de fondo para navegación móvil -->
+    <div class="side-backdrop" id="sideBackdrop"></div>
+
+    <div class="shell">
+        <!-- BARRA LATERAL ESPRESSO OSCURO -->
+        <aside class="side" id="sidebar">
+            <div class="brand">
+                <div class="logo">V</div>
+                <div class="brand-text">
+                    <b>VIVI</b>
+                    <small>Spa y Estudio</small>
+                </div>
+                <button class="side-close-btn d-lg-none ms-auto" id="sideClose" aria-label="Cerrar menú">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+
+            <nav aria-label="Menú principal">
+                <div class="grp">Principal</div>
+                <a class="nv" href="dashboard.html">
+                    <i class="bi bi-grid-1x2"></i>Dashboard
+                </a>
+                <a class="nv" href="reportes.html">
+                    <i class="bi bi-bar-chart-line"></i>Reportes
+                </a>
+
+                <div class="grp">Gestión</div>
+                <a class="nv" href="citas.html">
+                    <i class="bi bi-calendar-check"></i>Citas
+                </a>
+                <a class="nv" href="clientes.html">
+                    <i class="bi bi-people"></i>Clientes
+                </a>
+                <a class="nv" href="servicios.html">
+                    <i class="bi bi-stars"></i>Servicios
+                </a>
+                <a class="nv on" href="inventario.html" aria-current="page">
+                    <i class="bi bi-box-seam"></i>Inventario
+                </a>
+                <a class="nv" href="pagos.html"><i class="bi bi-cash-stack"></i>Pagos y caja</a>
+                <a class="nv" href="comisiones.html"><i class="bi bi-percent"></i>Comisiones</a>
+
+                <div class="grp">Configuraciones</div>
+                <a class="nv" href="roles.html"><i class="bi bi-shield-check"></i>Roles
+                </a>
+                <a class="nv" href="usuarios.html"><i class="bi bi-person-gear"></i>Usuarios
+                </a>
+                <a class="nv" href="categorias.html"><i class="bi bi-grid"></i>Categorías
+                </a>
+            </nav>
+
+            <div class="usr">
+                <div class="pm" id="pm" hidden>
+                    <div class="mh">
+                        <div class="av">AD</div>
+                        <div>
+                            <b>Administradora</b>
+                            <small>admin@vivispa.com</small>
+                            <span class="tg">Administradora</span>
+                        </div>
+                    </div>
+                    <button class="mi"><i class="bi bi-person-circle"></i>Mi perfil</button>
+                    <button class="mi"><i class="bi bi-shield-lock"></i>Cambiar contraseña</button>
+                    <button class="mi"><i class="bi bi-sliders"></i>Preferencias del Spa</button>
+                    <button class="mi out"><i class="bi bi-box-arrow-right"></i>Cerrar sesión</button>
+                </div>
+                <button class="ub" id="ub" aria-haspopup="true" aria-expanded="false">
+                    <div class="av">AD</div>
+                    <div>
+                        <b>Administradora</b>
+                        <small>admin@vivispa.com</small>
+                    </div>
+                    <i class="bi bi-chevron-up"></i>
+                </button>
+            </div>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <div class="main">
+            <!-- HEADER SUPERIOR ULTRA-SLIM -->
+            <header class="top">
+                <button class="ib" id="burger" aria-label="Mostrar u ocultar menú">
+                    <i class="bi bi-list"></i>
+                </button>
+                <span class="fw-semibold text-uppercase small d-none d-sm-inline" style="letter-spacing:0.06em; color:var(--spa-espresso);">Control de Inventario</span>
+
+                <!-- Barra de búsqueda rápida -->
+                <div class="search-wrapper d-none d-md-flex">
+                    <i class="bi bi-search"></i>
+                    <input type="text" id="topSearchInventory" class="search-input" placeholder="Buscar productos por nombre o SKU...">
+                    <span class="search-badge">Ctrl K</span>
+                </div>
+
+                <!-- Fecha actual en cabecera -->
+                <div class="header-date-badge d-none d-lg-flex ms-auto">
+                    <i class="bi bi-calendar3"></i>
+                    <span id="currentDateBadge">Hoy</span>
+                </div>
+
+                <!-- Notificaciones -->
+                <div class="nb ms-auto ms-lg-0">
+                    <button class="ib" id="bell" aria-expanded="false" aria-label="Notificaciones del Spa">
+                        <i class="bi bi-bell"></i>
+                        <span class="bdg">3</span>
+                    </button>
+                    <div class="pop" id="pop" hidden>
+                        <div class="pop-header">
+                            <b>Notificaciones</b>
+                            <span id="btnMarkRead">Marcar leídas</span>
+                        </div>
+                        <div class="pop-item">
+                            <i class="bi bi-exclamation-triangle-fill text-danger"></i>
+                            <div>
+                                <b>Stock bajo: Aceite de masaje argán</b>
+                                <small>Quedan 2 unidades en almacén</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- PÁGINA / VISTAS -->
+            <main class="page">
+                <!-- CABECERA DE PÁGINA -->
+                <div class="page-head">
+                    <div class="page-head-title">
+                        <h1 class="page-title">Inventario e Insumos</h1>
+                        <p class="page-subtitle">Gestión de existencias, consumos en cabina, reposiciones y valorización de almacén.</p>
+                    </div>
+                    <div class="page-head-actions">
+                        <button class="btn btn-outline-spa btn-sm" id="btnHistorialGeneral">
+                            <i class="bi bi-clock-history me-1"></i>Movimientos
+                        </button>
+                        <button class="btn btn-outline-spa btn-sm" id="btnExportInventario">
+                            <i class="bi bi-file-earmark-excel me-1 text-success"></i>Exportar Excel
+                        </button>
+                        <button class="btn btn-outline-spa btn-sm" id="btnNuevoMovimientoTop">
+                            <i class="bi bi-arrow-down-up me-1"></i>Registrar Movimiento
+                        </button>
+                        <button class="btn btn-primary btn-sm" id="btnNuevoProductoTop">
+                            <i class="bi bi-plus-lg me-1"></i>Nuevo Producto
+                        </button>
+                    </div>
+                </div>
+
+                <!-- TARJETAS KPI RESUMEN DE INVENTARIO -->
+                <div class="row g-3 mb-3">
+                    <!-- KPI 1: Total Productos -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="cd kpi">
+                            <span class="kpi-title">Total productos</span>
+                            <b id="kpiTotalProductos">10</b>
+                            <div class="kpi-footer">
+                                <span class="badge-sage"><i class="bi bi-box"></i> SKU activos</span>
+                            </div>
+                            <svg viewBox="0 0 84 30" aria-hidden="true">
+                                <polyline points="0,21 14,17 28,19 42,12 56,15 70,8 84,2" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- KPI 2: Valorización Total al Costo -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="cd kpi gold">
+                            <span class="kpi-title">Valorización stock</span>
+                            <b id="kpiValorCosto">S/ 4,749.00</b>
+                            <div class="kpi-footer">
+                                <span class="text-dark small"><i class="bi bi-cash-stack me-1"></i>Inversión en insumos</span>
+                            </div>
+                            <svg viewBox="0 0 84 30" aria-hidden="true">
+                                <polyline points="0,17 14,13 28,15 42,9 56,10 70,4 84,2" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- KPI 3: Stock Bajo (Alerta Preventiva) -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="cd kpi">
+                            <span class="kpi-title">Stock por agotar</span>
+                            <b id="kpiStockBajo" class="text-warning">1</b>
+                            <div class="kpi-footer">
+                                <span class="text-warning small"><i class="bi bi-exclamation-triangle me-1"></i>Próximos a agotarse</span>
+                            </div>
+                            <svg viewBox="0 0 84 30" aria-hidden="true">
+                                <polyline points="0,18 14,15 28,12 42,14 56,8 70,6 84,3" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- KPI 4: Productos Agotados -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="cd kpi">
+                            <span class="kpi-title">Agotados (Stock 0)</span>
+                            <b id="kpiAgotados" class="text-danger">1</b>
+                            <div class="kpi-footer">
+                                <span class="text-danger small"><i class="bi bi-x-circle me-1"></i>Reposición urgente</span>
+                            </div>
+                            <svg viewBox="0 0 84 30" aria-hidden="true">
+                                <polyline points="0,12 14,14 28,15 42,18 56,22 70,20 84,24" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FILTROS Y BÚSQUEDA -->
+                <div class="cd p-3 mb-3">
+                    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2 pb-2 border-bottom">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-funnel text-primary"></i>
+                            <span class="fw-semibold text-dark small">Filtros de Inventario</span>
+                        </div>
+                        <div class="d-flex align-items-center gap-1">
+                            <button type="button" class="btn btn-outline-spa btn-sm py-1 px-2" id="btnQuickBajo">Stock Bajo</button>
+                            <button type="button" class="btn btn-outline-spa btn-sm py-1 px-2" id="btnQuickAgotado">Agotados</button>
+                            <button type="button" class="btn btn-outline-spa btn-sm py-1 px-2" id="btnQuickTodos">Todos</button>
+                            <button type="button" class="btn btn-link text-muted btn-sm py-1 px-2 ms-2 text-decoration-none" id="btnResetFilters">
+                                <i class="bi bi-arrow-counterclockwise me-1"></i>Limpiar
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row g-2">
+                        <!-- Buscador por texto -->
+                        <div class="col-12 col-md-5 col-lg-4">
+                            <label for="filtroTexto" class="form-label small text-muted mb-1">Buscar por nombre, SKU o ubicación</label>
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-text bg-white"><i class="bi bi-search text-muted"></i></span>
+                                <input type="text" class="form-control form-control-sm" id="filtroTexto" placeholder="Ej. Aceite, SKU-ACE-001, Cabina 1...">
+                            </div>
+                        </div>
+
+                        <!-- Categoría -->
+                        <div class="col-6 col-md-4 col-lg-4">
+                            <label for="filtroCategoria" class="form-label small text-muted mb-1">Categoría</label>
+                            <select class="form-select form-select-sm" id="filtroCategoria">
+                                <option value="">Todas las categorías</option>
+                                <option value="facial">Facial & Cosmecéutica</option>
+                                <option value="insumos_masajes">Insumos de Masajes y Aromaterapia</option>
+                                <option value="laser">Láser & Aparatología</option>
+                                <option value="estudio">Nail Studio & Esmaltes</option>
+                                <option value="blanqueria">Blanquería & Desechables</option>
+                                <option value="reventa">Productos para Reventa</option>
+                            </select>
+                        </div>
+
+                        <!-- Estado de Stock -->
+                        <div class="col-6 col-md-3 col-lg-4">
+                            <label for="filtroEstado" class="form-label small text-muted mb-1">Estado de Stock</label>
+                            <select class="form-select form-select-sm" id="filtroEstado">
+                                <option value="">Todos los niveles</option>
+                                <option value="normal">Stock Normal</option>
+                                <option value="bajo">Stock Bajo (En alerta)</option>
+                                <option value="agotado">Agotado (0 unidades)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TABLA PROFESIONAL DE INVENTARIO -->
+                <div class="cd">
+                    <div class="cd-h d-flex align-items-center justify-content-between flex-wrap gap-2">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="cd-title mb-0">Existencias de Almacén</span>
+                            <span class="badge bg-light text-muted border" id="productosCountBadge">0 productos</span>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="text-muted small d-none d-sm-inline">Filas por página:</span>
+                            <select class="form-select form-select-sm w-auto py-1" id="pageSizeSelect">
+                                <option value="10" selected>10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Contenedor responsive con scroll horizontal interno protegido -->
+                    <div class="table-responsive">
+                        <table class="tb" id="tablaInventario">
+                            <thead>
+                                <tr>
+                                    <th style="width: 100px;">Código SKU</th>
+                                    <th>Producto / Insumo</th>
+                                    <th>Categoría</th>
+                                    <th>Stock Actual</th>
+                                    <th>Stock Mín.</th>
+                                    <th>Unidad</th>
+                                    <th>P. Compra</th>
+                                    <th>Valor Total</th>
+                                    <th>Estado</th>
+                                    <th style="width: 160px; text-align: center;">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inventarioTableBody">
+                                <!-- Filas generadas dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Estado vacío si no hay resultados -->
+                    <div id="inventarioEmptyState" class="p-4 text-center d-none">
+                        <div class="py-4">
+                            <i class="bi bi-box-seam fs-1 text-muted opacity-50 mb-2 d-block"></i>
+                            <h6 class="fw-bold text-dark mb-1">No se encontraron productos</h6>
+                            <p class="small text-muted mb-3">No hay insumos que coincidan con los filtros aplicados.</p>
+                            <button type="button" class="btn btn-outline-spa btn-sm" id="btnEmptyReset">
+                                <i class="bi bi-arrow-counterclockwise me-1"></i>Restablecer filtros
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Pie de tabla con paginación profesional -->
+                    <div class="spa-table-footer" id="tableFooter">
+                        <div id="tableInfoText">Mostrando 0 de 0 productos</div>
+                        <div class="spa-pagination" id="paginationControls">
+                            <!-- Botones generados dinámicamente -->
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- SCRIPTS DEL SISTEMA VIVI SPA -->
+    <script src="./js/spa-store.js"></script>
+    <script src="./js/spa-ui.js"></script>
+    <script src="./js/inventory-modal.js"></script>
+    <script src="./js/xlsx.full.min.js"></script>
+    <script src="./js/spa-excel.js"></script>
+
+    <script>
+        (function () {
+            'use strict';
+
+            const b = document.body;
+            const $ = (id) => document.getElementById(id);
+
+            let currentPage = 1;
+            let pageSize = 10;
+            let currentFiltros = {
+                texto: '',
+                categoria: '',
+                estado: ''
+            };
+
+            function init() {
+                InventoryModal.init();
+                updateDateBadge();
+                renderView();
+
+                window.addEventListener('spastore:change', function () {
+                    renderView();
+                });
+
+                setupEventListeners();
+            }
+
+            function updateDateBadge() {
+                const now = new Date();
+                const options = { weekday: 'short', day: 'numeric', month: 'short' };
+                const dateStr = now.toLocaleDateString('es-PE', options);
+                $('currentDateBadge').textContent = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
+            }
+
+            function renderKPIs() {
+                const res = SpaStore.getResumenInventario();
+                $('kpiTotalProductos').textContent = res.total;
+                $('kpiValorCosto').textContent = SpaStore.formatMoney(res.valorCostoTotal);
+                $('kpiStockBajo').textContent = res.stockBajo;
+                $('kpiAgotados').textContent = res.agotados;
+            }
+
+            function renderView() {
+                renderKPIs();
+
+                const productosFiltrados = SpaStore.getProductos(currentFiltros);
+                const totalCount = productosFiltrados.length;
+                $('productosCountBadge').textContent = `${totalCount} producto${totalCount === 1 ? '' : 's'}`;
+
+                const tbody = $('inventarioTableBody');
+                const emptyState = $('inventarioEmptyState');
+                const tableFooter = $('tableFooter');
+
+                if (totalCount === 0) {
+                    tbody.innerHTML = '';
+                    emptyState.classList.remove('d-none');
+                    tableFooter.classList.add('d-none');
+                    return;
+                }
+
+                emptyState.classList.add('d-none');
+                tableFooter.classList.remove('d-none');
+
+                const totalPages = Math.ceil(totalCount / pageSize);
+                if (currentPage > totalPages) currentPage = totalPages || 1;
+
+                const startIndex = (currentPage - 1) * pageSize;
+                const endIndex = Math.min(startIndex + pageSize, totalCount);
+                const productosPagina = productosFiltrados.slice(startIndex, endIndex);
+
+                $('tableInfoText').textContent = `Mostrando ${startIndex + 1} a ${endIndex} de ${totalCount} productos`;
+
+                tbody.innerHTML = productosPagina.map(p => {
+                    const valorTotal = (Number(p.stockActual) || 0) * (Number(p.precioCompra) || 0);
+
+                    let estadoClass = 'ok';
+                    let estadoLabel = 'Normal';
+                    let estadoIcon = 'bi-check-circle-fill';
+
+                    if (p.stockActual <= 0) {
+                        estadoClass = 'rd';
+                        estadoLabel = 'Agotado';
+                        estadoIcon = 'bi-x-circle-fill';
+                    } else if (p.stockActual <= p.stockMinimo) {
+                        estadoClass = 'wn';
+                        estadoLabel = 'Stock Bajo';
+                        estadoIcon = 'bi-exclamation-triangle-fill';
+                    }
+
+                    return `
+                        <tr>
+                            <td><b class="text-dark">${p.sku}</b></td>
+                            <td>
+                                <div><b class="text-dark">${p.nombre}</b></div>
+                                <small class="text-muted"><i class="bi bi-geo-alt me-1"></i>${p.ubicacion || 'Almacén'}</small>
+                            </td>
+                            <td>
+                                <span class="badge bg-light text-dark border" style="font-size: 11px;">
+                                    ${p.categoria.replace('_', ' ').toUpperCase()}
+                                </span>
+                            </td>
+                            <td>
+                                <b class="fs-6 ${p.stockActual <= 0 ? 'text-danger' : (p.stockActual <= p.stockMinimo ? 'text-warning' : 'text-dark')}">
+                                    ${p.stockActual}
+                                </b>
+                            </td>
+                            <td>
+                                <span class="text-muted small">${p.stockMinimo}</span>
+                            </td>
+                            <td>
+                                <span class="small">${p.unidad}</span>
+                            </td>
+                            <td>
+                                <span>${SpaStore.formatMoney(p.precioCompra)}</span>
+                            </td>
+                            <td>
+                                <b class="text-dark">${SpaStore.formatMoney(valorTotal)}</b>
+                            </td>
+                            <td>
+                                <span class="pl ${estadoClass}">
+                                    <i class="bi ${estadoIcon}"></i> ${estadoLabel}
+                                </span>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center justify-content-center gap-1">
+                                    <button type="button" class="btn-action-icon btn-act-danger" data-action="salida" data-id="${p.id}" title="Registrar salida o consumo (- stock)">
+                                        <i class="bi bi-dash-lg"></i>
+                                    </button>
+                                    <button type="button" class="btn-action-icon btn-act-success" data-action="entrada" data-id="${p.id}" title="Registrar entrada o reposición (+ stock)">
+                                        <i class="bi bi-plus-lg"></i>
+                                    </button>
+                                    <button type="button" class="btn-action-icon" data-action="history" data-id="${p.id}" title="Ver movimientos de este insumo">
+                                        <i class="bi bi-clock-history"></i>
+                                    </button>
+                                    <button type="button" class="btn-action-icon" data-action="edit" data-id="${p.id}" title="Editar producto">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+
+                renderPagination(totalPages);
+            }
+
+            function renderPagination(totalPages) {
+                const container = $('paginationControls');
+                if (totalPages <= 1) {
+                    container.innerHTML = '';
+                    return;
+                }
+
+                let html = `
+                    <button type="button" ${currentPage === 1 ? 'disabled' : ''} data-page="${currentPage - 1}">
+                        <i class="bi bi-chevron-left"></i>
+                    </button>
+                `;
+
+                for (let p = 1; p <= totalPages; p++) {
+                    if (p === 1 || p === totalPages || (p >= currentPage - 1 && p <= currentPage + 1)) {
+                        html += `
+                            <button type="button" class="${p === currentPage ? 'active' : ''}" data-page="${p}">
+                                ${p}
+                            </button>
+                        `;
+                    } else if (p === currentPage - 2 || p === currentPage + 2) {
+                        html += `<span class="px-1 text-muted">...</span>`;
+                    }
+                }
+
+                html += `
+                    <button type="button" ${currentPage === totalPages ? 'disabled' : ''} data-page="${currentPage + 1}">
+                        <i class="bi bi-chevron-right"></i>
+                    </button>
+                `;
+
+                container.innerHTML = html;
+            }
+
+            function setupEventListeners() {
+                $('btnNuevoProductoTop').onclick = function () {
+                    InventoryModal.openNewProduct(this);
+                };
+
+                $('btnNuevoMovimientoTop').onclick = function () {
+                    InventoryModal.openMovement(null, 'salida', this);
+                };
+
+                $('btnHistorialGeneral').onclick = function () {
+                    InventoryModal.openMovementHistory(null, this);
+                };
+
+                $('filtroTexto').oninput = function () {
+                    currentFiltros.texto = this.value.trim();
+                    currentPage = 1;
+                    renderView();
+                };
+
+                $('filtroCategoria').onchange = function () {
+                    currentFiltros.categoria = this.value;
+                    currentPage = 1;
+                    renderView();
+                };
+
+                $('filtroEstado').onchange = function () {
+                    currentFiltros.estado = this.value;
+                    currentPage = 1;
+                    renderView();
+                };
+
+                $('btnQuickBajo').onclick = function () {
+                    currentFiltros.estado = 'bajo';
+                    $('filtroEstado').value = 'bajo';
+                    currentPage = 1;
+                    renderView();
+                };
+
+                $('btnQuickAgotado').onclick = function () {
+                    currentFiltros.estado = 'agotado';
+                    $('filtroEstado').value = 'agotado';
+                    currentPage = 1;
+                    renderView();
+                };
+
+                $('btnQuickTodos').onclick = function () {
+                    resetFilters();
+                };
+
+                const resetFilters = function () {
+                    currentFiltros = { texto: '', categoria: '', estado: '' };
+                    $('filtroTexto').value = '';
+                    $('filtroCategoria').value = '';
+                    $('filtroEstado').value = '';
+                    currentPage = 1;
+                    renderView();
+                };
+
+                $('btnResetFilters').onclick = resetFilters;
+                $('btnEmptyReset').onclick = resetFilters;
+
+                $('pageSizeSelect').onchange = function () {
+                    pageSize = Number(this.value);
+                    currentPage = 1;
+                    renderView();
+                };
+
+                $('paginationControls').onclick = function (e) {
+                    const btn = e.target.closest('button[data-page]');
+                    if (btn && !btn.disabled) {
+                        currentPage = Number(btn.dataset.page);
+                        renderView();
+                    }
+                };
+
+                $('inventarioTableBody').onclick = function (e) {
+                    const btn = e.target.closest('button[data-action]');
+                    if (!btn) return;
+
+                    const action = btn.dataset.action;
+                    const prodId = btn.dataset.id;
+
+                    if (action === 'salida') {
+                        InventoryModal.openMovement(prodId, 'salida', btn);
+                    } else if (action === 'entrada') {
+                        InventoryModal.openMovement(prodId, 'entrada', btn);
+                    } else if (action === 'history') {
+                        InventoryModal.openMovementHistory(prodId, btn);
+                    } else if (action === 'edit') {
+                        InventoryModal.openEditProduct(prodId, btn);
+                    }
+                };
+
+                const topSearch = $('topSearchInventory');
+                if (topSearch) {
+                    topSearch.oninput = function () {
+                        $('filtroTexto').value = this.value;
+                        currentFiltros.texto = this.value.trim();
+                        currentPage = 1;
+                        renderView();
+                    };
+                }
+
+                $('btnExportInventario').onclick = function () {
+                    const productos = SpaStore.getProductos(currentFiltros);
+                    const movimientos = SpaStore.getMovimientos();
+                    SpaExcel.exportInventario(productos, movimientos);
+                };
+
+                // Menú lateral responsive
+                const burger = $('burger');
+                const backdrop = $('sideBackdrop');
+                const sideClose = $('sideClose');
+
+                function toggleMenu(e) {
+                    if (e) e.stopPropagation();
+                    if (window.innerWidth < 992) {
+                        b.toggleAttribute('data-sidebar-open');
+                    } else {
+                        b.toggleAttribute('data-collapsed');
+                    }
+                }
+
+                if (burger) burger.onclick = toggleMenu;
+                if (backdrop) backdrop.onclick = function () { b.removeAttribute('data-sidebar-open'); };
+                if (sideClose) sideClose.onclick = function (e) {
+                    e.stopPropagation();
+                    b.removeAttribute('data-sidebar-open');
+                };
+
+                function closeAllPopovers() {
+                    [['ub', 'pm'], ['bell', 'pop']].forEach(function (pair) {
+                        const btn = $(pair[0]);
+                        const pop = $(pair[1]);
+                        if (pop) pop.hidden = true;
+                        if (btn) btn.setAttribute('aria-expanded', 'false');
+                    });
+                }
+
+                function setupToggle(btnId, popId) {
+                    const btn = $(btnId);
+                    const pop = $(popId);
+                    if (!btn || !pop) return;
+                    btn.onclick = function (e) {
+                        e.stopPropagation();
+                        const isHidden = pop.hidden;
+                        closeAllPopovers();
+                        pop.hidden = !isHidden;
+                        btn.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+                    };
+                }
+
+                setupToggle('ub', 'pm');
+                setupToggle('bell', 'pop');
+
+                $('btnMarkRead').onclick = function () {
+                    SpaUI.showToast('Notificaciones', 'Notificaciones marcadas como leídas.', 'info');
+                    closeAllPopovers();
+                };
+
+                document.addEventListener('click', function (e) {
+                    if (!e.target.closest('#sidebar') && window.innerWidth < 992 && b.hasAttribute('data-sidebar-open')) {
+                        b.removeAttribute('data-sidebar-open');
+                    }
+                    closeAllPopovers();
+                });
+
+                document.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape') {
+                        closeAllPopovers();
+                        b.removeAttribute('data-sidebar-open');
+                    }
+                    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+                        e.preventDefault();
+                        if (topSearch) topSearch.focus();
+                    }
+                });
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+        })();
+    </script>
+</body>
+
+</html>
