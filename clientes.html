@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -49,28 +49,21 @@
                 <a class="nv on" href="clientes.html" aria-current="page">
                     <i class="bi bi-people"></i>Clientes
                 </a>
-                <a class="nv" href="#">
+                <a class="nv" href="servicios.html">
                     <i class="bi bi-stars"></i>Servicios
                 </a>
-                <a class="nv" href="#">
+                <a class="nv" href="inventario.html">
                     <i class="bi bi-box-seam"></i>Inventario
                 </a>
-                <a class="nv" href="#">
-                    <i class="bi bi-cash-stack"></i>Pagos y caja
-                </a>
-                <a class="nv" href="#">
-                    <i class="bi bi-percent"></i>Comisiones
-                </a>
+                <a class="nv" href="pagos.html"><i class="bi bi-cash-stack"></i>Pagos y caja</a>
+                <a class="nv" href="comisiones.html"><i class="bi bi-percent"></i>Comisiones</a>
 
                 <div class="grp">Configuraciones</div>
-                <a class="nv" href="#">
-                    <i class="bi bi-shield-check"></i>Roles
+                <a class="nv" href="roles.html"><i class="bi bi-shield-check"></i>Roles
                 </a>
-                <a class="nv" href="#">
-                    <i class="bi bi-person-gear"></i>Usuarios
+                <a class="nv" href="usuarios.html"><i class="bi bi-person-gear"></i>Usuarios
                 </a>
-                <a class="nv" href="#">
-                    <i class="bi bi-grid"></i>Categorías
+                <a class="nv" href="categorias.html"><i class="bi bi-grid"></i>Categorías
                 </a>
             </nav>
 
@@ -343,6 +336,8 @@
     <script src="./js/spa-ui.js"></script>
     <script src="./js/appointment-modal.js"></script>
     <script src="./js/client-modal.js"></script>
+    <script src="./js/xlsx.full.min.js"></script>
+    <script src="./js/spa-excel.js"></script>
 
     <script>
         (function () {
@@ -644,36 +639,10 @@
                     };
                 }
 
-                // Exportar
+                // Exportar profesionalmente a Excel (XLSX)
                 $('btnExportClientes').onclick = function () {
                     const clientes = SpaStore.getClientes(currentFiltros);
-                    const rows = [
-                        ['Código', 'Nombres', 'Apellidos', 'Tipo Doc', 'N° Doc', 'Teléfono', 'Email', 'Alergias', 'Preferencias', 'Estado', 'Última Visita']
-                    ];
-                    clientes.forEach(c => {
-                        rows.push([
-                            c.codigo,
-                            `"${c.nombres}"`,
-                            `"${c.apellidos}"`,
-                            c.tipoDocumento,
-                            `"${c.numeroDocumento}"`,
-                            `"${c.telefono}"`,
-                            `"${c.email || ''}"`,
-                            `"${c.alergias || 'Ninguna'}"`,
-                            `"${c.preferencias || ''}"`,
-                            c.estado,
-                            c.ultimaVisita || ''
-                        ]);
-                    });
-                    const csvContent = "data:text/csv;charset=utf-8," + rows.map(e => e.join(",")).join("\n");
-                    const encodedUri = encodeURI(csvContent);
-                    const link = document.createElement("a");
-                    link.setAttribute("href", encodedUri);
-                    link.setAttribute("download", `ViviSpa_Clientes_${SpaStore.getTodayDateString()}.csv`);
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                    SpaUI.showToast('Exportación Exitosa', 'El archivo CSV de clientas se ha descargado correctamente.', 'success');
+                    SpaExcel.exportClientes(clientes);
                 };
 
                 // Menú responsive

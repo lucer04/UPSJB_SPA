@@ -43,34 +43,27 @@
                 </a>
 
                 <div class="grp">Gestión</div>
-                <a class="nv" href="#">
+                <a class="nv" href="citas.html">
                     <i class="bi bi-calendar-check"></i>Citas
                 </a>
-                <a class="nv" href="#">
+                <a class="nv" href="clientes.html">
                     <i class="bi bi-people"></i>Clientes
                 </a>
-                <a class="nv" href="#">
+                <a class="nv" href="servicios.html">
                     <i class="bi bi-stars"></i>Servicios
                 </a>
-                <a class="nv" href="#">
+                <a class="nv" href="inventario.html">
                     <i class="bi bi-box-seam"></i>Inventario
                 </a>
-                <a class="nv" href="#">
-                    <i class="bi bi-cash-stack"></i>Pagos y caja
-                </a>
-                <a class="nv" href="#">
-                    <i class="bi bi-percent"></i>Comisiones
-                </a>
+                <a class="nv" href="pagos.html"><i class="bi bi-cash-stack"></i>Pagos y caja</a>
+                <a class="nv" href="comisiones.html"><i class="bi bi-percent"></i>Comisiones</a>
 
                 <div class="grp">Configuraciones</div>
-                <a class="nv" href="#">
-                    <i class="bi bi-shield-check"></i>Roles
+                <a class="nv" href="roles.html"><i class="bi bi-shield-check"></i>Roles
                 </a>
-                <a class="nv" href="#">
-                    <i class="bi bi-person-gear"></i>Usuarios
+                <a class="nv" href="usuarios.html"><i class="bi bi-person-gear"></i>Usuarios
                 </a>
-                <a class="nv" href="#">
-                    <i class="bi bi-grid"></i>Categorías
+                <a class="nv" href="categorias.html"><i class="bi bi-grid"></i>Categorías
                 </a>
             </nav>
 
@@ -170,21 +163,21 @@
                         <button class="btn btn-outline-spa btn-sm" onclick="location.href='reportes.html'">
                             <i class="bi bi-bar-chart-line me-1"></i>Ver Reportes
                         </button>
-                        <button class="btn btn-primary btn-sm" onclick="alert('Formulario de nueva cita rápida abierto')">
+                        <button class="btn btn-primary btn-sm" onclick="location.href='citas.html'">
                             <i class="bi bi-plus-lg me-1"></i>Nueva Cita
                         </button>
                     </div>
                 </div>
 
-                <!-- TARJETAS KPI -->
+                <!-- TARJETAS KPI RESUMEN DEL DÍA -->
                 <div class="row g-3 mb-3">
                     <!-- KPI 1: Citas de Hoy -->
                     <div class="col-12 col-md-6 col-xl-3">
                         <div class="cd kpi">
                             <span class="kpi-title">Citas de hoy</span>
-                            <b>12</b>
+                            <b id="dash-kpi-citas">—</b>
                             <div class="kpi-footer">
-                                <span class="badge-sage"><i class="bi bi-arrow-up-short"></i> +2 hoy</span>
+                                <span class="badge-sage" id="dash-kpi-citas-sub"><i class="bi bi-calendar3"></i> cargando...</span>
                             </div>
                             <svg viewBox="0 0 84 30" aria-hidden="true">
                                 <polyline points="0,21 14,17 28,19 42,12 56,15 70,8 84,2" />
@@ -192,13 +185,13 @@
                         </div>
                     </div>
 
-                    <!-- KPI 2: Ingresos del Día (Dorado Elegante) -->
+                    <!-- KPI 2: Ingresos del Día -->
                     <div class="col-12 col-md-6 col-xl-3">
                         <div class="cd kpi gold">
                             <span class="kpi-title">Ingresos del día</span>
-                            <b>S/ 1 480</b>
+                            <b id="dash-kpi-ingresos">—</b>
                             <div class="kpi-footer">
-                                <span class="badge-sage"><i class="bi bi-arrow-up-short"></i> +8.4%</span>
+                                <span class="badge-sage" id="dash-kpi-caja-estado"><i class="bi bi-lock"></i> cargando...</span>
                             </div>
                             <svg viewBox="0 0 84 30" aria-hidden="true">
                                 <polyline points="0,17 14,13 28,15 42,9 56,10 70,4 84,2" />
@@ -206,13 +199,13 @@
                         </div>
                     </div>
 
-                    <!-- KPI 3: Clientes del Día -->
+                    <!-- KPI 3: Clientas Atendidas -->
                     <div class="col-12 col-md-6 col-xl-3">
                         <div class="cd kpi">
                             <span class="kpi-title">Clientas atendidas</span>
-                            <b>14</b>
+                            <b id="dash-kpi-clientas">—</b>
                             <div class="kpi-footer">
-                                <span class="badge-sage"><i class="bi bi-arrow-up-short"></i> +15%</span>
+                                <span class="badge-sage" id="dash-kpi-clientas-sub"><i class="bi bi-people"></i> hoy</span>
                             </div>
                             <svg viewBox="0 0 84 30" aria-hidden="true">
                                 <polyline points="0,18 14,15 28,12 42,14 56,8 70,6 84,3" />
@@ -220,13 +213,13 @@
                         </div>
                     </div>
 
-                    <!-- KPI 4: Ocupación de Cabinas -->
+                    <!-- KPI 4: Comisiones Pendientes -->
                     <div class="col-12 col-md-6 col-xl-3">
                         <div class="cd kpi">
-                            <span class="kpi-title">Ocupación cabinas</span>
-                            <b>85%</b>
+                            <span class="kpi-title">Comisiones pendientes</span>
+                            <b id="dash-kpi-comisiones">—</b>
                             <div class="kpi-footer">
-                                <span class="badge-sage"><i class="bi bi-check2"></i> Óptimo</span>
+                                <span class="badge-sage" id="dash-kpi-comisiones-sub"><i class="bi bi-percent"></i> por aprobar</span>
                             </div>
                             <svg viewBox="0 0 84 30" aria-hidden="true">
                                 <polyline points="0,22 14,20 28,18 42,15 56,11 70,7 84,2" />
@@ -427,7 +420,7 @@
                                     Alertas de Stock
                                     <small class="text-muted">Insumos y productos críticos</small>
                                 </h3>
-                                <button class="btn btn-outline-spa btn-sm py-1 px-2" onclick="alert('Módulo de inventario abierto')">
+                                <button class="btn btn-outline-spa btn-sm py-1 px-2" onclick="location.href='inventario.html'">
                                     Ver almacén
                                 </button>
                             </div>
@@ -482,6 +475,9 @@
         </div>
     </div>
 
+    <!-- Scripts del store y UI -->
+    <script src="./js/spa-store.js"></script>
+    <script src="./js/spa-ui.js"></script>
     <!-- SCRIPT DE INTERACTIVIDAD -->
     <script>
         var b = document.body;
@@ -498,15 +494,89 @@
             if (dateBadge) dateBadge.textContent = dateStr;
 
             var hour = now.getHours();
-            var greeting = "Buenos días, Administradora";
+            var greeting = 'Buenos días, Administradora';
             if (hour >= 12 && hour < 19) {
-                greeting = "Buenas tardes, Administradora";
+                greeting = 'Buenas tardes, Administradora';
             } else if (hour >= 19 || hour < 6) {
-                greeting = "Buenas noches, Administradora";
+                greeting = 'Buenas noches, Administradora';
             }
             var greetingEl = $('greetingTitle');
             if (greetingEl) greetingEl.textContent = greeting;
         })();
+
+        // KPIs reales desde SpaStore
+        (function initDashboardKPIs() {
+            if (typeof SpaStore === 'undefined') return;
+
+            var today = (function() {
+                var d = new Date();
+                var y = d.getFullYear();
+                var m = String(d.getMonth() + 1).padStart(2, '0');
+                var dd = String(d.getDate()).padStart(2, '0');
+                return y + '-' + m + '-' + dd;
+            })();
+
+            // KPI 1: Citas de hoy
+            var citasHoy = SpaStore.getCitas({ fecha: today });
+            var totalCitas = citasHoy.length;
+            var completadas = citasHoy.filter(function(c) { return c.estado === 'completada'; }).length;
+            var confirmadas = citasHoy.filter(function(c) { return c.estado === 'confirmada' || c.estado === 'en_curso'; }).length;
+            var el = $('dash-kpi-citas');
+            if (el) el.textContent = totalCitas;
+            var subEl = $('dash-kpi-citas-sub');
+            if (subEl) subEl.innerHTML = '<i class="bi bi-check2-circle"></i> ' + completadas + ' completadas · ' + confirmadas + ' confirmadas';
+
+            // KPI 2: Ingresos del día (pagos de hoy)
+            var pagosHoy = SpaStore.getPagos({ fecha: today, estado: 'completado' });
+            var totalIngresos = pagosHoy.reduce(function(acc, p) { return acc + (p.monto || 0); }, 0);
+            var elIng = $('dash-kpi-ingresos');
+            if (elIng) elIng.textContent = SpaStore.formatMoney(totalIngresos);
+
+            // Estado de caja
+            var caja = SpaStore.getCajaActual();
+            var elCaja = $('dash-kpi-caja-estado');
+            if (elCaja) {
+                if (caja.estado === 'abierta') {
+                    elCaja.innerHTML = '<i class="bi bi-unlock-fill text-success"></i> Caja abierta desde ' + caja.horaApertura;
+                    elCaja.style.color = '#2e7d32';
+                } else {
+                    elCaja.innerHTML = '<i class="bi bi-lock-fill text-danger"></i> Caja cerrada — <a href="pagos.html" style="color:inherit;">Abrir caja</a>';
+                    elCaja.style.color = '#c62828';
+                }
+            }
+
+            // KPI 3: Clientas únicas atendidas hoy (citas completadas)
+            var clientasUnicas = {};
+            citasHoy.filter(function(c) { return c.estado === 'completada'; }).forEach(function(c) {
+                if (c.clienteId) clientasUnicas[c.clienteId] = true;
+            });
+            var elCli = $('dash-kpi-clientas');
+            if (elCli) elCli.textContent = Object.keys(clientasUnicas).length || completadas;
+            var elCliSub = $('dash-kpi-clientas-sub');
+            if (elCliSub) elCliSub.innerHTML = '<i class="bi bi-people"></i> ' + completadas + ' atenciones hoy';
+
+            // KPI 4: Comisiones pendientes de aprobación
+            var comisiones = SpaStore.getComisiones({ estado: 'pendiente' });
+            var montoPend = comisiones.reduce(function(acc, c) { return acc + (c.montoComision || 0); }, 0);
+            var elCom = $('dash-kpi-comisiones');
+            if (elCom) elCom.textContent = SpaStore.formatMoney(montoPend);
+            var elComSub = $('dash-kpi-comisiones-sub');
+            if (elComSub) elComSub.innerHTML = '<i class="bi bi-percent"></i> ' + comisiones.length + ' por aprobar';
+
+            // Subtítulo dinámico del dashboard
+            var subtitleEl = $('greetingSubtitle');
+            if (subtitleEl) {
+                subtitleEl.textContent = 'Hoy tienes ' + totalCitas + ' citas programadas · ' + completadas + ' completadas · Caja ' + (caja.estado === 'abierta' ? 'abierta' : 'cerrada') + '.';
+            }
+        })();
+
+        // Refrescar KPIs cuando se registre un pago o se cambie la caja
+        window.addEventListener('spa:pagos-changed', function() {
+            if (typeof SpaStore !== 'undefined') initDashboardKPIs && initDashboardKPIs();
+        });
+        window.addEventListener('spa:comisiones-changed', function() {
+            if (typeof SpaStore !== 'undefined') initDashboardKPIs && initDashboardKPIs();
+        });
 
         // Control de Menú Lateral en Escritorio y Móvil
         var burger = $('burger');

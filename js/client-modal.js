@@ -1,4 +1,4 @@
-/**
+﻿/**
  * VIVI SPA & ESTUDIO - CLIENT MODAL CONTROLLER
  * Controlador reutilizable para Registro, Edición y Ficha de Historial de Clientas.
  */
@@ -88,9 +88,10 @@
                 </div>
 
                 <div class="col-12 col-md-6">
-                  <label for="cliTelefono" class="form-label">Teléfono Móvil <span class="req">*</span></label>
-                  <input type="tel" class="form-control" id="cliTelefono" name="telefono" placeholder="9XX XXX XXX" required>
+                  <label for="cliTelefono" class="form-label">Tel\u00e9fono \u003cspan class="req"\u003e*\u003c/span\u003e</label>
+                  <input type="tel" class="form-control" id="cliTelefono" name="telefono" placeholder="Ej: 987654321  o  +51 987 654 321" autocomplete="tel" required>
                   <div class="invalid-feedback"></div>
+                  <small class="text-muted" style="font-size:10.5px;">Peruano (9 d\u00edgitos) o internacional con c\u00f3digo de pa\u00eds (+51, +1, +34\u2026)</small>
                 </div>
 
                 <div class="col-12">

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -76,28 +76,21 @@
                 <a class="nv" href="clientes.html">
                     <i class="bi bi-people"></i>Clientes
                 </a>
-                <a class="nv" href="#">
+                <a class="nv" href="servicios.html">
                     <i class="bi bi-stars"></i>Servicios
                 </a>
-                <a class="nv" href="#">
+                <a class="nv" href="inventario.html">
                     <i class="bi bi-box-seam"></i>Inventario
                 </a>
-                <a class="nv" href="#">
-                    <i class="bi bi-cash-stack"></i>Pagos y caja
-                </a>
-                <a class="nv" href="#">
-                    <i class="bi bi-percent"></i>Comisiones
-                </a>
+                <a class="nv" href="pagos.html"><i class="bi bi-cash-stack"></i>Pagos y caja</a>
+                <a class="nv" href="comisiones.html"><i class="bi bi-percent"></i>Comisiones</a>
 
                 <div class="grp">Configuraciones</div>
-                <a class="nv" href="#">
-                    <i class="bi bi-shield-check"></i>Roles
+                <a class="nv" href="roles.html"><i class="bi bi-shield-check"></i>Roles
                 </a>
-                <a class="nv" href="#">
-                    <i class="bi bi-person-gear"></i>Usuarios
+                <a class="nv" href="usuarios.html"><i class="bi bi-person-gear"></i>Usuarios
                 </a>
-                <a class="nv" href="#">
-                    <i class="bi bi-grid"></i>Categorías
+                <a class="nv" href="categorias.html"><i class="bi bi-grid"></i>Categorías
                 </a>
             </nav>
 
@@ -200,8 +193,8 @@
                         <p class="page-subtitle">Ingresos consolidados, flujo de citas atendidas y comisiones por especialista.</p>
                     </div>
                     <div class="page-head-actions">
-                        <!-- Botón de Exportación Real a CSV -->
-                        <button class="btn btn-outline-spa btn-sm" id="btnExportCSV" onclick="exportTableToCSV('Reporte_Especialistas_VIVI_Spa.csv')">
+                        <!-- Botón de Exportación Excel real con SpaExcel -->
+                        <button class="btn btn-outline-spa btn-sm" id="btnExportCSV" onclick="exportarReporte()">
                             <i class="bi bi-file-earmark-spreadsheet me-1"></i>Exportar Excel
                         </button>
                         <!-- Botón de Impresión / PDF Real -->
@@ -531,10 +524,15 @@
     </div>
 
     <!-- SCRIPT DE INTERACTIVIDAD Y EXPORTACIÓN -->
+    <script src="./js/spa-store.js"></script>
     <script src="./js/spa-ui.js"></script>
+    <script src="./js/xlsx.full.min.js"></script>
+    <script src="./js/spa-excel.js"></script>
     <script>
         var b = document.body;
         var $ = function (id) { return document.getElementById(id); };
+        var currentPeriod = 'semana';
+        var currentServiceFilter = 'todos';
 
         // Formateo de fecha dinámica en español
         (function initDate() {
@@ -545,6 +543,208 @@
             var dateBadge = $('currentDateBadge');
             if (dateBadge) dateBadge.textContent = dateStr;
         })();
+
+        // Calcula rango de fechas para un período
+        function getRangoFechas(key) {
+            var now = new Date();
+            var y = now.getFullYear(), m = now.getMonth(), d = now.getDate();
+            var pad = function(n) { return String(n).padStart(2,'0'); };
+            var iso = function(dt) { return dt.getFullYear() + '-' + pad(dt.getMonth()+1) + '-' + pad(dt.getDate()); };
+            var today = new Date(y, m, d);
+            if (key === 'hoy') {
+                return { desde: iso(today), hasta: iso(today) };
+            } else if (key === 'semana') {
+                var dow = today.getDay(); // 0=Sun
+                var lunes = new Date(today); lunes.setDate(d - (dow === 0 ? 6 : dow - 1));
+                var domingo = new Date(lunes); domingo.setDate(lunes.getDate() + 6);
+                return { desde: iso(lunes), hasta: iso(domingo) };
+            } else if (key === 'mes') {
+                return { desde: iso(new Date(y, m, 1)), hasta: iso(new Date(y, m+1, 0)) };
+            } else { // anio
+                return { desde: iso(new Date(y, 0, 1)), hasta: iso(new Date(y, 11, 31)) };
+            }
+        }
+
+        function rangoLabel(key) {
+            var r = getRangoFechas(key);
+            if (key === 'hoy') return 'Hoy · ' + new Date().toLocaleDateString('es-PE', { day:'numeric', month:'long', year:'numeric' });
+            if (key === 'anio') return 'Año ' + new Date().getFullYear() + ' (Acumulado anual)';
+            return r.desde + ' — ' + r.hasta;
+        }
+
+        // Filtra citas/pagos por período y especialidad
+        function getCitasFiltradas(key, categoria) {
+            if (typeof SpaStore === 'undefined') return [];
+            var r = getRangoFechas(key);
+            var citas = SpaStore.getCitas();
+            return citas.filter(function(c) {
+                if (c.fecha < r.desde || c.fecha > r.hasta) return false;
+                if (c.estado === 'cancelada') return false;
+                if (categoria && categoria !== 'todos') {
+                    var esp = SpaStore.getEspecialistaById ? SpaStore.getEspecialistaById(c.especialistaId) : null;
+                    if (!esp || esp.categoria !== categoria) return false;
+                }
+                return true;
+            });
+        }
+
+        function getIngresosFiltrados(key) {
+            if (typeof SpaStore === 'undefined') return [];
+            var r = getRangoFechas(key);
+            return SpaStore.getPagos({ estado: 'completado' }).filter(function(p) {
+                return p.fecha >= r.desde && p.fecha <= r.hasta;
+            });
+        }
+
+        function actualizarKPIs(key) {
+            var citas = getCitasFiltradas(key, 'todos');
+            var pagos = getIngresosFiltrados(key);
+            var totalIngresos = pagos.reduce(function(a, p) { return a + (p.monto||0); }, 0);
+            var ticket = citas.length > 0 ? (totalIngresos / citas.length) : 0;
+
+            // Comisiones del período (pagadas en el período)
+            var r = getRangoFechas(key);
+            var comisiones = typeof SpaStore !== 'undefined' ? SpaStore.getComisiones().filter(function(c) {
+                return c.estado === 'pagada' && c.fecha >= r.desde && c.fecha <= r.hasta;
+            }) : [];
+            var totalCom = comisiones.reduce(function(a,c) { return a + (c.montoComision||0); }, 0);
+
+            if ($('kpiIngresos')) $('kpiIngresos').textContent = typeof SpaStore !== 'undefined' ? SpaStore.formatMoney(totalIngresos) : '—';
+            if ($('kpiCitas')) $('kpiCitas').textContent = citas.filter(function(c){ return c.estado === 'completada'; }).length || citas.length;
+            if ($('kpiTicket')) $('kpiTicket').textContent = typeof SpaStore !== 'undefined' ? SpaStore.formatMoney(ticket) : '—';
+            if ($('kpiComisiones')) $('kpiComisiones').textContent = typeof SpaStore !== 'undefined' ? SpaStore.formatMoney(totalCom) : '—';
+
+            if ($('kpiIngresosDelta')) $('kpiIngresosDelta').innerHTML = '<i class="bi bi-cash-stack"></i> ' + pagos.length + ' pagos';
+            if ($('kpiCitasDelta')) $('kpiCitasDelta').innerHTML = '<i class="bi bi-calendar-check"></i> ' + citas.length + ' en período';
+            if ($('kpiTicketDelta')) $('kpiTicketDelta').innerHTML = '<i class="bi bi-tag"></i> ticket promedio';
+            if ($('kpiComisionesDelta')) $('kpiComisionesDelta').innerHTML = '<i class="bi bi-percent"></i> ' + comisiones.length + ' liquidadas';
+        }
+
+        function actualizarTablaEspecialistas(key, categoria) {
+            if (typeof SpaStore === 'undefined') return;
+            var especialistas = SpaStore.getEspecialistas();
+            var r = getRangoFechas(key);
+            var todasComisiones = SpaStore.getComisiones();
+            var comisionesPeriodo = todasComisiones.filter(function(c) {
+                return c.fecha >= r.desde && c.fecha <= r.hasta;
+            });
+
+            var tbody = $('tableBody');
+            if (!tbody) return;
+
+            var totalServs = 0, totalIngBruto = 0, totalCom = 0;
+            var maxCitas = 1;
+
+            // Pre-calcula máximo para barra de rendimiento
+            var data = especialistas.filter(function(e){ return e.estado === 'activa'; }).map(function(esp) {
+                var comEsp = comisionesPeriodo.filter(function(c){ return c.especialistaId === esp.id; });
+                var citas = comEsp.length;
+                var ingBruto = comEsp.reduce(function(a,c){ return a + (c.precioServicio||0); }, 0);
+                var montoComision = comEsp.reduce(function(a,c){ return a + (c.montoComision||0); }, 0);
+                var pct = esp.comisionPct || 25;
+                if (citas > maxCitas) maxCitas = citas;
+                return { esp: esp, citas: citas, ingBruto: ingBruto, montoComision: montoComision, pct: pct };
+            }).filter(function(row) {
+                if (categoria === 'todos') return true;
+                return row.esp.categoria === categoria;
+            });
+
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" class="text-center text-muted py-4">Sin datos para el período seleccionado</td></tr>';
+                if ($('totalServicios')) $('totalServicios').textContent = '0 citas';
+                if ($('totalIngresos')) $('totalIngresos').textContent = SpaStore.formatMoney(0);
+                if ($('totalComisiones')) $('totalComisiones').textContent = SpaStore.formatMoney(0);
+                return;
+            }
+
+            var html = data.map(function(row) {
+                var rendPct = maxCitas > 0 ? Math.round((row.citas / maxCitas) * 100) : 0;
+                totalServs += row.citas;
+                totalIngBruto += row.ingBruto;
+                totalCom += row.montoComision;
+                var iniciales = row.esp.iniciales || row.esp.nombre.split(' ').map(function(n){ return n[0]; }).join('').slice(0,2);
+                return '<tr>' +
+                    '<td><div class="specialist-cell"><div class="sp-av">' + iniciales + '</div><div><b>' + row.esp.nombre + '</b><small>' + row.esp.especialidad + '</small></div></div></td>' +
+                    '<td><b>' + row.citas + '</b> <small class="text-muted">citas</small></td>' +
+                    '<td><b>' + SpaStore.formatMoney(row.ingBruto) + '</b></td>' +
+                    '<td>' + row.pct + '%</td>' +
+                    '<td class="text-dark fw-bold">' + SpaStore.formatMoney(row.montoComision) + '</td>' +
+                    '<td><div class="d-flex align-items-center gap-2"><div class="mt flex-grow-1"><i style="width:' + rendPct + '%;"></i></div><span class="small fw-semibold">' + rendPct + '%</span></div></td>' +
+                    '<td><span class="text-warning">★</span> —</td>' +
+                    '<td><span class="pl ok">' + (row.esp.estado === 'activa' ? 'Activa' : 'Inactiva') + '</span></td>' +
+                    '</tr>';
+            }).join('');
+            tbody.innerHTML = html;
+
+            if ($('totalServicios')) $('totalServicios').textContent = totalServs + ' citas';
+            if ($('totalIngresos')) $('totalIngresos').textContent = SpaStore.formatMoney(totalIngBruto);
+            if ($('totalComisiones')) $('totalComisiones').textContent = SpaStore.formatMoney(totalCom);
+        }
+
+        function changePeriod(key) {
+            currentPeriod = key;
+            var btns = document.querySelectorAll('.sg button');
+            btns.forEach(function(btn) {
+                btn.setAttribute('aria-pressed', 'false');
+                btn.classList.remove('active');
+            });
+            var activeBtn = $('btnPeriod' + key.charAt(0).toUpperCase() + key.slice(1));
+            if (activeBtn) {
+                activeBtn.setAttribute('aria-pressed', 'true');
+                activeBtn.classList.add('active');
+            }
+            if ($('periodRangeLabel')) $('periodRangeLabel').textContent = rangoLabel(key);
+            actualizarKPIs(key);
+            actualizarTablaEspecialistas(key, currentServiceFilter);
+        }
+
+        function filterService(categoria) {
+            currentServiceFilter = categoria;
+            actualizarTablaEspecialistas(currentPeriod, categoria);
+        }
+
+        function exportarReporte() {
+            if (typeof SpaExcel !== 'undefined' && typeof SpaExcel.exportComisiones === 'function') {
+                SpaExcel.exportComisiones();
+            } else {
+                // Fallback: exportar tabla visible a CSV
+                exportTableToCSV('Reporte_Especialistas_VIVI_Spa.csv');
+            }
+        }
+
+        // EXPORTACIÓN FALLBACK A CSV
+        function exportTableToCSV(filename) {
+            var table = $('specialistsTable');
+            if (!table) return;
+            var csv = [];
+            var ths = table.querySelectorAll('thead th');
+            var headers = [];
+            ths.forEach(function(th) { headers.push('"' + th.innerText.trim().replace(/"/g, '""') + '"'); });
+            csv.push(headers.join(';'));
+            var trs = table.querySelectorAll('tbody tr');
+            trs.forEach(function(tr) {
+                if (tr.style.display === 'none') return;
+                var row = [];
+                tr.querySelectorAll('td').forEach(function(td) {
+                    row.push('"' + td.innerText.replace(/\n/g,' ').trim().replace(/"/g,'""') + '"');
+                });
+                csv.push(row.join(';'));
+            });
+            var tfootTds = table.querySelectorAll('tfoot td');
+            if (tfootTds.length > 0) {
+                var footRow = [];
+                tfootTds.forEach(function(td) { footRow.push('"' + td.innerText.replace(/\n/g,' ').trim().replace(/"/g,'""') + '"'); });
+                csv.push(footRow.join(';'));
+            }
+            var blob = new Blob(['\uFEFF' + csv.join('\r\n')], { type: 'text/csv;charset=utf-8;' });
+            var link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.setAttribute('download', filename);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
 
         // Control de Menú Lateral en Escritorio y Móvil
         var burger = $('burger');
@@ -626,169 +826,10 @@
             });
         }
 
-        // Datos Dinámicos por Período
-        var periodData = {
-            hoy: {
-                label: 'Hoy · 14 de Octubre de 2026',
-                ingresos: 'S/ 1 480',
-                ingresosDelta: '+8.4% vs. ayer',
-                citas: '12',
-                citasDelta: '+2 vs. ayer',
-                ticket: 'S/ 123.30',
-                ticketDelta: '+2.1%',
-                comisiones: 'S/ 370',
-                comisionesDelta: '+8.4%',
-                subtitle: 'Flujo del día de hoy · Cumplimiento de meta 82%',
-                chartLine: '30,140 120,110 210,135 300,75 390,50 480,65 570,95',
-                chartArea: '30,140 120,110 210,135 300,75 390,50 480,65 570,95 570,170 30,170'
-            },
-            semana: {
-                label: '07 Oct 2026 - 14 Oct 2026',
-                ingresos: 'S/ 8 940',
-                ingresosDelta: '+12.4% vs. ant.',
-                citas: '71',
-                citasDelta: '+9 citas',
-                ticket: 'S/ 125.90',
-                ticketDelta: '+3.8%',
-                comisiones: 'S/ 1 890',
-                comisionesDelta: '+11.2%',
-                subtitle: 'Semana actual · Cumplimiento de meta 91%',
-                chartLine: '30,105 120,85 210,115 300,68 390,42 480,56 570,122',
-                chartArea: '30,105 120,85 210,115 300,68 390,42 480,56 570,122 570,170 30,170'
-            },
-            mes: {
-                label: '01 Oct 2026 - 31 Oct 2026',
-                ingresos: 'S/ 36 450',
-                ingresosDelta: '+16.5% vs. ant.',
-                citas: '288',
-                citasDelta: '+34 citas',
-                ticket: 'S/ 126.50',
-                ticketDelta: '+5.2%',
-                comisiones: 'S/ 7 650',
-                comisionesDelta: '+14.1%',
-                subtitle: 'Mes de Octubre 2026 · Cumplimiento de meta 96%',
-                chartLine: '30,90 120,65 210,80 300,45 390,35 480,48 570,70',
-                chartArea: '30,90 120,65 210,80 300,45 390,35 480,48 570,70 570,170 30,170'
-            },
-            anio: {
-                label: 'Año 2026 (Acumulado Anual)',
-                ingresos: 'S/ 418 200',
-                ingresosDelta: '+21.8% vs. 2025',
-                citas: '3 240',
-                citasDelta: '+310 citas',
-                ticket: 'S/ 129.00',
-                ticketDelta: '+6.5%',
-                comisiones: 'S/ 86 500',
-                comisionesDelta: '+19.4%',
-                subtitle: 'Acumulado 2026 · Desempeño excepcional',
-                chartLine: '30,80 120,55 210,70 300,38 390,30 480,42 570,60',
-                chartArea: '30,80 120,55 210,70 300,38 390,30 480,42 570,60 570,170 30,170'
-            }
-        };
-
-        function changePeriod(key) {
-            var data = periodData[key];
-            if (!data) return;
-
-            // Actualizar botones de periodo
-            var btns = document.querySelectorAll('.sg button');
-            btns.forEach(function(btn) {
-                btn.setAttribute('aria-pressed', 'false');
-                btn.classList.remove('active');
-            });
-
-            var activeBtn = $('btnPeriod' + key.charAt(0).toUpperCase() + key.slice(1));
-            if (activeBtn) {
-                activeBtn.setAttribute('aria-pressed', 'true');
-                activeBtn.classList.add('active');
-            }
-
-            // Actualizar etiqueta de rango
-            $('periodRangeLabel').textContent = data.label;
-            $('kpiIngresos').textContent = data.ingresos;
-            $('kpiIngresosDelta').innerHTML = '<i class="bi bi-arrow-up-short"></i> ' + data.ingresosDelta;
-            $('kpiCitas').textContent = data.citas;
-            $('kpiCitasDelta').innerHTML = '<i class="bi bi-arrow-up-short"></i> ' + data.citasDelta;
-            $('kpiTicket').textContent = data.ticket;
-            $('kpiTicketDelta').innerHTML = '<i class="bi bi-arrow-up-short"></i> ' + data.ticketDelta;
-            $('kpiComisiones').textContent = data.comisiones;
-            $('kpiComisionesDelta').innerHTML = '<i class="bi bi-arrow-up-short"></i> ' + data.comisionesDelta;
-            $('chartPeriodSubtitle').textContent = data.subtitle;
-
-            // Transición suave en el gráfico SVG
-            $('chartLine').setAttribute('points', data.chartLine);
-            $('chartArea').setAttribute('points', data.chartArea);
-        }
-
-        // Filtro por Categoría de Servicio
-        function filterService(category) {
-            var rows = document.querySelectorAll('#tableBody tr');
-            rows.forEach(function(row) {
-                if (category === 'todos') {
-                    row.style.display = '';
-                } else if (category === 'facial' && row.textContent.indexOf('Facial') > -1) {
-                    row.style.display = '';
-                } else if (category === 'masajes' && row.textContent.indexOf('Masajes') > -1) {
-                    row.style.display = '';
-                } else if (category === 'laser' && row.textContent.indexOf('Láser') > -1) {
-                    row.style.display = '';
-                } else if (category === 'estudio' && row.textContent.indexOf('Nail') > -1) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
-            });
-        }
-
-        // EXPORTACIÓN REAL A CSV (EXCEL COMPATIBLE UTF-8 CON BOM)
-        function exportTableToCSV(filename) {
-            var table = $('specialistsTable');
-            var csv = [];
-            
-            // Encabezados
-            var headers = [];
-            var ths = table.querySelectorAll('thead th');
-            ths.forEach(function(th) {
-                headers.push('"' + th.innerText.trim().replace(/"/g, '""') + '"');
-            });
-            csv.push(headers.join(';'));
-
-            // Filas
-            var trs = table.querySelectorAll('tbody tr');
-            trs.forEach(function(tr) {
-                if (tr.style.display === 'none') return;
-                var row = [];
-                var tds = tr.querySelectorAll('td');
-                tds.forEach(function(td) {
-                    var text = td.innerText.replace(/\n/g, ' - ').trim();
-                    row.push('"' + text.replace(/"/g, '""') + '"');
-                });
-                csv.push(row.join(';'));
-            });
-
-            // Fila de totales
-            var tfootTds = table.querySelectorAll('tfoot td');
-            if (tfootTds.length > 0) {
-                var footRow = [];
-                tfootTds.forEach(function(td) {
-                    var text = td.innerText.replace(/\n/g, ' ').trim();
-                    footRow.push('"' + text.replace(/"/g, '""') + '"');
-                });
-                csv.push(footRow.join(';'));
-            }
-
-            var csvContent = '\uFEFF' + csv.join('\r\n');
-            var blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            
-            var link = document.createElement('a');
-            var url = URL.createObjectURL(blob);
-            link.setAttribute('href', url);
-            link.setAttribute('download', filename);
-            link.style.visibility = 'hidden';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
+        // Inicializar reportes con datos reales al cargar
+        (function initReportes() {
+            changePeriod('semana');
+        })();
     </script>
 </body>
 
