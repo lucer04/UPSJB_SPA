@@ -1,0 +1,940 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Citas · VIVI Spa y Estudio</title>
+    <!-- Google Fonts: Cormorant Garamond & Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Estilos Principales Compilados por Sass -->
+    <link rel="stylesheet" href="./css/custom.css">
+</head>
+
+<body>
+    <!-- Telón de fondo para navegación móvil -->
+    <div class="side-backdrop" id="sideBackdrop"></div>
+
+    <div class="shell">
+        <!-- BARRA LATERAL ESPRESSO OSCURO -->
+        <aside class="side" id="sidebar">
+            <div class="brand">
+                <div class="logo">V</div>
+                <div class="brand-text">
+                    <b>VIVI</b>
+                    <small>Spa y Estudio</small>
+                </div>
+                <button class="side-close-btn d-lg-none ms-auto" id="sideClose" aria-label="Cerrar menú">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+
+            <nav aria-label="Menú principal">
+                <div class="grp">Principal</div>
+                <a class="nv" href="dashboard.html">
+                    <i class="bi bi-grid-1x2"></i>Dashboard
+                </a>
+                <a class="nv" href="reportes.html">
+                    <i class="bi bi-bar-chart-line"></i>Reportes
+                </a>
+
+                <div class="grp">Gestión</div>
+                <a class="nv on" href="citas.html" aria-current="page">
+                    <i class="bi bi-calendar-check"></i>Citas
+                </a>
+                <a class="nv" href="clientes.html">
+                    <i class="bi bi-people"></i>Clientes
+                </a>
+                <a class="nv" href="servicios.html">
+                    <i class="bi bi-stars"></i>Servicios
+                </a>
+                <a class="nv" href="inventario.html">
+                    <i class="bi bi-box-seam"></i>Inventario
+                </a>
+                <a class="nv" href="pagos.html"><i class="bi bi-cash-stack"></i>Pagos y caja</a>
+                <a class="nv" href="comisiones.html"><i class="bi bi-percent"></i>Comisiones</a>
+
+                <div class="grp">Configuraciones</div>
+                <a class="nv" href="roles.html"><i class="bi bi-shield-check"></i>Roles
+                </a>
+                <a class="nv" href="usuarios.html"><i class="bi bi-person-gear"></i>Usuarios
+                </a>
+                <a class="nv" href="categorias.html"><i class="bi bi-grid"></i>Categorías
+                </a>
+            </nav>
+
+            <div class="usr">
+                <div class="pm" id="pm" hidden>
+                    <div class="mh">
+                        <div class="av">AD</div>
+                        <div>
+                            <b>Administradora</b>
+                            <small>admin@vivispa.com</small>
+                            <span class="tg">Administradora</span>
+                        </div>
+                    </div>
+                    <button class="mi"><i class="bi bi-person-circle"></i>Mi perfil</button>
+                    <button class="mi"><i class="bi bi-shield-lock"></i>Cambiar contraseña</button>
+                    <button class="mi"><i class="bi bi-sliders"></i>Preferencias del Spa</button>
+                    <button class="mi out"><i class="bi bi-box-arrow-right"></i>Cerrar sesión</button>
+                </div>
+                <button class="ub" id="ub" aria-haspopup="true" aria-expanded="false">
+                    <div class="av">AD</div>
+                    <div>
+                        <b>Administradora</b>
+                        <small>admin@vivispa.com</small>
+                    </div>
+                    <i class="bi bi-chevron-up"></i>
+                </button>
+            </div>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <div class="main">
+            <!-- HEADER SUPERIOR ULTRA-SLIM -->
+            <header class="top">
+                <button class="ib" id="burger" aria-label="Mostrar u ocultar menú">
+                    <i class="bi bi-list"></i>
+                </button>
+                <span class="fw-semibold text-uppercase small d-none d-sm-inline" style="letter-spacing:0.06em; color:var(--spa-espresso);">Gestión de Citas</span>
+
+                <!-- Barra de búsqueda rápida -->
+                <div class="search-wrapper d-none d-md-flex">
+                    <i class="bi bi-search"></i>
+                    <input type="text" id="topSearchInput" class="search-input" placeholder="Buscar citas por código o clienta...">
+                    <span class="search-badge">Ctrl K</span>
+                </div>
+
+                <!-- Fecha actual en cabecera -->
+                <div class="header-date-badge d-none d-lg-flex ms-auto">
+                    <i class="bi bi-calendar3"></i>
+                    <span id="currentDateBadge">Hoy</span>
+                </div>
+
+                <!-- Notificaciones -->
+                <div class="nb ms-auto ms-lg-0">
+                    <button class="ib" id="bell" aria-expanded="false" aria-label="Notificaciones del Spa">
+                        <i class="bi bi-bell"></i>
+                        <span class="bdg">3</span>
+                    </button>
+                    <div class="pop" id="pop" hidden>
+                        <div class="pop-header">
+                            <b>Notificaciones</b>
+                            <span id="btnMarkRead">Marcar leídas</span>
+                        </div>
+                        <div class="pop-item">
+                            <i class="bi bi-exclamation-triangle-fill text-danger"></i>
+                            <div>
+                                <b>Stock bajo: Aceite de masaje argán</b>
+                                <small>Quedan 2 unidades en almacén</small>
+                            </div>
+                        </div>
+                        <div class="pop-item">
+                            <i class="bi bi-calendar-plus-fill text-primary"></i>
+                            <div>
+                                <b>Nueva cita online confirmada</b>
+                                <small>Valentina R. · Facial Oro hoy 16:30</small>
+                            </div>
+                        </div>
+                        <div class="pop-item">
+                            <i class="bi bi-check-circle-fill text-success"></i>
+                            <div>
+                                <b>Cabina 2 lista para higienización</b>
+                                <small>Turno finalizado a las 13:00</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- PÁGINA / VISTAS -->
+            <main class="page">
+                <!-- CABECERA DE PÁGINA -->
+                <div class="page-head">
+                    <div class="page-head-title">
+                        <h1 class="page-title">Gestión de Citas</h1>
+                        <p class="page-subtitle">Programa, organiza y monitorea la atención de tus clientas en cabinas y estudio.</p>
+                    </div>
+                    <div class="page-head-actions">
+                        <button class="btn btn-outline-spa btn-sm" id="btnExportCitas">
+                            <i class="bi bi-download me-1"></i>Exportar
+                        </button>
+                        <button class="btn btn-primary btn-sm" id="btnNuevaCitaTop">
+                            <i class="bi bi-plus-lg me-1"></i>Nueva Cita
+                        </button>
+                    </div>
+                </div>
+
+                <!-- TARJETAS KPI RESUMEN DE CITAS -->
+                <div class="row g-3 mb-3">
+                    <!-- KPI 1: Citas del Día / Total -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="cd kpi">
+                            <span class="kpi-title">Citas de hoy</span>
+                            <b id="kpiTotalCitas">12</b>
+                            <div class="kpi-footer">
+                                <span class="badge-sage" id="kpiOcupacionBadge"><i class="bi bi-pie-chart-fill"></i> 75% ocupación</span>
+                            </div>
+                            <svg viewBox="0 0 84 30" aria-hidden="true">
+                                <polyline points="0,21 14,17 28,19 42,12 56,15 70,8 84,2" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- KPI 2: Confirmadas & En curso -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="cd kpi gold">
+                            <span class="kpi-title">Confirmadas / En curso</span>
+                            <b id="kpiConfirmadas">8</b>
+                            <div class="kpi-footer">
+                                <span class="text-dark small" id="kpiIngresosText"><i class="bi bi-cash-stack"></i> S/ 1,480 proyectados</span>
+                            </div>
+                            <svg viewBox="0 0 84 30" aria-hidden="true">
+                                <polyline points="0,17 14,13 28,15 42,9 56,10 70,4 84,2" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- KPI 3: Pendientes de confirmación -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="cd kpi">
+                            <span class="kpi-title">Pendientes de confirmar</span>
+                            <b id="kpiPendientes">2</b>
+                            <div class="kpi-footer">
+                                <span class="text-warning small"><i class="bi bi-clock-history"></i> Requieren atención</span>
+                            </div>
+                            <svg viewBox="0 0 84 30" aria-hidden="true">
+                                <polyline points="0,18 14,15 28,12 42,14 56,8 70,6 84,3" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- KPI 4: Canceladas -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="cd kpi">
+                            <span class="kpi-title">Canceladas</span>
+                            <b id="kpiCanceladas">2</b>
+                            <div class="kpi-footer">
+                                <span class="text-muted small"><i class="bi bi-x-circle"></i> Horarios liberados</span>
+                            </div>
+                            <svg viewBox="0 0 84 30" aria-hidden="true">
+                                <polyline points="0,12 14,14 28,15 42,18 56,22 70,20 84,24" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FILTROS Y BÚSQUEDA -->
+                <div class="cd p-3 mb-3">
+                    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2 pb-2 border-bottom">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-funnel text-primary"></i>
+                            <span class="fw-semibold text-dark small">Filtros de Búsqueda</span>
+                        </div>
+                        <div class="d-flex align-items-center gap-1">
+                            <button type="button" class="btn btn-outline-spa btn-sm py-1 px-2" id="btnQuickHoy">Hoy</button>
+                            <button type="button" class="btn btn-outline-spa btn-sm py-1 px-2" id="btnQuickManana">Mañana</button>
+                            <button type="button" class="btn btn-outline-spa btn-sm py-1 px-2" id="btnQuickSemana">Esta semana</button>
+                            <button type="button" class="btn btn-outline-spa btn-sm py-1 px-2" id="btnQuickTodas">Todas</button>
+                            <button type="button" class="btn btn-link text-muted btn-sm py-1 px-2 ms-2 text-decoration-none" id="btnResetFilters">
+                                <i class="bi bi-arrow-counterclockwise me-1"></i>Limpiar
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row g-2">
+                        <!-- Buscador por texto -->
+                        <div class="col-12 col-md-4 col-lg-3">
+                            <label for="filtroTexto" class="form-label small text-muted mb-1">Buscar clienta / código</label>
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-text bg-white"><i class="bi bi-search text-muted"></i></span>
+                                <input type="text" class="form-control form-control-sm" id="filtroTexto" placeholder="Nombre, DNI o CIT-...">
+                            </div>
+                        </div>
+
+                        <!-- Fecha específica -->
+                        <div class="col-6 col-md-3 col-lg-2">
+                            <label for="filtroFecha" class="form-label small text-muted mb-1">Fecha</label>
+                            <input type="date" class="form-control form-control-sm" id="filtroFecha">
+                        </div>
+
+                        <!-- Estado -->
+                        <div class="col-6 col-md-3 col-lg-2">
+                            <label for="filtroEstado" class="form-label small text-muted mb-1">Estado</label>
+                            <select class="form-select form-select-sm" id="filtroEstado">
+                                <option value="">Todos los estados</option>
+                                <option value="confirmada">Confirmada</option>
+                                <option value="en_curso">En curso</option>
+                                <option value="pendiente">Pendiente</option>
+                                <option value="completada">Completada</option>
+                                <option value="cancelada">Cancelada</option>
+                            </select>
+                        </div>
+
+                        <!-- Especialista -->
+                        <div class="col-6 col-md-4 col-lg-2">
+                            <label for="filtroEspecialista" class="form-label small text-muted mb-1">Especialista</label>
+                            <select class="form-select form-select-sm" id="filtroEspecialista">
+                                <option value="">Todas las especialistas</option>
+                            </select>
+                        </div>
+
+                        <!-- Cabina -->
+                        <div class="col-6 col-md-4 col-lg-1">
+                            <label for="filtroCabina" class="form-label small text-muted mb-1">Cabina</label>
+                            <select class="form-select form-select-sm" id="filtroCabina">
+                                <option value="">Todas</option>
+                            </select>
+                        </div>
+
+                        <!-- Servicio -->
+                        <div class="col-12 col-md-4 col-lg-2">
+                            <label for="filtroServicio" class="form-label small text-muted mb-1">Servicio</label>
+                            <select class="form-select form-select-sm" id="filtroServicio">
+                                <option value="">Todos los servicios</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TABLA PROFESIONAL DE CITAS -->
+                <div class="cd">
+                    <div class="cd-h d-flex align-items-center justify-content-between flex-wrap gap-2">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="cd-title mb-0">Listado de Citas</span>
+                            <span class="badge bg-light text-muted border" id="citasCountBadge">0 citas</span>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="text-muted small d-none d-sm-inline">Filas por página:</span>
+                            <select class="form-select form-select-sm w-auto py-1" id="pageSizeSelect">
+                                <option value="10">10</option>
+                                <option value="25" selected>25</option>
+                                <option value="50">50</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Contenedor responsive con scroll horizontal interno protegido -->
+                    <div class="table-responsive">
+                        <table class="tb" id="tablaCitas">
+                            <thead>
+                                <tr>
+                                    <th style="width: 100px;">Código</th>
+                                    <th>Fecha y Horario</th>
+                                    <th>Clienta</th>
+                                    <th>Servicio</th>
+                                    <th>Especialista</th>
+                                    <th>Cabina</th>
+                                    <th>Duración</th>
+                                    <th>Total</th>
+                                    <th>Estado</th>
+                                    <th style="width: 150px; text-align: center;">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="citasTableBody">
+                                <!-- Filas generadas dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Estado vacío si no hay resultados -->
+                    <div id="citasEmptyState" class="p-4 text-center d-none">
+                        <div class="py-4">
+                            <i class="bi bi-calendar-x fs-1 text-muted opacity-50 mb-2 d-block"></i>
+                            <h6 class="fw-bold text-dark mb-1">No se encontraron citas</h6>
+                            <p class="small text-muted mb-3">No hay registros que coincidan con los filtros aplicados.</p>
+                            <button type="button" class="btn btn-outline-spa btn-sm" id="btnEmptyReset">
+                                <i class="bi bi-arrow-counterclockwise me-1"></i>Restablecer filtros
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Pie de tabla con paginación profesional -->
+                    <div class="spa-table-footer" id="tableFooter">
+                        <div id="tableInfoText">Mostrando 0 de 0 citas</div>
+                        <div class="spa-pagination" id="paginationControls">
+                            <!-- Botones generados dinámicamente -->
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- SCRIPTS DEL SISTEMA VIVI SPA -->
+    <script src="./js/spa-store.js"></script>
+    <script src="./js/spa-ui.js"></script>
+    <script src="./js/appointment-modal.js"></script>
+    <script src="./js/payment-modal.js"></script>
+    <script src="./js/client-modal.js"></script>
+    <script src="./js/xlsx.full.min.js"></script>
+    <script src="./js/spa-excel.js"></script>
+
+    <script>
+        (function () {
+            'use strict';
+
+            const b = document.body;
+            const $ = (id) => document.getElementById(id);
+
+            // Estado de la vista
+            let currentPage = 1;
+            let pageSize = 25;
+            let currentFiltros = {
+                texto: '',
+                fecha: SpaStore.getTodayDateString(), // Por defecto muestra hoy
+                estado: '',
+                especialistaId: '',
+                cabinaId: '',
+                servicioId: ''
+            };
+
+            // 1. Inicialización
+            function init() {
+                // Iniciar AppointmentModal
+                AppointmentModal.init();
+
+                // Establecer fecha por defecto en input
+                $('filtroFecha').value = currentFiltros.fecha;
+                updateDateBadge();
+
+                // Poblar selectores de filtros
+                populateFilterSelects();
+
+                // Renderizar KPIs y Tabla
+                renderView();
+
+                // Escuchar eventos globales del Store (creación, edición, cancelación)
+                window.addEventListener('spastore:change', function (e) {
+                    renderView();
+                });
+
+                // Setup de eventos UI
+                setupEventListeners();
+            }
+
+            function updateDateBadge() {
+                const now = new Date();
+                const options = { weekday: 'short', day: 'numeric', month: 'short' };
+                const dateStr = now.toLocaleDateString('es-PE', options);
+                $('currentDateBadge').textContent = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
+            }
+
+            function populateFilterSelects() {
+                // Especialistas
+                const espSel = $('filtroEspecialista');
+                const especialistas = SpaStore.getEspecialistas();
+                especialistas.forEach(e => {
+                    const opt = document.createElement('option');
+                    opt.value = e.id;
+                    opt.textContent = `${e.nombre} (${e.especialidad})`;
+                    espSel.appendChild(opt);
+                });
+
+                // Cabinas
+                const cabSel = $('filtroCabina');
+                const cabinas = SpaStore.getCabinas();
+                cabinas.forEach(c => {
+                    const opt = document.createElement('option');
+                    opt.value = c.id;
+                    opt.textContent = c.nombre;
+                    cabSel.appendChild(opt);
+                });
+
+                // Servicios
+                const srvSel = $('filtroServicio');
+                const servicios = SpaStore.getServicios();
+                servicios.forEach(s => {
+                    const opt = document.createElement('option');
+                    opt.value = s.id;
+                    opt.textContent = `${s.nombre} (${SpaStore.formatMoney(s.precio)})`;
+                    srvSel.appendChild(opt);
+                });
+            }
+
+            // 2. Renderizado de KPIs
+            function renderKPIs() {
+                // Resumen del día o de la fecha seleccionada
+                const fechaTarget = currentFiltros.fecha || SpaStore.getTodayDateString();
+                const resumen = SpaStore.getResumenCitas(fechaTarget);
+
+                $('kpiTotalCitas').textContent = resumen.total;
+                $('kpiConfirmadas').textContent = resumen.confirmadas;
+                $('kpiPendientes').textContent = resumen.pendientes;
+                $('kpiCanceladas').textContent = resumen.canceladas;
+
+                $('kpiOcupacionBadge').innerHTML = `<i class="bi bi-pie-chart-fill"></i> ${resumen.ocupacionPct}% ocupación`;
+                $('kpiIngresosText').innerHTML = `<i class="bi bi-cash-stack"></i> ${SpaStore.formatMoney(resumen.ingresosDia)} proyectados`;
+            }
+
+            // 3. Renderizado de Tabla con Paginación
+            function renderView() {
+                renderKPIs();
+
+                // Obtener citas con filtros aplicados
+                const todasLasCitas = SpaStore.getCitas(currentFiltros);
+                const totalCount = todasLasCitas.length;
+                $('citasCountBadge').textContent = `${totalCount} cita${totalCount === 1 ? '' : 's'}`;
+
+                const tbody = $('citasTableBody');
+                const emptyState = $('citasEmptyState');
+                const tableFooter = $('tableFooter');
+
+                if (totalCount === 0) {
+                    tbody.innerHTML = '';
+                    emptyState.classList.remove('d-none');
+                    tableFooter.classList.add('d-none');
+                    return;
+                }
+
+                emptyState.classList.add('d-none');
+                tableFooter.classList.remove('d-none');
+
+                // Paginación
+                const totalPages = Math.ceil(totalCount / pageSize);
+                if (currentPage > totalPages) currentPage = totalPages || 1;
+
+                const startIndex = (currentPage - 1) * pageSize;
+                const endIndex = Math.min(startIndex + pageSize, totalCount);
+                const citasPagina = todasLasCitas.slice(startIndex, endIndex);
+
+                // Info footer
+                $('tableInfoText').textContent = `Mostrando ${startIndex + 1} a ${endIndex} de ${totalCount} citas`;
+
+                // Construcción de filas HTML
+                tbody.innerHTML = citasPagina.map(cita => {
+                    const cliente = SpaStore.getClienteById(cita.clienteId);
+                    const tieneAlergia = cliente && cliente.alergias && cliente.alergias.toLowerCase() !== 'ninguna';
+
+                    // Clases y badges de estado
+                    let estadoClass = 'confirmada';
+                    let estadoLabel = 'Confirmada';
+                    let estadoIcon = 'bi-check-circle-fill';
+
+                    if (cita.estado === 'pendiente') {
+                        estadoClass = 'pendiente';
+                        estadoLabel = 'Pendiente';
+                        estadoIcon = 'bi-clock-history';
+                    } else if (cita.estado === 'en_curso') {
+                        estadoClass = 'en_curso';
+                        estadoLabel = 'En curso';
+                        estadoIcon = 'bi-play-circle-fill';
+                    } else if (cita.estado === 'completada') {
+                        estadoClass = 'completada';
+                        estadoLabel = 'Completada';
+                        estadoIcon = 'bi-check2-all';
+                    } else if (cita.estado === 'cancelada') {
+                        estadoClass = 'cancelada';
+                        estadoLabel = 'Cancelada';
+                        estadoIcon = 'bi-x-circle-fill';
+                    }
+
+                    // Acciones condicionales
+                    let botonesAccion = `
+                        <button type="button" class="btn-action-icon" data-action="detail" data-id="${cita.id}" title="Ver detalle de cita">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                        <button type="button" class="btn-action-icon" data-action="edit" data-id="${cita.id}" title="Editar cita">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                    `;
+
+                    if (cita.estado === 'pendiente') {
+                        botonesAccion += `
+                            <button type="button" class="btn-action-icon btn-act-success" data-action="confirm" data-id="${cita.id}" title="Confirmar cita">
+                                <i class="bi bi-check-lg"></i>
+                            </button>
+                        `;
+                    }
+
+                    if (cita.estado === 'confirmada' || cita.estado === 'en_curso') {
+                        botonesAccion += `
+                            <button type="button" class="btn-action-icon btn-act-success" data-action="complete" data-id="${cita.id}" title="Registrar atención / Completar">
+                                <i class="bi bi-check2-all"></i>
+                            </button>
+                        `;
+                    }
+
+                    if (cita.estado !== 'cancelada' && cita.estado !== 'completada') {
+                        botonesAccion += `
+                            <button type="button" class="btn-action-icon btn-act-danger" data-action="cancel" data-id="${cita.id}" title="Cancelar cita">
+                                <i class="bi bi-x-lg"></i>
+                            </button>
+                        `;
+                    }
+
+                    // Botón Cobrar / Ver Comprobante (cualquier estado no cancelado)
+                    if (cita.estado !== 'cancelada') {
+                        const saldoPend = typeof cita.saldoPendiente === 'number'
+                            ? cita.saldoPendiente
+                            : Math.max(0, (cita.total || cita.precio || 0) - (cita.montoPagado || 0));
+
+                        if (saldoPend > 0.05) {
+                            botonesAccion += `
+                                <button type="button" class="btn-action-icon" style="color:var(--spa-dorado-oscuro,#8a7042);" data-action="pay" data-id="${cita.id}" title="Cobrar cita — Saldo pendiente: ${SpaStore.formatMoney(saldoPend)}">
+                                    <i class="bi bi-cash-stack"></i>
+                                </button>
+                            `;
+                        } else {
+                            botonesAccion += `
+                                <button type="button" class="btn-action-icon text-success" data-action="receipt" data-id="${cita.id}" title="Ver comprobante de pago">
+                                    <i class="bi bi-receipt"></i>
+                                </button>
+                            `;
+                        }
+                    }
+
+                    return `
+                        <tr>
+                            <td>
+                                <b class="text-dark">${cita.codigo}</b>
+                            </td>
+                            <td>
+                                <div><b>${SpaStore.formatDateFriendly(cita.fecha)}</b></div>
+                                <small class="text-muted"><i class="bi bi-clock me-1"></i>${cita.horaInicio} - ${cita.horaFin}</small>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center gap-1">
+                                    <span class="fw-semibold text-dark">${cita.clienteNombre}</span>
+                                    ${tieneAlergia ? '<i class="bi bi-exclamation-triangle-fill text-warning ms-1" title="Alergia: ' + cliente.alergias + '"></i>' : ''}
+                                </div>
+                                <small class="text-muted">${cita.clienteTelefono || (cliente ? cliente.telefono : '')}</small>
+                            </td>
+                            <td>
+                                <div>${cita.servicioNombre}</div>
+                                <small class="text-muted">${cita.duracionMin} min</small>
+                            </td>
+                            <td>
+                                <div class="specialist-cell">
+                                    <div class="sp-av">${(cita.especialistaNombre || 'ES').split(' ').map(n=>n[0]).join('').slice(0,2)}</div>
+                                    <div>
+                                        <b>${cita.especialistaNombre}</b>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="badge bg-light text-dark border">${cita.cabinaNombre}</span>
+                            </td>
+                            <td>
+                                <span class="small">${cita.duracionMin} min</span>
+                            </td>
+                            <td>
+                                <b class="text-dark">${SpaStore.formatMoney(cita.total || cita.precio)}</b>
+                                <small class="text-muted d-block" style="font-size:10px;">${(cita.metodoPago || 'Pendiente').toUpperCase()}</small>
+                                ${(() => {
+                                    if (cita.estado === 'cancelada') return '';
+                                    const saldoPend2 = typeof cita.saldoPendiente === 'number'
+                                        ? cita.saldoPendiente
+                                        : Math.max(0, (cita.total || cita.precio || 0) - (cita.montoPagado || 0));
+                                    if (saldoPend2 <= 0.05) {
+                                        return '<span class="badge" style="background:#eef8ef;color:#2e7d32;font-size:9px;padding:2px 5px;border-radius:4px;"><i class="bi bi-check-circle me-1"></i>Pagado</span>';
+                                    } else if (cita.montoPagado && cita.montoPagado > 0) {
+                                        return '<span class="badge" style="background:#fff8e6;color:#856404;font-size:9px;padding:2px 5px;border-radius:4px;"><i class="bi bi-clock-history me-1"></i>Abono ' + SpaStore.formatMoney(cita.montoPagado) + '</span>';
+                                    } else {
+                                        return '<span class="badge" style="background:#fef2f2;color:#c62828;font-size:9px;padding:2px 5px;border-radius:4px;"><i class="bi bi-exclamation-circle me-1"></i>Por cobrar</span>';
+                                    }
+                                })()}
+                            </td>
+                            <td>
+                                <span class="pl ${estadoClass}">
+                                    <i class="bi ${estadoIcon}"></i> ${estadoLabel}
+                                </span>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center justify-content-center gap-1">
+                                    ${botonesAccion}
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+
+                renderPagination(totalPages);
+            }
+
+            function renderPagination(totalPages) {
+                const container = $('paginationControls');
+                if (totalPages <= 1) {
+                    container.innerHTML = '';
+                    return;
+                }
+
+                let html = `
+                    <button type="button" ${currentPage === 1 ? 'disabled' : ''} data-page="${currentPage - 1}">
+                        <i class="bi bi-chevron-left"></i>
+                    </button>
+                `;
+
+                for (let p = 1; p <= totalPages; p++) {
+                    if (p === 1 || p === totalPages || (p >= currentPage - 1 && p <= currentPage + 1)) {
+                        html += `
+                            <button type="button" class="${p === currentPage ? 'active' : ''}" data-page="${p}">
+                                ${p}
+                            </button>
+                        `;
+                    } else if (p === currentPage - 2 || p === currentPage + 2) {
+                        html += `<span class="px-1 text-muted">...</span>`;
+                    }
+                }
+
+                html += `
+                    <button type="button" ${currentPage === totalPages ? 'disabled' : ''} data-page="${currentPage + 1}">
+                        <i class="bi bi-chevron-right"></i>
+                    </button>
+                `;
+
+                container.innerHTML = html;
+            }
+
+            // 4. Configuración de Event Listeners
+            function setupEventListeners() {
+                // Botón Nueva Cita
+                $('btnNuevaCitaTop').onclick = function () {
+                    AppointmentModal.openNew(null, this);
+                };
+
+                // Filtros
+                $('filtroTexto').oninput = function () {
+                    currentFiltros.texto = this.value.trim();
+                    currentPage = 1;
+                    renderView();
+                };
+
+                $('filtroFecha').onchange = function () {
+                    currentFiltros.fecha = this.value;
+                    currentPage = 1;
+                    renderView();
+                };
+
+                $('filtroEstado').onchange = function () {
+                    currentFiltros.estado = this.value;
+                    currentPage = 1;
+                    renderView();
+                };
+
+                $('filtroEspecialista').onchange = function () {
+                    currentFiltros.especialistaId = this.value;
+                    currentPage = 1;
+                    renderView();
+                };
+
+                $('filtroCabina').onchange = function () {
+                    currentFiltros.cabinaId = this.value;
+                    currentPage = 1;
+                    renderView();
+                };
+
+                $('filtroServicio').onchange = function () {
+                    currentFiltros.servicioId = this.value;
+                    currentPage = 1;
+                    renderView();
+                };
+
+                // Botones rápidos de fecha
+                $('btnQuickHoy').onclick = function () {
+                    currentFiltros.fecha = SpaStore.getTodayDateString();
+                    $('filtroFecha').value = currentFiltros.fecha;
+                    currentPage = 1;
+                    renderView();
+                };
+
+                $('btnQuickManana').onclick = function () {
+                    currentFiltros.fecha = SpaStore.getTodayDateString(1);
+                    $('filtroFecha').value = currentFiltros.fecha;
+                    currentPage = 1;
+                    renderView();
+                };
+
+                $('btnQuickSemana').onclick = function () {
+                    currentFiltros.fecha = '';
+                    $('filtroFecha').value = '';
+                    currentPage = 1;
+                    renderView();
+                };
+
+                $('btnQuickTodas').onclick = function () {
+                    currentFiltros.fecha = '';
+                    $('filtroFecha').value = '';
+                    currentPage = 1;
+                    renderView();
+                };
+
+                const resetFilters = function () {
+                    currentFiltros = {
+                        texto: '',
+                        fecha: '',
+                        estado: '',
+                        especialistaId: '',
+                        cabinaId: '',
+                        servicioId: ''
+                    };
+                    $('filtroTexto').value = '';
+                    $('filtroFecha').value = '';
+                    $('filtroEstado').value = '';
+                    $('filtroEspecialista').value = '';
+                    $('filtroCabina').value = '';
+                    $('filtroServicio').value = '';
+                    currentPage = 1;
+                    renderView();
+                };
+
+                $('btnResetFilters').onclick = resetFilters;
+                $('btnEmptyReset').onclick = resetFilters;
+
+                // Tamaño de página
+                $('pageSizeSelect').onchange = function () {
+                    pageSize = Number(this.value);
+                    currentPage = 1;
+                    renderView();
+                };
+
+                // Paginación click
+                $('paginationControls').onclick = function (e) {
+                    const btn = e.target.closest('button[data-page]');
+                    if (btn && !btn.disabled) {
+                        currentPage = Number(btn.dataset.page);
+                        renderView();
+                    }
+                };
+
+                // Acciones en la tabla delegadas
+                $('citasTableBody').onclick = function (e) {
+                    const btn = e.target.closest('button[data-action]');
+                    if (!btn) return;
+
+                    const action = btn.dataset.action;
+                    const citaId = btn.dataset.id;
+
+                    if (action === 'detail') {
+                        AppointmentModal.openDetail(citaId, btn);
+                    } else if (action === 'edit') {
+                        AppointmentModal.openEdit(citaId, btn);
+                    } else if (action === 'confirm') {
+                        const res = SpaStore.confirmarCita(citaId);
+                        if (res.success) {
+                            SpaUI.showToast('Cita Confirmada', 'La reserva ha sido confirmada satisfactoriamente.', 'success');
+                            renderView();
+                        }
+                    } else if (action === 'complete') {
+                        const res = SpaStore.completarCita(citaId);
+                        if (res.success) {
+                            SpaUI.showToast('Atención Registrada', 'La cita fue marcada como completada con éxito.', 'success');
+                            renderView();
+                        }
+                    } else if (action === 'cancel') {
+                        AppointmentModal.openCancel(citaId, btn);
+                    } else if (action === 'pay') {
+                        PaymentModal.openNuevoPagoModal({ citaId: citaId, onSaved: renderView });
+                    } else if (action === 'receipt') {
+                        const pagosRec = SpaStore.getPagos().filter(function(p) { return p.citaId === citaId; });
+                        if (pagosRec && pagosRec.length > 0) {
+                            PaymentModal.openComprobanteModal(pagosRec[0].id);
+                        } else {
+                            PaymentModal.openNuevoPagoModal({ citaId: citaId, onSaved: renderView });
+                        }
+                    }
+                };
+
+                // Búsqueda superior (Header)
+                const topSearch = $('topSearchInput');
+                if (topSearch) {
+                    topSearch.oninput = function () {
+                        $('filtroTexto').value = this.value;
+                        currentFiltros.texto = this.value.trim();
+                        currentPage = 1;
+                        renderView();
+                    };
+                }
+
+                // Exportar profesionalmente a Excel (XLSX)
+                $('btnExportCitas').onclick = function () {
+                    const citas = SpaStore.getCitas(currentFiltros);
+                    SpaExcel.exportCitas(citas);
+                };
+
+                // Control de Menú Lateral en Escritorio y Móvil
+                const burger = $('burger');
+                const backdrop = $('sideBackdrop');
+                const sideClose = $('sideClose');
+
+                function toggleMenu(e) {
+                    if (e) e.stopPropagation();
+                    if (window.innerWidth < 992) {
+                        b.toggleAttribute('data-sidebar-open');
+                    } else {
+                        b.toggleAttribute('data-collapsed');
+                    }
+                }
+
+                if (burger) burger.onclick = toggleMenu;
+                if (backdrop) backdrop.onclick = function () { b.removeAttribute('data-sidebar-open'); };
+                if (sideClose) sideClose.onclick = function (e) {
+                    e.stopPropagation();
+                    b.removeAttribute('data-sidebar-open');
+                };
+
+                // Popovers de Notificaciones y Perfil
+                function closeAllPopovers() {
+                    [['ub', 'pm'], ['bell', 'pop']].forEach(function (pair) {
+                        const btn = $(pair[0]);
+                        const pop = $(pair[1]);
+                        if (pop) pop.hidden = true;
+                        if (btn) btn.setAttribute('aria-expanded', 'false');
+                    });
+                }
+
+                function setupToggle(btnId, popId) {
+                    const btn = $(btnId);
+                    const pop = $(popId);
+                    if (!btn || !pop) return;
+                    btn.onclick = function (e) {
+                        e.stopPropagation();
+                        const isHidden = pop.hidden;
+                        closeAllPopovers();
+                        pop.hidden = !isHidden;
+                        btn.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+                    };
+                }
+
+                setupToggle('ub', 'pm');
+                setupToggle('bell', 'pop');
+
+                $('btnMarkRead').onclick = function () {
+                    SpaUI.showToast('Notificaciones', 'Todas las notificaciones fueron marcadas como leídas.', 'info');
+                    closeAllPopovers();
+                };
+
+                document.addEventListener('click', function (e) {
+                    if (!e.target.closest('#sidebar') && window.innerWidth < 992 && b.hasAttribute('data-sidebar-open')) {
+                        b.removeAttribute('data-sidebar-open');
+                    }
+                    closeAllPopovers();
+                });
+
+                document.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape') {
+                        closeAllPopovers();
+                        b.removeAttribute('data-sidebar-open');
+                    }
+                    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+                        e.preventDefault();
+                        if (topSearch) topSearch.focus();
+                    }
+                });
+            }
+
+            // Iniciar cuando el DOM esté listo
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+        })();
+    </script>
+</body>
+
+</html>

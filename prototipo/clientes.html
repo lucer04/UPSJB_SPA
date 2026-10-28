@@ -1,0 +1,728 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Directorio de Clientes · VIVI Spa y Estudio</title>
+    <!-- Google Fonts: Cormorant Garamond & Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Estilos Principales Compilados por Sass -->
+    <link rel="stylesheet" href="./css/custom.css">
+</head>
+
+<body>
+    <!-- Telón de fondo para navegación móvil -->
+    <div class="side-backdrop" id="sideBackdrop"></div>
+
+    <div class="shell">
+        <!-- BARRA LATERAL ESPRESSO OSCURO -->
+        <aside class="side" id="sidebar">
+            <div class="brand">
+                <div class="logo">V</div>
+                <div class="brand-text">
+                    <b>VIVI</b>
+                    <small>Spa y Estudio</small>
+                </div>
+                <button class="side-close-btn d-lg-none ms-auto" id="sideClose" aria-label="Cerrar menú">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+
+            <nav aria-label="Menú principal">
+                <div class="grp">Principal</div>
+                <a class="nv" href="dashboard.html">
+                    <i class="bi bi-grid-1x2"></i>Dashboard
+                </a>
+                <a class="nv" href="reportes.html">
+                    <i class="bi bi-bar-chart-line"></i>Reportes
+                </a>
+
+                <div class="grp">Gestión</div>
+                <a class="nv" href="citas.html">
+                    <i class="bi bi-calendar-check"></i>Citas
+                </a>
+                <a class="nv on" href="clientes.html" aria-current="page">
+                    <i class="bi bi-people"></i>Clientes
+                </a>
+                <a class="nv" href="servicios.html">
+                    <i class="bi bi-stars"></i>Servicios
+                </a>
+                <a class="nv" href="inventario.html">
+                    <i class="bi bi-box-seam"></i>Inventario
+                </a>
+                <a class="nv" href="pagos.html"><i class="bi bi-cash-stack"></i>Pagos y caja</a>
+                <a class="nv" href="comisiones.html"><i class="bi bi-percent"></i>Comisiones</a>
+
+                <div class="grp">Configuraciones</div>
+                <a class="nv" href="roles.html"><i class="bi bi-shield-check"></i>Roles
+                </a>
+                <a class="nv" href="usuarios.html"><i class="bi bi-person-gear"></i>Usuarios
+                </a>
+                <a class="nv" href="categorias.html"><i class="bi bi-grid"></i>Categorías
+                </a>
+            </nav>
+
+            <div class="usr">
+                <div class="pm" id="pm" hidden>
+                    <div class="mh">
+                        <div class="av">AD</div>
+                        <div>
+                            <b>Administradora</b>
+                            <small>admin@vivispa.com</small>
+                            <span class="tg">Administradora</span>
+                        </div>
+                    </div>
+                    <button class="mi"><i class="bi bi-person-circle"></i>Mi perfil</button>
+                    <button class="mi"><i class="bi bi-shield-lock"></i>Cambiar contraseña</button>
+                    <button class="mi"><i class="bi bi-sliders"></i>Preferencias del Spa</button>
+                    <button class="mi out"><i class="bi bi-box-arrow-right"></i>Cerrar sesión</button>
+                </div>
+                <button class="ub" id="ub" aria-haspopup="true" aria-expanded="false">
+                    <div class="av">AD</div>
+                    <div>
+                        <b>Administradora</b>
+                        <small>admin@vivispa.com</small>
+                    </div>
+                    <i class="bi bi-chevron-up"></i>
+                </button>
+            </div>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <div class="main">
+            <!-- HEADER SUPERIOR ULTRA-SLIM -->
+            <header class="top">
+                <button class="ib" id="burger" aria-label="Mostrar u ocultar menú">
+                    <i class="bi bi-list"></i>
+                </button>
+                <span class="fw-semibold text-uppercase small d-none d-sm-inline" style="letter-spacing:0.06em; color:var(--spa-espresso);">Directorio de Clientes</span>
+
+                <!-- Barra de búsqueda rápida -->
+                <div class="search-wrapper d-none d-md-flex">
+                    <i class="bi bi-search"></i>
+                    <input type="text" id="topSearchClient" class="search-input" placeholder="Buscar clienta por nombre, DNI o teléfono...">
+                    <span class="search-badge">Ctrl K</span>
+                </div>
+
+                <!-- Fecha actual en cabecera -->
+                <div class="header-date-badge d-none d-lg-flex ms-auto">
+                    <i class="bi bi-calendar3"></i>
+                    <span id="currentDateBadge">Hoy</span>
+                </div>
+
+                <!-- Notificaciones -->
+                <div class="nb ms-auto ms-lg-0">
+                    <button class="ib" id="bell" aria-expanded="false" aria-label="Notificaciones del Spa">
+                        <i class="bi bi-bell"></i>
+                        <span class="bdg">3</span>
+                    </button>
+                    <div class="pop" id="pop" hidden>
+                        <div class="pop-header">
+                            <b>Notificaciones</b>
+                            <span id="btnMarkRead">Marcar leídas</span>
+                        </div>
+                        <div class="pop-item">
+                            <i class="bi bi-exclamation-triangle-fill text-danger"></i>
+                            <div>
+                                <b>Stock bajo: Aceite de masaje argán</b>
+                                <small>Quedan 2 unidades en almacén</small>
+                            </div>
+                        </div>
+                        <div class="pop-item">
+                            <i class="bi bi-calendar-plus-fill text-primary"></i>
+                            <div>
+                                <b>Nueva cita online confirmada</b>
+                                <small>Valentina R. · Facial Oro hoy 16:30</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- PÁGINA / VISTAS -->
+            <main class="page">
+                <!-- CABECERA DE PÁGINA -->
+                <div class="page-head">
+                    <div class="page-head-title">
+                        <h1 class="page-title">Directorio de Clientes</h1>
+                        <p class="page-subtitle">Historial de tratamientos, ficha médica y gestión integral de tus clientas.</p>
+                    </div>
+                    <div class="page-head-actions">
+                        <button class="btn btn-outline-spa btn-sm" id="btnExportClientes">
+                            <i class="bi bi-download me-1"></i>Exportar
+                        </button>
+                        <button class="btn btn-primary btn-sm" id="btnNuevoClienteTop">
+                            <i class="bi bi-person-plus-fill me-1"></i>Nueva Clienta
+                        </button>
+                    </div>
+                </div>
+
+                <!-- TARJETAS KPI RESUMEN DE CLIENTES -->
+                <div class="row g-3 mb-3">
+                    <!-- KPI 1: Total Clientas -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="cd kpi">
+                            <span class="kpi-title">Total clientas</span>
+                            <b id="kpiTotalClientes">12</b>
+                            <div class="kpi-footer">
+                                <span class="badge-sage" id="kpiNuevasBadge"><i class="bi bi-arrow-up-short"></i> +3 este mes</span>
+                            </div>
+                            <svg viewBox="0 0 84 30" aria-hidden="true">
+                                <polyline points="0,21 14,17 28,19 42,12 56,15 70,8 84,2" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- KPI 2: Clientas Activas -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="cd kpi gold">
+                            <span class="kpi-title">Clientas activas</span>
+                            <b id="kpiClientesActivas">12</b>
+                            <div class="kpi-footer">
+                                <span class="text-dark small"><i class="bi bi-check-circle-fill text-success me-1"></i>100% de la cartera</span>
+                            </div>
+                            <svg viewBox="0 0 84 30" aria-hidden="true">
+                                <polyline points="0,17 14,13 28,15 42,9 56,10 70,4 84,2" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- KPI 3: Citas de Hoy -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="cd kpi">
+                            <span class="kpi-title">En agenda hoy</span>
+                            <b id="kpiClientasAgenda">11</b>
+                            <div class="kpi-footer">
+                                <span class="badge-sage"><i class="bi bi-calendar-event me-1"></i>En cabinas</span>
+                            </div>
+                            <svg viewBox="0 0 84 30" aria-hidden="true">
+                                <polyline points="0,18 14,15 28,12 42,14 56,8 70,6 84,3" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- KPI 4: Con Alergias o Cuidados Especiales -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="cd kpi">
+                            <span class="kpi-title">Con alertas dérmicas</span>
+                            <b id="kpiClientesAlergias">5</b>
+                            <div class="kpi-footer">
+                                <span class="text-warning small"><i class="bi bi-exclamation-triangle-fill me-1"></i>Cuidados especiales</span>
+                            </div>
+                            <svg viewBox="0 0 84 30" aria-hidden="true">
+                                <polyline points="0,12 14,14 28,15 42,18 56,22 70,20 84,24" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FILTROS Y BÚSQUEDA -->
+                <div class="cd p-3 mb-3">
+                    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2 pb-2 border-bottom">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-funnel text-primary"></i>
+                            <span class="fw-semibold text-dark small">Filtros de Clientas</span>
+                        </div>
+                        <div class="d-flex align-items-center gap-1">
+                            <button type="button" class="btn btn-outline-spa btn-sm py-1 px-2" id="btnQuickActivas">Solo Activas</button>
+                            <button type="button" class="btn btn-outline-spa btn-sm py-1 px-2" id="btnQuickAlergias">Con Alergias</button>
+                            <button type="button" class="btn btn-outline-spa btn-sm py-1 px-2" id="btnQuickTodas">Todas</button>
+                            <button type="button" class="btn btn-link text-muted btn-sm py-1 px-2 ms-2 text-decoration-none" id="btnResetFilters">
+                                <i class="bi bi-arrow-counterclockwise me-1"></i>Limpiar
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row g-2">
+                        <!-- Buscador por texto -->
+                        <div class="col-12 col-md-6 col-lg-5">
+                            <label for="filtroTexto" class="form-label small text-muted mb-1">Buscar por nombre, documento, teléfono o código</label>
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-text bg-white"><i class="bi bi-search text-muted"></i></span>
+                                <input type="text" class="form-control form-control-sm" id="filtroTexto" placeholder="Ej. Mariana, 74581290, 994...">
+                            </div>
+                        </div>
+
+                        <!-- Estado -->
+                        <div class="col-6 col-md-3 col-lg-3">
+                            <label for="filtroEstado" class="form-label small text-muted mb-1">Estado</label>
+                            <select class="form-select form-select-sm" id="filtroEstado">
+                                <option value="">Todos los estados</option>
+                                <option value="activo">Solo Activas</option>
+                                <option value="inactivo">Inactivas</option>
+                            </select>
+                        </div>
+
+                        <!-- Condición / Alergias -->
+                        <div class="col-6 col-md-3 col-lg-4">
+                            <label for="filtroCondicion" class="form-label small text-muted mb-1">Condición Dérmica</label>
+                            <select class="form-select form-select-sm" id="filtroCondicion">
+                                <option value="">Todas las clientas</option>
+                                <option value="alergias">Solo con Alergias o Cuidados</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TABLA PROFESIONAL DE CLIENTAS -->
+                <div class="cd">
+                    <div class="cd-h d-flex align-items-center justify-content-between flex-wrap gap-2">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="cd-title mb-0">Listado de Clientas</span>
+                            <span class="badge bg-light text-muted border" id="clientesCountBadge">0 clientas</span>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="text-muted small d-none d-sm-inline">Filas por página:</span>
+                            <select class="form-select form-select-sm w-auto py-1" id="pageSizeSelect">
+                                <option value="10">10</option>
+                                <option value="25" selected>25</option>
+                                <option value="50">50</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Contenedor responsive con scroll horizontal interno protegido -->
+                    <div class="table-responsive">
+                        <table class="tb" id="tablaClientes">
+                            <thead>
+                                <tr>
+                                    <th style="width: 90px;">Código</th>
+                                    <th>Clienta</th>
+                                    <th>Documento</th>
+                                    <th>Contacto</th>
+                                    <th>Alergias / Contraindicaciones</th>
+                                    <th>Última Visita</th>
+                                    <th>Estado</th>
+                                    <th style="width: 160px; text-align: center;">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="clientesTableBody">
+                                <!-- Filas generadas dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Estado vacío si no hay resultados -->
+                    <div id="clientesEmptyState" class="p-4 text-center d-none">
+                        <div class="py-4">
+                            <i class="bi bi-person-x fs-1 text-muted opacity-50 mb-2 d-block"></i>
+                            <h6 class="fw-bold text-dark mb-1">No se encontraron clientas</h6>
+                            <p class="small text-muted mb-3">No hay registros que coincidan con los criterios de búsqueda.</p>
+                            <button type="button" class="btn btn-outline-spa btn-sm" id="btnEmptyReset">
+                                <i class="bi bi-arrow-counterclockwise me-1"></i>Restablecer filtros
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Pie de tabla con paginación profesional -->
+                    <div class="spa-table-footer" id="tableFooter">
+                        <div id="tableInfoText">Mostrando 0 de 0 clientas</div>
+                        <div class="spa-pagination" id="paginationControls">
+                            <!-- Botones generados dinámicamente -->
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- SCRIPTS DEL SISTEMA VIVI SPA -->
+    <script src="./js/spa-store.js"></script>
+    <script src="./js/spa-ui.js"></script>
+    <script src="./js/appointment-modal.js"></script>
+    <script src="./js/client-modal.js"></script>
+    <script src="./js/xlsx.full.min.js"></script>
+    <script src="./js/spa-excel.js"></script>
+
+    <script>
+        (function () {
+            'use strict';
+
+            const b = document.body;
+            const $ = (id) => document.getElementById(id);
+
+            let currentPage = 1;
+            let pageSize = 25;
+            let currentFiltros = {
+                texto: '',
+                estado: '',
+                soloAlergias: false
+            };
+
+            function init() {
+                // Iniciar modales compartidos
+                AppointmentModal.init();
+                ClientModal.init();
+
+                updateDateBadge();
+                renderView();
+
+                // Escuchar cambios en el almacén de datos
+                window.addEventListener('spastore:change', function () {
+                    renderView();
+                });
+
+                setupEventListeners();
+            }
+
+            function updateDateBadge() {
+                const now = new Date();
+                const options = { weekday: 'short', day: 'numeric', month: 'short' };
+                const dateStr = now.toLocaleDateString('es-PE', options);
+                $('currentDateBadge').textContent = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
+            }
+
+            function renderKPIs() {
+                const todas = SpaStore.getClientes();
+                const total = todas.length;
+                const activas = todas.filter(c => c.estado === 'activo').length;
+                const conAlergias = todas.filter(c => c.alergias && c.alergias.toLowerCase() !== 'ninguna').length;
+
+                // Clientas en agenda de hoy
+                const resumenHoy = SpaStore.getResumenCitas();
+                const enAgenda = resumenHoy.clientasAtendidas;
+
+                $('kpiTotalClientes').textContent = total;
+                $('kpiClientesActivas').textContent = activas;
+                $('kpiClientasAgenda').textContent = enAgenda;
+                $('kpiClientesAlergias').textContent = conAlergias;
+            }
+
+            function renderView() {
+                renderKPIs();
+
+                const clientesFiltrados = SpaStore.getClientes(currentFiltros);
+                const totalCount = clientesFiltrados.length;
+                $('clientesCountBadge').textContent = `${totalCount} clienta${totalCount === 1 ? '' : 's'}`;
+
+                const tbody = $('clientesTableBody');
+                const emptyState = $('clientesEmptyState');
+                const tableFooter = $('tableFooter');
+
+                if (totalCount === 0) {
+                    tbody.innerHTML = '';
+                    emptyState.classList.remove('d-none');
+                    tableFooter.classList.add('d-none');
+                    return;
+                }
+
+                emptyState.classList.add('d-none');
+                tableFooter.classList.remove('d-none');
+
+                const totalPages = Math.ceil(totalCount / pageSize);
+                if (currentPage > totalPages) currentPage = totalPages || 1;
+
+                const startIndex = (currentPage - 1) * pageSize;
+                const endIndex = Math.min(startIndex + pageSize, totalCount);
+                const clientesPagina = clientesFiltrados.slice(startIndex, endIndex);
+
+                $('tableInfoText').textContent = `Mostrando ${startIndex + 1} a ${endIndex} de ${totalCount} clientas`;
+
+                tbody.innerHTML = clientesPagina.map(cli => {
+                    const tieneAlergia = cli.alergias && cli.alergias.toLowerCase() !== 'ninguna';
+                    const iniciales = cli.nombreCompleto.split(' ').map(n => n[0]).join('').slice(0, 2);
+
+                    let alergiaBadge = '<span class="text-muted small">Ninguna reportada</span>';
+                    if (tieneAlergia) {
+                        alergiaBadge = `
+                            <span class="badge bg-warning text-dark" style="font-size:11px;" title="${cli.alergias}">
+                                <i class="bi bi-exclamation-triangle-fill me-1"></i>${cli.alergias}
+                            </span>
+                        `;
+                    }
+
+                    return `
+                        <tr>
+                            <td><b>${cli.codigo}</b></td>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="sp-av" style="width:30px; height:30px; border-radius:50%; background:#F4EDE2; color:#18120F; font-weight:700; font-size:11px; display:grid; place-items:center;">
+                                        ${iniciales}
+                                    </div>
+                                    <div>
+                                        <b class="text-dark d-block">${cli.nombreCompleto}</b>
+                                        ${cli.preferencias ? '<small class="text-muted d-block" style="font-size:10.5px;">' + cli.preferencias.slice(0, 32) + (cli.preferencias.length > 32 ? '...' : '') + '</small>' : ''}
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div><b class="text-dark">${cli.numeroDocumento}</b></div>
+                                <small class="text-muted">${cli.tipoDocumento}</small>
+                            </td>
+                            <td>
+                                <div><i class="bi bi-telephone text-muted me-1"></i>${cli.telefono}</div>
+                                <small class="text-muted"><i class="bi bi-envelope text-muted me-1"></i>${cli.email || 'No registrado'}</small>
+                            </td>
+                            <td>
+                                ${alergiaBadge}
+                            </td>
+                            <td>
+                                <span class="small text-dark">${cli.ultimaVisita ? SpaStore.formatDateFriendly(cli.ultimaVisita) : '<span class="text-muted">Sin visitas</span>'}</span>
+                            </td>
+                            <td>
+                                <span class="pl ${cli.estado === 'activo' ? 'ok' : 'inactivo'}">
+                                    <i class="bi ${cli.estado === 'activo' ? 'bi-check-circle-fill' : 'bi-dash-circle'}"></i> 
+                                    ${cli.estado === 'activo' ? 'Activa' : 'Inactiva'}
+                                </span>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center justify-content-center gap-1">
+                                    <button type="button" class="btn-action-icon" data-action="detail" data-id="${cli.id}" title="Ver ficha e historial de citas">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                    <button type="button" class="btn-action-icon" data-action="edit" data-id="${cli.id}" title="Editar clienta">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button type="button" class="btn-action-icon btn-act-success" data-action="book" data-id="${cli.id}" title="Agendar nueva cita para esta clienta">
+                                        <i class="bi bi-calendar-plus"></i>
+                                    </button>
+                                    <button type="button" class="btn-action-icon ${cli.estado === 'activo' ? 'btn-act-danger' : 'btn-act-success'}" data-action="toggle" data-id="${cli.id}" title="${cli.estado === 'activo' ? 'Desactivar clienta' : 'Activar clienta'}">
+                                        <i class="bi ${cli.estado === 'activo' ? 'bi-person-x' : 'bi-person-check'}"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+
+                renderPagination(totalPages);
+            }
+
+            function renderPagination(totalPages) {
+                const container = $('paginationControls');
+                if (totalPages <= 1) {
+                    container.innerHTML = '';
+                    return;
+                }
+
+                let html = `
+                    <button type="button" ${currentPage === 1 ? 'disabled' : ''} data-page="${currentPage - 1}">
+                        <i class="bi bi-chevron-left"></i>
+                    </button>
+                `;
+
+                for (let p = 1; p <= totalPages; p++) {
+                    if (p === 1 || p === totalPages || (p >= currentPage - 1 && p <= currentPage + 1)) {
+                        html += `
+                            <button type="button" class="${p === currentPage ? 'active' : ''}" data-page="${p}">
+                                ${p}
+                            </button>
+                        `;
+                    } else if (p === currentPage - 2 || p === currentPage + 2) {
+                        html += `<span class="px-1 text-muted">...</span>`;
+                    }
+                }
+
+                html += `
+                    <button type="button" ${currentPage === totalPages ? 'disabled' : ''} data-page="${currentPage + 1}">
+                        <i class="bi bi-chevron-right"></i>
+                    </button>
+                `;
+
+                container.innerHTML = html;
+            }
+
+            function setupEventListeners() {
+                // Nuevo Cliente
+                $('btnNuevoClienteTop').onclick = function () {
+                    ClientModal.openNew(this);
+                };
+
+                // Filtros
+                $('filtroTexto').oninput = function () {
+                    currentFiltros.texto = this.value.trim();
+                    currentPage = 1;
+                    renderView();
+                };
+
+                $('filtroEstado').onchange = function () {
+                    currentFiltros.estado = this.value;
+                    currentPage = 1;
+                    renderView();
+                };
+
+                $('filtroCondicion').onchange = function () {
+                    currentFiltros.soloAlergias = this.value === 'alergias';
+                    currentPage = 1;
+                    renderView();
+                };
+
+                // Botones rápidos
+                $('btnQuickActivas').onclick = function () {
+                    currentFiltros.estado = 'activo';
+                    currentFiltros.soloAlergias = false;
+                    $('filtroEstado').value = 'activo';
+                    $('filtroCondicion').value = '';
+                    currentPage = 1;
+                    renderView();
+                };
+
+                $('btnQuickAlergias').onclick = function () {
+                    currentFiltros.soloAlergias = true;
+                    $('filtroCondicion').value = 'alergias';
+                    currentPage = 1;
+                    renderView();
+                };
+
+                $('btnQuickTodas').onclick = function () {
+                    resetFilters();
+                };
+
+                const resetFilters = function () {
+                    currentFiltros = {
+                        texto: '',
+                        estado: '',
+                        soloAlergias: false
+                    };
+                    $('filtroTexto').value = '';
+                    $('filtroEstado').value = '';
+                    $('filtroCondicion').value = '';
+                    currentPage = 1;
+                    renderView();
+                };
+
+                $('btnResetFilters').onclick = resetFilters;
+                $('btnEmptyReset').onclick = resetFilters;
+
+                // Tamaño de página
+                $('pageSizeSelect').onchange = function () {
+                    pageSize = Number(this.value);
+                    currentPage = 1;
+                    renderView();
+                };
+
+                // Paginación click
+                $('paginationControls').onclick = function (e) {
+                    const btn = e.target.closest('button[data-page]');
+                    if (btn && !btn.disabled) {
+                        currentPage = Number(btn.dataset.page);
+                        renderView();
+                    }
+                };
+
+                // Acciones de tabla
+                $('clientesTableBody').onclick = function (e) {
+                    const btn = e.target.closest('button[data-action]');
+                    if (!btn) return;
+
+                    const action = btn.dataset.action;
+                    const cliId = btn.dataset.id;
+
+                    if (action === 'detail') {
+                        ClientModal.openDetail(cliId, btn);
+                    } else if (action === 'edit') {
+                        ClientModal.openEdit(cliId, btn);
+                    } else if (action === 'book') {
+                        AppointmentModal.openNew({ clienteId: cliId }, btn);
+                    } else if (action === 'toggle') {
+                        const res = SpaStore.toggleEstadoCliente(cliId);
+                        if (res.success) {
+                            SpaUI.showToast('Estado Modificado', res.message, 'success');
+                            renderView();
+                        }
+                    }
+                };
+
+                // Búsqueda superior
+                const topSearch = $('topSearchClient');
+                if (topSearch) {
+                    topSearch.oninput = function () {
+                        $('filtroTexto').value = this.value;
+                        currentFiltros.texto = this.value.trim();
+                        currentPage = 1;
+                        renderView();
+                    };
+                }
+
+                // Exportar profesionalmente a Excel (XLSX)
+                $('btnExportClientes').onclick = function () {
+                    const clientes = SpaStore.getClientes(currentFiltros);
+                    SpaExcel.exportClientes(clientes);
+                };
+
+                // Menú responsive
+                const burger = $('burger');
+                const backdrop = $('sideBackdrop');
+                const sideClose = $('sideClose');
+
+                function toggleMenu(e) {
+                    if (e) e.stopPropagation();
+                    if (window.innerWidth < 992) {
+                        b.toggleAttribute('data-sidebar-open');
+                    } else {
+                        b.toggleAttribute('data-collapsed');
+                    }
+                }
+
+                if (burger) burger.onclick = toggleMenu;
+                if (backdrop) backdrop.onclick = function () { b.removeAttribute('data-sidebar-open'); };
+                if (sideClose) sideClose.onclick = function (e) {
+                    e.stopPropagation();
+                    b.removeAttribute('data-sidebar-open');
+                };
+
+                // Popovers
+                function closeAllPopovers() {
+                    [['ub', 'pm'], ['bell', 'pop']].forEach(function (pair) {
+                        const btn = $(pair[0]);
+                        const pop = $(pair[1]);
+                        if (pop) pop.hidden = true;
+                        if (btn) btn.setAttribute('aria-expanded', 'false');
+                    });
+                }
+
+                function setupToggle(btnId, popId) {
+                    const btn = $(btnId);
+                    const pop = $(popId);
+                    if (!btn || !pop) return;
+                    btn.onclick = function (e) {
+                        e.stopPropagation();
+                        const isHidden = pop.hidden;
+                        closeAllPopovers();
+                        pop.hidden = !isHidden;
+                        btn.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+                    };
+                }
+
+                setupToggle('ub', 'pm');
+                setupToggle('bell', 'pop');
+
+                $('btnMarkRead').onclick = function () {
+                    SpaUI.showToast('Notificaciones', 'Todas las notificaciones fueron marcadas como leídas.', 'info');
+                    closeAllPopovers();
+                };
+
+                document.addEventListener('click', function (e) {
+                    if (!e.target.closest('#sidebar') && window.innerWidth < 992 && b.hasAttribute('data-sidebar-open')) {
+                        b.removeAttribute('data-sidebar-open');
+                    }
+                    closeAllPopovers();
+                });
+
+                document.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape') {
+                        closeAllPopovers();
+                        b.removeAttribute('data-sidebar-open');
+                    }
+                    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+                        e.preventDefault();
+                        if (topSearch) topSearch.focus();
+                    }
+                });
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+        })();
+    </script>
+</body>
+
+</html>
